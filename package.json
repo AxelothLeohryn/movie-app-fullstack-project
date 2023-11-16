@@ -4,7 +4,9 @@
   "description": "Fullstack movie app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
     "mongo": "^0.1.0",
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "pug": "^3.0.2"
   }
 }
