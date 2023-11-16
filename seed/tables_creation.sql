@@ -6,13 +6,13 @@ CREATE TABLE "users"(
 );
 ALTER TABLE
     "users" ADD PRIMARY KEY("email");
-CREATE TABLE "movies"(
+CREATE TABLE "favorite_movies"(
     "favorite_id" BIGINT NOT NULL UNIQUE,
     "email" VARCHAR(255) NOT NULL,
     "movie_id" BIGINT NOT NULL,
     "from_api" BOOLEAN NOT NULL
 );
 ALTER TABLE
-    "movies" ADD PRIMARY KEY("favorite_id");
+    "favorite_movies" ADD PRIMARY KEY("favorite_id");
 ALTER TABLE
-    "movies" ADD CONSTRAINT "movies_email_foreign" FOREIGN KEY("email") REFERENCES "users"("email");
+    "favorite_movies" ADD CONSTRAINT "movies_email_foreign" FOREIGN KEY("email") REFERENCES "users"("email");
