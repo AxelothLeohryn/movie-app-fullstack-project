@@ -26,6 +26,12 @@ app.set("views", "./views");
 app.use("/", viewsRoutes);
 // app.use("/api", apiRoutes);
 
+//Para rutas no existentes
+app.use("*", (req, res) => {
+  res.status(404).json({
+    message: "route not found"
+  })
+})
 app.listen(port, () => {
   console.log(`Movie app listening on port ${port}`);
 });

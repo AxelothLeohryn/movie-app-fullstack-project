@@ -1,5 +1,22 @@
-h1 Soy la página de busqueda 
-button(type="button") Busca una peli
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Búsqueda
+        //- link(rel="stylesheet", href="./css/style.css")
+        //- link(rel="shortcut icon", href="./css/favicon.png", type="image/x-icon")
+    body 
+        header 
+            //- Aquí irá el header general de la app
+        main 
+            h1 Soy la página de busqueda 
+            form#search-form()
+                input#search-bar(type="text") 
+                input#search-button(type="submit") 
+            h2 Resultados de búsqueda (cuando se haya buscado)
+            section#search-results
 
-
-h2 Resultados de búsqueda (cuando se haya buscado)
+        script(src="../utils/fetch.js")
+        script(src="./script.js")  
