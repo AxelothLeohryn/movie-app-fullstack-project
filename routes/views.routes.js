@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const dashboardController = require("../controllers/dashboard.controller");
 const searchController = require("../controllers/search.controller");
 const moviesControllers = require("../controllers/movies.controller");
+const inicioController = require("../controllers/inicio.controller");
+const dashboardController = require("../controllers/dashboard.controller");
 
-router.get("/", function (req, res) {
-  res.render("inicio");
-});
-router.get("/dashboard", dashboardController);
+router.get("/", inicioController.getInicio);
+router.get("/dashboard", dashboardController.getDashboard);
 router.get("/search/:title?", searchController.searchView);
 router.get("/movies", /*moviesControllers.getMovies*/);
 

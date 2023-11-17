@@ -14,9 +14,7 @@ app.use(morgan(":method :host :status - :response-time ms :body"));
 
 const viewsRoutes = require("./routes/views.routes");
 const apiRoutes = require("./routes/api.routes");
-// const dashboardRoutes = require('./routes/dashboard.routes')
-// const moviesRoutes = require("./routes/movies.routes");
-// const searchRoutes = require("./routes/search.routes");
+
 
 //Configuracion de Pug
 app.set("view engine", "pug");
@@ -24,8 +22,8 @@ app.set("views", "./views");
 
 //Rutas
 app.use("/", viewsRoutes);
-// app.use("/api", apiRoutes);
+app.use("/api", apiRoutes);
 
 app.listen(port, () => {
-  console.log(`Movie app listening on port ${port}`);
+  console.log(`Movie app listening on port http://localhost:${port}`);
 });
