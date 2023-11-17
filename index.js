@@ -14,9 +14,7 @@ app.use(morgan(":method :host :status - :response-time ms :body"));
 
 const viewsRoutes = require("./routes/views.routes");
 const apiRoutes = require("./routes/api.routes");
-// const dashboardRoutes = require('./routes/dashboard.routes')
-// const moviesRoutes = require("./routes/movies.routes");
-// const searchRoutes = require("./routes/search.routes");
+
 
 //Configuracion de Pug
 app.set("view engine", "pug");
