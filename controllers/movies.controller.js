@@ -1,10 +1,10 @@
 const getMovies = (req, res) => {
   const viewData = {
     title: "Administrador",
-    trueAdmi: req.trueAdmi,
+    trueAdmi: true,
   };
 
-  if (req.isAdmin) {
+  if (viewData.isAdmin) {
     res.render("adminView", viewData);
   } else {
     res.render("userView", viewData);
