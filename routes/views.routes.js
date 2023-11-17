@@ -10,9 +10,9 @@ router.get("/", function (req, res) {
 });
 router.get("/dashboard", dashboardController);
 router.get("/search/:title?", searchController.searchView);
-router.get("/movies", /*moviesControllers.getMovies*/);
+router.get("/movies", moviesControllers.getMovies);
 
-
+//Rutas recover y restore password
 
 
 
