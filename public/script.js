@@ -61,7 +61,11 @@ if (document.title == "Inicio") {
                   })
             }
         } 
-
-        
+    });
+    let google = document.querySelectorAll(".google")
+    google.forEach(element => {
+        element.addEventListener("click", function() {
+            window.location.href = "http://localhost:3000/api/auth/google";
+        });
     });
 }

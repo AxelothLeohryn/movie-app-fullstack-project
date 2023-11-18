@@ -95,6 +95,7 @@ body {
 .google {
     width: 80vw;
     margin: auto;
+    cursor: pointer;
 }
 
 .blueButton {

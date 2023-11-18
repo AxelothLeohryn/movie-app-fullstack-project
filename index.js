@@ -1,13 +1,23 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
+const session = require("express-session");
+require("./auth.js");
 // const mongoose = require("mongoose");
 const port = 3000;
 
 const morgan = require("./middlewares/morgan");
+const secret = process.env.secret;
 
 app.use(express.json());
 app.use(express.static("public"));
+app.use(session({ secret: secret,
+                  resave: false, 
+                  saveUninitialized: true}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Logger
 app.use(morgan(":method :host :status - :response-time ms :body"));
