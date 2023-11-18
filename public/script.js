@@ -22,6 +22,21 @@ if (document.title == "Inicio") {
   });
 }
 
+//Side nav
+function openNav() {
+  document.getElementById("sidenav").style.width = "calc(100vw - 56px)"
+}
+function closeNav() {
+  document.getElementById("sidenav").style.width = "0px"
+}
+document.getElementById("topnav-menu").addEventListener("click", event => {
+  event.preventDefault();
+  openNav();
+})
+document.getElementById("sidenav-header-close").addEventListener("click", event => {
+  event.preventDefault();
+  closeNav();
+})
 //Sección de búsqueda
 
 if (document.title == "Búsqueda") {
