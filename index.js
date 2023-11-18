@@ -15,6 +15,7 @@ app.use(express.static("public"));
 
 const viewsRoutes = require("./routes/views.routes");
 
+
 // esquema de la base de datos mongo
 const Movie = require('./models/movies.js')
 
@@ -23,6 +24,10 @@ const Movie = require('./models/movies.js')
 // const moviesRoutes = require("./routes/movies.routes");
 // const searchRoutes = require("./routes/search.routes");
 // const mongoRoutes = require("./routes/mongo.routes");
+
+const apiRoutes = require("./routes/api.routes");
+
+
 
 async function createMovie(id,title,description,image,year) {
       const movieObject = new Movie({
@@ -76,6 +81,15 @@ app.set("views", "./views");
 app.use("/", viewsRoutes);
 // app.use("/api", apiRoutes);
 
+
+
+
+//Para rutas no existentes
+app.use("*", (req, res) => {
+  res.status(404).json({
+    message: "route not found"
+  })
+})
 
 app.listen(port, () => {
   console.log(`Movie app listening on port ${port}`);
