@@ -31,6 +31,22 @@ const movieDetailsSchema = {
         type: Number,
         required:true,
     },
+    director: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true
+    },
+    length: {
+        type: String,
+        required: true
+    },
+    actors: {
+        type: String,
+        required: true
+    }
 
   
 };
