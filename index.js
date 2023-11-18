@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = 3000;
-require('./config/mongo_atlas.js') // Conexión a BBDD MongoDB
+// require('./config/mongo_atlas.js') // Conexión a BBDD MongoDB
 // require('./config/db_mongo.js') // Conexión a BBDD MongoDB
 
 // const morgan = require("./middlewares/morgan");
@@ -25,7 +25,7 @@ const Movie = require('./models/movies.js')
 // const searchRoutes = require("./routes/search.routes");
 // const mongoRoutes = require("./routes/mongo.routes");
 
-const apiRoutes = require("./routes/api.routes");
+// const apiRoutes = require("./routes/api.routes");
 
 
 

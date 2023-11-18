@@ -30,3 +30,9 @@ router.get("/movies", moviesControllers.getMovies);
 // [GET] /recoverpassword Recuperar password
 // [GET] /restorepassword Cambiar password
 module.exports = router;
+
+
+//Ruta temporal para probar view del navbar
+router.get("/navbar", (req, res) => {
+  res.render("navbar")
+})
