@@ -2,13 +2,13 @@
     margin: 0;
     padding: 0;
 }
-/* 
+
 html {
-    font-size: 15px;
+    /* font-size: 15px; */
 }
 
 body {
-    background: url(background.jpg) no-repeat center center;
+    /* background: url(background.jpg) no-repeat center center; */
     background-size: cover;
     background-attachment: fixed;
 }
@@ -112,7 +112,7 @@ body {
 
 .hide {
     display: none;
-} */
+}
 
 
 /* Top Navbar------------------------------------------------------- */

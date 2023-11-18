@@ -16,7 +16,7 @@ html(lang="en")
             //---------Navbars----------------------------------------
             nav#topnav 
                 section#topnav-left.topnav-section
-                    a(href="/dashboard")#topnav-back.topnav-button
+                    a(onclick="history.back()")#topnav-back.topnav-button
                         i#topnav-back-icon.fa-solid.fa-arrow-left.fa-xl
                 h1#page-title.topnav-section Editar película
                 section#topnav-right.topnav-section
@@ -32,9 +32,12 @@ html(lang="en")
                         i#sidenav-header-close-icon.fa-solid.fa-xmark.fa-2xl
                 section#sidenav-main 
                     ul#sidenav-main-navigation
-                        li.sidenav-main-link Inicio
-                        li.sidenav-main-link Buscador
-                        li.sidenav-main-link Mis películas
+                        li.sidenav-main-link
+                            a(href="/dashboard") Inicio
+                        li.sidenav-main-link
+                            a(href="/search") Buscador
+                        li.sidenav-main-link 
+                            a(href="/movies") Mis películas
                     //- Here we can add another section with more buttons:
                     //- ul#sidenav-main-navigation 
                     //-     li.sidenav-main-link Mi perfil
@@ -45,5 +48,6 @@ html(lang="en")
                 
 
 
-
+    //----script-------------------
     script(src="./script.js") 
+    //-------------------------------
