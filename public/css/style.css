@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
 }
-
+/* 
 html {
     font-size: 15px;
 }
@@ -112,10 +112,115 @@ body {
 
 .hide {
     display: none;
+} */
+
+
+/* Top Navbar------------------------------------------------------- */
+header a {
+    text-decoration: none;
+    color: inherit;
 }
 
+#topnav {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    background-color: gray;
+}
+.topnav-section {
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.topnav-button {
+    padding: 16px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#page-title {
+    overflow-x: hidden;
+    text-wrap: nowrap;
+    width: fit-content;
+}
 
-@media screen and (min-width: 400px) and (max-width: 600px){
+/* Side Navbar------------------------------------------------------- */
+#sidenav {
+    background-color: rgb(143, 143, 143);
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    transition: ease-out 0.25s;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    /* width por defecto, cerrado */
+    width: 0px;
+}
+#sidenav-header {
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+#sidenav-header > * {
+    padding: 16px;
+}
+#sidenav-header-close {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* #sidenav-main {
+
+} */
+#sidenav-main > ul {
+    overflow-x: hidden;
+    list-style-type: none;
+    padding: 16px;
+    text-align: end;
+}
+#sidenav-main > ul > li {
+    overflow-x: hidden;
+    text-wrap: nowrap;
+    padding: 16px;
+    text-align: end;
+    font-size: 24px;
+    font-weight: bold;
+}
+#sidenav-footer {
+    overflow-x: hidden;
+    position: absolute;
+    bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: end;
+}
+#sidenav-footer > * {
+    overflow-x: hidden;
+    text-wrap: nowrap;
+    padding: 16px;
+}
+#sidenav-footer-logout {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#sidenav  i:hover, li:hover, span:hover {
+    color: white;
+    cursor: pointer;
+}
+/* @media screen and (min-width: 400px) and (max-width: 600px){
     html {
         font-size: 18px;
     }
@@ -140,4 +245,4 @@ body {
     .google {
         width: 40vw;
     }
-}
+} */
