@@ -24,31 +24,64 @@ if (document.title == "Inicio") {
 
 //Side nav
 function openNav() {
-  document.getElementById("sidenav").style.width = "calc(100vw - 56px)"
+  document.getElementById("sidenav").style.width = "calc(100vw - 56px)";
 }
 function closeNav() {
-  document.getElementById("sidenav").style.width = "0px"
+  document.getElementById("sidenav").style.width = "0px";
 }
-document.getElementById("topnav-menu").addEventListener("click", event => {
+document.getElementById("topnav-menu").addEventListener("click", (event) => {
   event.preventDefault();
   openNav();
-})
-document.getElementById("sidenav-header-close").addEventListener("click", event => {
-  event.preventDefault();
-  closeNav();
-})
+});
+document
+  .getElementById("sidenav-header-close")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+    closeNav();
+  });
 //Sección de búsqueda
+async function searchFilms(title) {
+  return await fetch(`http://localhost:3000/api/movies/${title}`).then((res) =>
+    res.json()
+  );
+}
+function printMovieCards(moviesData, section) {
+  // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
+  const resultsSection = document.getElementById(`${section}`);
+  let cardNumber = 0;
+  const movieCard = (movie) => {
+    return `<section class="movie-card" data-movie-title="${movie.title}" data-movie-poster="https://image.tmdb.org/t/p/w500/${movie.poster_path}" data-movie-id="${movie.id}">
+              <section class="movie-card-image">
+                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="Poster Image">
+              </section>
+              <section class="movie-card-details">
+                <section class="movie-card-details-header">
+                  <h4>${movie.release_date}</h4>
+                  </section>
+                <section class="movie-card-details-content">
+                  <h3>${movie.title}</h3>
+                </section>
+              </section>
+            </section>`;
+  };
+  // Podria añadir inline: style="background-image: url(https://image.tmdb.org/t/p/w1280${movie.poster_path})"
+  // console.log(moviesData);
+  let movieCardContainerHTML = `<section class="movie-card-container">`;
+  moviesData.forEach((movie) => {
+    movieCardContainerHTML += movieCard(movie);
+  });
+  movieCardContainerHTML += `</section>`;
+  resultsSection.innerHTML += movieCardContainerHTML;
+}
 
 if (document.title == "Búsqueda") {
-  
-  console.log("estoy en search");
   const searchButton = document.getElementById("search-button");
-  //Prueba de fetch en API externa y display resultados:
-  searchButton.addEventListener("click", (event) => {
+  searchButton.addEventListener("click", async (event) => {
     event.preventDefault();
-    console.log("test de busqueda");
     const query = document.getElementById("search-bar").value;
-    console.log(query);
-    // fetch.searchFilmsExternalAPI(query);
+    //Fetch from our API to search for the film/s.
+    const results = await searchFilms(query);
+    console.log(results);
+    printMovieCards(results, "search-results");
   });
 }

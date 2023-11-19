@@ -9,7 +9,7 @@ router.get("/", function (req, res) {
   res.render("inicio");
 });
 router.get("/dashboard", dashboardController);
-router.get("/search/:title?", searchController.searchView);
+router.get("/search/:id?", searchController.searchView); //search page if no id, search details if id
 router.get("/movies", moviesControllers.getMovies);
 
 //Rutas recover y restore password
