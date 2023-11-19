@@ -1,27 +1,42 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const jwt = require("jsonwebtoken");
+const passport = require('./config/passport-config');
+const session = require("express-session");
+const cookieParser = require('cookie-parser');
+require("./auth.js");
+// const mongoose = require("mongoose");
 const port = 3000;
 // require('./config/mongo_atlas.js') // Conexión a BBDD MongoDB
 
 const morgan = require("./middlewares/morgan");
+const secret = process.env.secret;
+app.set('trust proxy', 1); 
 
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static('public', { index: false, redirect: false }))
+app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: secret,
+                  resave: false, 
+                  saveUninitialized: true,
+                  cookie: {
+                    secure: false, 
+                  },}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cookieParser());
+
 
 // Logger
-app.use(morgan(":method :host :status - :response-time ms :body"));
+app.use(morgan(":method :host :status :url :response-time ms :body"));
 
 const viewsRoutes = require("./routes/views.routes");
 const apiRoutes = require("./routes/api.routes");
-
+                
 
 // esquema de la base de datos mongo
 const Movie = require('./models/movies.js')
-
-
-
-
 
 // async function createMovie(id,title,description,image,year) {
 //       const movieObject = new Movie({
@@ -47,9 +62,6 @@ app.set("views", "./views");
 app.use("/", viewsRoutes);
 app.use("/api", apiRoutes);
 
-
-
-
 //Para rutas no existentes
 app.use("*", (req, res) => {
   res.status(404).json({
@@ -57,8 +69,9 @@ app.use("*", (req, res) => {
   })
 })
 
+
 app.listen(port, () => {
-  console.log(`Movie app listening on port ${port}`);
+  console.log(`Movie app listening on port http://localhost:${port}`);
 });
 
 

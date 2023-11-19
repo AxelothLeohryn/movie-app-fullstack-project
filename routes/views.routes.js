@@ -1,16 +1,20 @@
 const express = require("express");
 const router = express.Router();
 
-const dashboardController = require("../controllers/dashboard.controller");
+const isAuthenticated = require("../middlewares/isAuthenticated");
+const checkToken = require("../middlewares/checkToken");
+
 const searchController = require("../controllers/search.controller");
 const moviesControllers = require("../controllers/movies.controller");
+const inicioController = require("../controllers/inicio.controller");
+const dashboardController = require("../controllers/dashboard.controller");
 
-router.get("/", function (req, res) {
-  res.render("inicio");
-});
+
+router.get("/", inicioController.getInicio);
 router.get("/dashboard", dashboardController);
 router.get("/search/:id?", searchController.searchView); //search page if no id, search details if id
 router.get("/movies", moviesControllers.getMovies);
+
 
 //Rutas recover y restore password
 
