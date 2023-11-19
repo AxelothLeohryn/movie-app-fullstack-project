@@ -41,24 +41,34 @@ document
   });
 //Sección de búsqueda
 async function searchFilms(title) {
-  return await fetch(`http://localhost:3000/api/movies/${title}`).then((res) => res.json());
+  return await fetch(`http://localhost:3000/api/movies/${title}`).then((res) =>
+    res.json()
+  );
 }
-function printMovieCards(moviesData) {
-  const resultsSection = document.getElementById("search-results");
+function printMovieCards(moviesData, section) {
+  // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
+  const resultsSection = document.getElementById(`${section}`);
+  let cardNumber = 0;
+  const movieCard = (movie) => {
+    return `<section class="movie-card" data-movie-title="${movie.title}" data-movie-poster="https://image.tmdb.org/t/p/w500/${movie.poster_path}" data-movie-id="${movie.id}">
+              <section class="movie-card-image">
+                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="Poster Image">
+              </section>
+              <section class="movie-card-details">
+                <section class="movie-card-details-header">
+                  <h4>${movie.release_date}</h4>
+                  </section>
+                <section class="movie-card-details-content">
+                  <h3>${movie.title}</h3>
+                </section>
+              </section>
+            </section>`;
+  };
+  // Podria añadir inline: style="background-image: url(https://image.tmdb.org/t/p/w1280${movie.poster_path})"
   // console.log(moviesData);
   let movieCardContainerHTML = `<section class="movie-card-container">`;
   moviesData.forEach((movie) => {
-    if (movie.poster_path) {
-      movieCardContainerHTML += `<section class="movie-card" data-movie-title="${movie.title}" data-movie-poster="https://image.tmdb.org/t/p/w500/${movie.poster_path}" data-movie-id="${movie.id}">
-                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="Poster Image">
-                <h3 class="dynamic-font-size">${movie.title}</h3>
-            </section>`;
-    } else {
-      movieCardContainerHTML += `<section class="movie-card" data-movie-title="${movie.title}" data-movie-poster="https://image.tmdb.org/t/p/w500/${movie.poster_path}" data-movie-id="${movie.id}">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png" alt="Poster Image">
-                <h3 class="dynamic-font-size">${movie.title}</h3>
-            </section>`;
-    }
+    movieCardContainerHTML += movieCard(movie);
   });
   movieCardContainerHTML += `</section>`;
   resultsSection.innerHTML += movieCardContainerHTML;
@@ -72,6 +82,6 @@ if (document.title == "Búsqueda") {
     //Fetch from our API to search for the film/s.
     const results = await searchFilms(query);
     console.log(results);
-    printMovieCards(results);
+    printMovieCards(results, "search-results");
   });
 }
