@@ -5,16 +5,26 @@ require('../config/db_mongo') // Conexión a BBDD MongoDB
 
 const movieDetailsSchema = {
     id: {
-        type: Number,
+        type: String,
         required: true,
-        unique: true
-    },
+        default: function() {
+          return `int-${this._id}`;
+        }
+      },
     title: {
         type: String,
         required: true,
         unique: true
     },
-    description: {
+    director: {
+        type: String,
+        required: true
+    },
+    year: {
+        type: Number,
+        required:true,
+    },
+    length: {
         type: String,
         required: true
     },
@@ -27,28 +37,22 @@ const movieDetailsSchema = {
             message: "Por favor, solo imágenes JPG o PNG"
         }
     },
-    year: {
-        type: Number,
-        required:true,
-    },
-    director: {
-        type: String,
-        required: true
-    },
-    gender: {
-        type: String,
-        required: true
-    },
-    length: {
+    genres: {
         type: String,
         required: true
     },
     actors: {
         type: String,
         required: true
+    },
+    trailer: {
+        type: String,
+        required: true
+    },
+    overview: {
+        type: String,
+        required: true
     }
-
-  
 };
 
 const movieSchema = mongoose.Schema(movieDetailsSchema);
