@@ -37,8 +37,25 @@ const createGoogle = async (email, name) => {
     } 
 }
 
+const createUser = async (email, name, password) => {
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion a bbdd
+        let admin = false;
+        const data = await client.query(queries.createUser, [email, name, password, admin])
+        result = data.rows
+        return "success"
+    } catch (err) {
+        console.log(err);
+        return "error";
+    } finally {
+        client.release();
+    } 
+}
+
 const signup = {
     checkEmail,
-    createGoogle
+    createGoogle,
+    createUser,
 }
 module.exports = signup;

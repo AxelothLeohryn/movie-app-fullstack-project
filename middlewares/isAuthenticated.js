@@ -1,8 +1,8 @@
-function isAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
+function checkLogin(req, res, next) {
+    if (req.user ) {
       return next();
     }
     res.redirect('/');
 }
 
-module.exports = isAuthenticated;
+module.exports = checkLogin;

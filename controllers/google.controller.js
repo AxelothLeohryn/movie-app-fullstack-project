@@ -28,7 +28,7 @@ const loginFunction = async function (req, res) {
         res.cookie("access-token", token, {
             httpOnly: true,
             sameSite: "strict",
-        }).redirect("/dashboard");
+        }).render("dashboard");
     } else {
         let failure = await signup.createGoogle(email, name);
         if (failure != undefined) {
@@ -45,7 +45,7 @@ const loginFunction = async function (req, res) {
             res.cookie("access-token", token, {
                 httpOnly: true,
                 sameSite: "strict",
-            }).redirect("/dashboard");
+            }).render("dashboard");
         }
     }
     

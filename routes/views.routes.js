@@ -1,13 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
+const isAuthenticated = require("../middlewares/isAuthenticated");
+const checkToken = require("../middlewares/checkToken");
+
 const searchController = require("../controllers/search.controller");
 const moviesControllers = require("../controllers/movies.controller");
 const inicioController = require("../controllers/inicio.controller");
 const dashboardController = require("../controllers/dashboard.controller");
 
 router.get("/", inicioController.getInicio);
-router.get("/dashboard", dashboardController.getDashboard);
+router.get("/dashboard", isAuthenticated, checkToken, dashboardController.getDashboard);
 router.get("/search/:title?", searchController.searchView);
 router.get("/movies", /*moviesControllers.getMovies*/);
 
