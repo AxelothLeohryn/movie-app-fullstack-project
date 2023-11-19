@@ -5,10 +5,12 @@ require('../config/db_mongo') // Conexión a BBDD MongoDB
 
 const movieDetailsSchema = {
     id: {
-        type: Number,
+        type: String,
         required: true,
-        unique: true
-    },
+        default: function() {
+          return `int-${this._id}`;
+        }
+      },
     title: {
         type: String,
         required: true,
