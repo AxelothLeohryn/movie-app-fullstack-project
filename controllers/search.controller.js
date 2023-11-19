@@ -24,7 +24,7 @@ const searchAPI = async (req, res) => {
   console.log(`Searching for title: ${title}`);
   try {
     const results = await searchModel.searchFilms(title);
-    // console.log(`Results: `, results);
+    console.log(`Results: `, results);
     res.status(200).json(results);
   } catch (error) {
     console.error(`ERROR in searchAPI: ${error.stack}`);

@@ -50,9 +50,11 @@ function printMovieCards(moviesData, section) {
   const resultsSection = document.getElementById(`${section}`);
   let cardNumber = 0;
   const movieCard = (movie) => {
+    let moviePoster;
+    movie.poster_path === null ? moviePoster = `https://i0.wp.com/tacm.com/wp-content/uploads/2018/01/no-image-available.jpeg?ssl=1` : moviePoster = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
     return `<section class="movie-card" data-movie-title="${movie.title}" data-movie-poster="https://image.tmdb.org/t/p/w500/${movie.poster_path}" data-movie-id="${movie.id}">
               <section class="movie-card-image">
-                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="Poster Image">
+                <img src="${moviePoster}" alt="Poster Image">
               </section>
               <section class="movie-card-details">
                 <section class="movie-card-details-header">

@@ -29,7 +29,7 @@ async function searchFilms(title) {
   //   }
   let externalApiResults = await fetch.searchFilmsExternalAPI(title);
   console.log(externalApiResults);
-  for (movie of externalApiResults.results) {
+  for (movie of externalApiResults) {
     results.push(movie);
   }
   // console.log(results);
