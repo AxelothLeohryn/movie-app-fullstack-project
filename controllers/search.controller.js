@@ -1,27 +1,16 @@
 //Importaciones
 const fetch = require("../utils/fetch");
+const searchModel = require("../models/search.model")
 //Funciones (req,res)
 const searchView = async (req, res) => {
   try {
-    if (req.params.title) {
-      const title = req.params.title;
+    if (req.params.id) {
+      // // Route: /search/id (details of the movie) VISTA DETALLES
+      // const id = req.params.id;
       // console.log(title);
-      //-----------------Descomentar cuando se cree la funcion de searchFilms-----------------
-      //   const movieDetails = await fetch.searchFilms(title);
-      //   if (movieDetails.total_results > 0) {
-      //     console.log(movieDetails);
-      //     res.render("search-details", { movieDetails });
-      //   } else {
-      //     res.render("error");
-      //   }
-
-      //De momento como prueba:
-      if (title === "pruebaerror") {
-        res.render("search-error");
-      } else {
-        res.render("search-details", { title });
-      }
+      // const movieDetails = await fetch.searchFilmDetails(id);
     } else {
+      // Route: /search
       res.render("search");
     }
   } catch (error) {
@@ -29,7 +18,22 @@ const searchView = async (req, res) => {
   }
 };
 
+
+const searchAPI = async (req, res) => {
+  const title = req.params.title;
+  console.log(`Searching for title: ${title}`);
+  try {
+    const results = await searchModel.searchFilms(title);
+    // console.log(`Results: `, results);
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(`ERROR in searchAPI: ${error.stack}`);
+    res.status(400).json({ msg: `ERROR: ${error.stack}` });
+  }
+};
+
 //Exportaciones
 module.exports = {
   searchView,
+  searchAPI,
 };
