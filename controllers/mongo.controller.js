@@ -1,19 +1,69 @@
-const Movie = require('../models/movies');
+const Movie = require("../models/movies");
 
-// // CREATE
-const createMovie = async (req, res) => {
-    console.log(req.body);
+const getAllMovies = async (req, res) => {
+  try {
+    const movies = await Movie.find();
+    const userType = req.user ? req.user.type : "user";
 
-    try{
-        const data = req.body;
-        let answer = await new Movie(data).save();
-        res.status(201).json(answer);
-
-    }catch (error) {
-        console.log(`ERROR: ${error.stack}`);
-        res.status(400).json({msj:`ERROR: ${error.stack}`});
+    if (userType === "admin") {
+      res.render("admView", { movies });
+    } else {
+      res.render("userView", { movies });
     }
-}
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener todas las películas" });
+  }
+};
+
+const createMovie = async (req, res) => {
+  try {
+    const newMovie = new Movie(req.body);
+    const savedMovie = await newMovie.save();
+    res.json(savedMovie);
+  } catch (error) {
+    res.status(500).json({ error: "Error al crear la película" });
+  }
+};
+
+const editMovie = async (req, res) => {
+  const movieId = req.params.id;
+  const newData = req.body;
+
+  try {
+    const updatedMovie = await Movie.findByIdAndUpdate(movieId, newData, {
+      new: true,
+    });
+    res.json(updatedMovie);
+  } catch (error) {
+    res.status(500).json({ error: "Error al editar la película" });
+  }
+};
+
+const deleteMovie = async (req, res) => {
+  const movieId = req.params.id;
+  try {
+    const deletedMovie = await Movie.findByIdAndDelete(movieId);
+    res.json(deletedMovie);
+  } catch (error) {
+    res.status(500).json({ error: "Error al borrar la película" });
+  }
+};
+
+const getFavorites = async (req, res) => {
+  try {
+    res.json({ favorites: [] });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+module.exports = {
+  getAllMovies,
+  createMovie,
+  editMovie,
+  deleteMovie,
+  getFavorites,
+};
 
 // // READ
 // const getProduct = async (req, res) => {
@@ -39,10 +89,10 @@ const createMovie = async (req, res) => {
 // }
 
 module.exports = {
-    createMovie
-    // getProduct,
-    // editProduct,
-    // deleteProduct
-}
+  createMovie,
+  // getProduct,
+  // editProduct,
+  // deleteProduct
+};
 
-// .populate('provider', 'company_name cif address -_id') 
+// .populate('provider', 'company_name cif address -_id')

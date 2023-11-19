@@ -85,3 +85,66 @@ if (document.title == "Búsqueda") {
     printMovieCards(results, "search-results");
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const createMovieButton = document.querySelector("#create_movie_button");
+  const createMovieForm = document.querySelector("#movie_form");
+
+  if (createMovieButton && createMovieForm) {
+    createMovieButton.addEventListener("click", () => {
+      createMovieForm.style.display = "block";
+    });
+
+    createMovieForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(createMovieForm);
+      const formObject = {};
+      formData.forEach((value, key) => {
+        formObject[key] = value;
+      });
+
+      try {
+        const response = await fetch("/createMovie", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        });
+      } catch (error) {
+        console.error("Error");
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const editMovieForm = document.querySelector("#edit_movie_form");
+
+  if (editMovieForm) {
+    editMovieForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(editMovieForm);
+      const formObject = {};
+      formData.forEach((value, key) => {
+        formObject[key] = value;
+      });
+
+      // const movieId = /* obtener ID*/;
+
+      try {
+        const response = await fetch(`/editMovie/${movieId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        });
+      } catch (error) {
+        console.error("Error de red", error);
+      }
+    });
+  }
+});

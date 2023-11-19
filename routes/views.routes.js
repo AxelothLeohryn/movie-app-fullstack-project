@@ -14,8 +14,6 @@ router.get("/movies", moviesControllers.getMovies);
 
 //Rutas recover y restore password
 
-
-
 //   [GET] / Vista de inicio de la app
 // [GET] /dashboard Panel de control
 // [GET] /search/:title Vista detalle de la película
@@ -29,10 +27,10 @@ router.get("/movies", moviesControllers.getMovies);
 // [DELETE] /removeMovie Borrar película
 // [GET] /recoverpassword Recuperar password
 // [GET] /restorepassword Cambiar password
-module.exports = router;
-
 
 //Ruta temporal para probar view del navbar
 router.get("/navbar", (req, res) => {
-  res.render("navbar")
-})
+  res.render("navbar");
+});
+
+module.exports = router;
