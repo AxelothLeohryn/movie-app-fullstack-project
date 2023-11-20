@@ -147,7 +147,7 @@ Swal.fire({
 
 /* Funciones generales para usar en toda la web ---------------------------------------------------------------------*/
 /* Función para imrpimir tarjetas de usuario (con boton de fav),hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas */
-function printMovieCards(moviesData, section) {
+function printMovieCardsUser(moviesData, section) {
   console.log("Movie data to print: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
@@ -289,7 +289,7 @@ async function displayMovieDetails(id, section) {
 
   console.log("I'm displaying details");
 }
-if (document.title === "Detalles") {
+if (document.title === "Detalles de la película") {
   const movieId = window.location.pathname.split("/").pop();
   console.log(movieId);
   displayMovieDetails(movieId, "details-section");
