@@ -1,10 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const mongoController = require("../controllers/bbdd.controller");
 
+const signupController = require("../controllers/signup.controller");
+const GoogleController = require("../controllers/google.controller");
+const loginController = require("../controllers/login.controller");
+const logoutController = require("../controllers/logout.controller");
 
 const searchController = require("../controllers/search.controller");
 
 
+// Rutas de la API
+router.get("/movies", mongoController.getAllMovies);
+router.post("/createMovie", mongoController.createMovie);
+router.put("/editMovie/:id", mongoController.editMovie);
+router.delete("/deleteMovie/:id", mongoController.deleteMovie);
+router.get("/getFavorites/:email", mongoController.getFavorites);
 
 //RUTA PARA 
 
@@ -24,27 +35,6 @@ router.get("/movies/:title", searchController.searchAPI);
 //RUTA PARA BORRAR DE FAVORITOS
 //delete(/favorites/:favorites.id)
 
-
-
-
-//ADMIN-----------------
-// RUTA PARA OBTENER TODAS LAS PELIS DE MONGODB
-// get(/localmovies)
-
-//CREAR PELICULA
-//post(/createMovie)
-
-//EDITAR PELICULA
-//put(/editMovie/:id)
-
-//BORRAR PELICULA
-//delete(/deleteMovie/:id)
-
-const signupController = require("../controllers/signup.controller");
-const GoogleController = require("../controllers/google.controller");
-const loginController = require("../controllers/login.controller");
-const logoutController = require("../controllers/logout.controller");
-
 router.post("/signup", signupController.signupFunction);
 router.get("/auth/google", GoogleController.profileFunction);
 router.get("/google/callBack?", GoogleController.loginMiddleware, GoogleController.loginFunction);
@@ -54,3 +44,4 @@ router.post("/logout", logoutController.logoutFunction);
 
 
 module.exports = router;
+
