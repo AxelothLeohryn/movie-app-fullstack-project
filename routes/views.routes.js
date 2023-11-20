@@ -9,34 +9,21 @@ const moviesControllers = require("../controllers/movies.controller");
 const inicioController = require("../controllers/inicio.controller");
 const dashboardController = require("../controllers/dashboard.controller");
 
-
 router.get("/", inicioController.getInicio);
-router.get("/dashboard", isAuthenticated, checkToken, dashboardController.getDashboard);
+router.get(
+  "/dashboard",
+  isAuthenticated,
+  checkToken,
+  dashboardController.getDashboard
+);
 router.get("/search/:id?", searchController.searchView); //search page if no id, search details if id
 router.get("/movies", moviesControllers.getMovies);
-
-
-//Rutas recover y restore password
-
-
-
-//   [GET] / Vista de inicio de la app
-// [GET] /dashboard Panel de control
-// [GET] /search/:title Vista detalle de la película
-// [GET] /search Buscador de películas
-// [GET] /movies Mis películas
-// [POST] /signup Registrarse en la aplicación
-// [POST] /login Hacer login en la aplicación
-// [POST] /logout Salir
-// [POST] /createMovie Crear película
-// [PUT] /editMovie/:id Editar película
-// [DELETE] /removeMovie Borrar película
-// [GET] /recoverpassword Recuperar password
-// [GET] /restorepassword Cambiar password
-module.exports = router;
-
+router.get("/createMovie", moviesControllers.createMoviesForm);
+router.get("/editMovie/:id", moviesControllers.editMoviesForm);
 
 //Ruta temporal para probar view del navbar
 router.get("/navbar", (req, res) => {
-  res.render("navbar")
-})
+  res.render("navbar");
+});
+
+module.exports = router;

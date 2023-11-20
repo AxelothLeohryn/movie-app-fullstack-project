@@ -5,3 +5,4 @@ const getDashboard = function (req, res) {
 module.exports = {
     getDashboard
 }
+
