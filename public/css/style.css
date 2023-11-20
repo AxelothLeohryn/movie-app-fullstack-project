@@ -117,9 +117,16 @@ body {
 
 
 /* Top Navbar------------------------------------------------------- */
+header {
+    position: sticky;
+    top: 0px;
+    z-index: 50;
+}
+
 header a {
     text-decoration: none;
     color: inherit;
+
 }
 
 #topnav {
@@ -128,6 +135,7 @@ header a {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
     height: 56px;
     background-color: gray;
 }
@@ -158,7 +166,7 @@ header a {
     background-color: rgb(143, 143, 143);
     height: 100%;
     position: fixed;
-    z-index: 1;
+    z-index: 100;
     top: 0;
     right: 0;
     overflow-x: hidden;
@@ -311,20 +319,25 @@ span:hover {
     margin-bottom: 15px;
     /* Space below the header */
 }
+
 .movie-card-year {
     text-align: start;
-    
+
 }
+
 .movie-card-length {
     text-align: center;
     margin: 0px 10px;
 }
+
 .movie-card-genres {
     text-align: end;
 }
+
 .movie-card-details-content {
     margin: 10px;
 }
+
 .movie-card img {
     width: 100%;
 
@@ -341,6 +354,51 @@ span:hover {
 .movie-card:hover {
     transform: scale(1.05);
     cursor: pointer;
+}
+/* Movie details -----------------------------------------------------*/
+.movie-details {
+    max-width: 800px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #e9e9e9;
+}
+.movie-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.movie-image {
+    max-width: 200px;
+    margin-right: 20px;
+}
+.movie-image img {
+    width: 100%;
+    border-radius: 5px;
+}
+.movie-info {
+    flex-grow: 1;
+}
+.movie-title {
+    font-size: 24px;
+    margin: 0;
+}
+.movie-year {
+    color: #666;
+}
+.movie-length, .movie-genres, .movie-director, .movie-actors {
+    margin: 10px 0;
+}
+.movie-overview {
+    margin-top: 20px;
+}
+.movie-trailer {
+    margin-top: 20px;
+}
+.movie-trailer iframe {
+    width: 100%;
+    height: 400px;
 }
 
 /* @media screen and (min-width: 400px) and (max-width: 600px){
