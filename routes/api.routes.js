@@ -7,6 +7,6 @@ router.get("/api", mongoController.getAllMovies);
 router.post("/api/createMovie", mongoController.createMovie);
 router.put("/api/editMovie/:id", mongoController.editMovie);
 router.delete("/api/deleteMovie/:id", mongoController.deleteMovie);
-router.get("/api/getFavorites", mongoController.getFavorites);
+router.get("/api/getFavorites/:email", mongoController.getFavorites);
 
 module.exports = router;
