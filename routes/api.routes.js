@@ -19,6 +19,14 @@ router.put("/editMovie/:id", mongoController.editMovie);
 router.delete("/deleteMovie/:id", mongoController.deleteMovie);
 router.get("/getFavorites/:email", mongoController.getFavorites);
 
+router.post("/signup", signupController.signupFunction);
+router.get("/auth/google", GoogleController.profileFunction);
+router.get("/google/callBack?", GoogleController.loginMiddleware, GoogleController.loginFunction);
+router.get("/google/success", isAuthenticated, GoogleController.cookieFunction);
+router.get("/auth/failure", GoogleController.failureFunction);
+router.post("/login", loginController.loginMiddleware, loginController.loginFunction);
+router.post("/logout", logoutController.logoutFunction);
+
 //RUTA PARA 
 
 //USER--------------------
@@ -36,12 +44,7 @@ router.get("/getFavorites/:email", mongoController.getFavorites);
 //RUTA PARA BORRAR DE FAVORITOS
 //delete(/favorites/:favorites.id)
 
-router.post("/signup", signupController.signupFunction);
-router.get("/auth/google", GoogleController.profileFunction);
-router.get("/google/callBack?", GoogleController.loginMiddleware, GoogleController.loginFunction);
-router.get("/auth/failure", GoogleController.failureFunction);
-router.post("/login", loginController.loginMiddleware, loginController.loginFunction);
-router.post("/logout", logoutController.logoutFunction);
+
 
 
 module.exports = router;

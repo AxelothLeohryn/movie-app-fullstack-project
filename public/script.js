@@ -76,24 +76,66 @@ if (document.title == "Inicio") {
         }
       }
     });
-  document
-    .getElementById("logIn")
-    .addEventListener("submit", async function (event) {
-      event.preventDefault();
-      let email = event.target.emailLI.value;
-      let password = event.target.passwordLI.value;
-      let alert = "";
-      if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
-        alert += "Introduce un email valido <br>";
-      }
-      if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
-        alert +=
-          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
-      }
-      if (alert.length > 0) {
-        Swal.fire({
-          icon: "error",
-          html: alert,
+  
+    document.getElementById("logIn").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        let email = event.target.emailLI.value;
+        let password = event.target.passwordLI.value;
+        let alert = "";
+        if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
+            alert += "Introduce un email valido <br>"
+        }
+        if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
+            alert += "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>"
+        }
+        if (alert.length > 0) {
+            Swal.fire({
+              icon: 'error',
+              html: alert,
+            })
+        } else {
+            const datos = {
+                email: email,
+                password: password
+            };
+            const opciones = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos) 
+            };
+            let emailSigned = await fetch("http://localhost:3000/api/login", opciones)
+                .then(response => response.json())
+            if (emailSigned == "success") {
+                window.location.href = "http://localhost:3000/dashboard";
+            } else if (emailSigned == false) {
+                Swal.fire({
+                    icon: 'error',
+                    html: "Este email no esta registrado, por favor proceda a Sign up.",
+                  })
+            } else if (emailSigned == "error") {
+                Swal.fire({
+                    icon: 'error',
+                    html: "Credenciales incorrectas",
+                  })
+            }
+        }
+    }); 
+    let google = document.querySelectorAll(".google")
+    google.forEach(element => {
+        element.addEventListener("click", async function() {
+          window.location.href = "http://localhost:3000/api/auth/google";
+          // let correctAutentification = await fetch("http://localhost:3000/api/auth/google", { mode: 'no-cors' })
+          //       .then(response => response.json())
+          //   if (correctAutentification == "success") {
+          //       window.location.href = "http://localhost:3000/dashboard";
+          //   } else if (correctAutentification == "error") { 
+          //       Swal.fire({
+          //           icon: 'error',
+          //           html: "Ha habido un error en la autenticación",
+          //         })
+          //   } 
         });
       } else {
         const datos = {
@@ -133,9 +175,21 @@ if (document.title == "Inicio") {
     });
   });
 }
+if (document.title == "tokenExpirado") {
+  Swal.fire({
+      icon: "error",
+      title: "La sesión ha expirado",
+      showDenyButton: false,
+      showCancelButton: false,
+      confirmButtonText: "Volver a iniciar sesión"
+    }).then((result) => {
+      window.location.href = "http://localhost:3000/"
+    });
+}
+
 /* Funciones generales para usar en toda la web ---------------------------------------------------------------------*/
 /* Función para imrpimir tarjetas de usuario (con boton de fav),hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas */
-function printMovieCardsUser(moviesData, section) {
+function printMovieCards(moviesData, section) {
   console.log("Movie data to print: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
@@ -346,15 +400,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-if (document.title == "tokenExpirado") {
-  Swal.fire({
-    icon: "error",
-    title: "La sesión ha expirado",
-    showDenyButton: false,
-    showCancelButton: false,
-    confirmButtonText: "Volver a iniciar sesión",
-  }).then((result) => {
-    window.location.href = "http://localhost:3000/";
-  });
-}
