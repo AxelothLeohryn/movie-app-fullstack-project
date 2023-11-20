@@ -11,7 +11,7 @@ const dashboardController = require("../controllers/dashboard.controller");
 
 
 router.get("/", inicioController.getInicio);
-router.get("/dashboard", dashboardController);
+router.get("/dashboard", isAuthenticated, checkToken, dashboardController.getDashboard);
 router.get("/search/:id?", searchController.searchView); //search page if no id, search details if id
 router.get("/movies", moviesControllers.getMovies);
 
