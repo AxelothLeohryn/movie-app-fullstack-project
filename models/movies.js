@@ -21,7 +21,7 @@ const movieDetailsSchema = {
     required: true,
   },
   year: {
-    type: Number,
+    type: String,
     required: true,
   },
   length: {
