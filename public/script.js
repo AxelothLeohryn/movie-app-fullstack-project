@@ -271,10 +271,10 @@ async function displayMovieDetails(id, section) {
       </section>
       <section class="movie-info">
           <h1 class="movie-title">${movieDetails.title} <span class="movie-year">(${movieDetails.year})</span></h1>
-          <div class="movie-length">Duration: ${movieDetails.length} min</div>
-          <div class="movie-genres">Genres: ${movieDetails.genres.join(", ")}</div>
-          <div class="movie-director">Director: ${movieDetails.director}</div>
-          <div class="movie-actors">Cast: ${movieDetails.actors.join(", ")}</div>
+          <div class="movie-length"><b>Duration:</b> ${movieDetails.length} min</div>
+          <div class="movie-genres"><b>Genres:</b> ${movieDetails.genres.join(", ")}</div>
+          <div class="movie-director"><b>Director:</b> ${movieDetails.director}</div>
+          <div class="movie-actors"><b>Cast:</b> ${movieDetails.actors.join(", ")}</div>
       </section>
   </section>
   <section class="movie-overview">
