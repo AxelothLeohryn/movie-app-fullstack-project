@@ -1,4 +1,5 @@
 const Movie = require("../models/movies");
+const movieModel = require("../models/search.model")
 require("../config/mongo_atlas.js");
 
 const getAllMovies = async (req, res) => {
@@ -59,8 +60,9 @@ const getFavorites = async (req, res) => {
 const findMovies = async (req, res) => {
   const movieTitle = req.params.title;
   try {
-    const search = await Movie.find({ title: movieTitle });
-    res.json(search);
+    const searchResults = movieModel.findMovies(movieTitle);
+    
+    res.json(searchResults);
   } catch (error) {
     res.status(500).json(error.message);
   }

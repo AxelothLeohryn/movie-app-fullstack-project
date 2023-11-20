@@ -12,6 +12,8 @@ const searchController = require("../controllers/search.controller");
 
 // Rutas de la API
 router.get("/movies", mongoController.getAllMovies);
+router.get("/movies/:title", searchController.searchAPI);
+router.get("/movies/details/:id", searchController.getDetails);
 router.post("/createMovie", mongoController.createMovie);
 router.put("/editMovie/:id", mongoController.editMovie);
 router.delete("/deleteMovie/:id", mongoController.deleteMovie);
@@ -32,7 +34,6 @@ router.post("/logout", logoutController.logoutFunction);
 
 //RUTA PARA OBTENER RESULTADOS BUSQUEDA
 // get (/movies/:title)  --> por dentro va a buscar en nuestra BBDD + en API externa
-router.get("/movies/:title", searchController.searchAPI);
 
 //RUTA PARA OBTENER FAVORITOS POR USUARIO
 //get(/favorites/:email)  <--- checkear que el usuario logueado es el del email
