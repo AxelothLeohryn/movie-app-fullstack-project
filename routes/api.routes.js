@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const mongoController = require("../controllers/mongo.controller");
+const mongoController = require("../controllers/bbdd.controller");
 
 // Rutas de la API
-router.get("/api", mongoController.getAllMovies);
-router.post("/api/createMovie", mongoController.createMovie);
-router.put("/api/editMovie/:id", mongoController.editMovie);
-router.delete("/api/deleteMovie/:id", mongoController.deleteMovie);
-router.get("/api/getFavorites/:email", mongoController.getFavorites);
+router.get("/movies", mongoController.getAllMovies);
+router.post("/createMovie", mongoController.createMovie);
+router.put("/editMovie/:id", mongoController.editMovie);
+router.delete("/deleteMovie/:id", mongoController.deleteMovie);
+router.get("/getFavorites/:email", mongoController.getFavorites);
 
 module.exports = router;

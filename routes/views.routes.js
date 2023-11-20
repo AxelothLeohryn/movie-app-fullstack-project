@@ -8,7 +8,7 @@ const moviesControllers = require("../controllers/movies.controller");
 router.get("/", function (req, res) {
   res.render("inicio");
 });
-router.get("/dashboard", dashboardController);
+router.get("/dashboard", dashboardController.getDashboard);
 router.get("/search/:id?", searchController.searchView); //search page if no id, search details if id
 router.get("/movies", moviesControllers.getMovies);
 
