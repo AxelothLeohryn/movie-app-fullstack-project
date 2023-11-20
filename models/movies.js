@@ -43,10 +43,12 @@ const movieDetailsSchema = {
         required: true
     }
     ],
-    actors: {
-        type: String,
-        required: true
-    },
+    actors: [
+      {
+          type: String,
+      required: true
+  }
+  ],
     trailer: {
         type: String,
         required: true
