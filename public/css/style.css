@@ -95,6 +95,7 @@ body {
 .google {
     width: 80vw;
     margin: auto;
+    cursor: pointer;
 }
 
 .blueButton {
@@ -252,6 +253,7 @@ span:hover {
     flex-direction: column;
     align-items: center;
 }
+
 /* animation: 0.25s ease-out 0s 1 zoomOut;
     height: 280px;
     width: 90%;
@@ -266,10 +268,11 @@ span:hover {
     flex-direction: column;
     align-items: center; */
 
+
 .movie-card-image {
     animation: 0.25s ease-in-out 0s 1 zoomIn;
     width: 100%;
-    height: 200px;
+    height: 480px;
     border: 3px solid black;
     border-radius: 10px;
     display: flex;
@@ -281,10 +284,11 @@ span:hover {
 
 .movie-card-details {
     position: relative;
-    bottom: 60px;
+    bottom: 10px;
     z-index: 20;
     width: 105%;
-    height: 120px;
+    min-height: 120px;
+    height: fit-content;
     /* border: 1px solid black; */
     box-shadow: 2px 2px 2px black;
     border-radius: 10px;
@@ -292,8 +296,38 @@ span:hover {
     backdrop-filter: blur(20px);
 }
 
+.movie-card-details-header {
+    display: flex;
+    justify-content: space-between;
+    /* Distribute space evenly between items */
+    align-items: start;
+    /* Align items vertically */
+    padding: 10px;
+    /* Add some padding for spacing */
+    background-color: #f3f3f3;
+    /* Light background for the header */
+    border-bottom: 1px solid #ddd;
+    /* Add a border to separate from content */
+    margin-bottom: 15px;
+    /* Space below the header */
+}
+.movie-card-year {
+    text-align: start;
+    
+}
+.movie-card-length {
+    text-align: center;
+    margin: 0px 10px;
+}
+.movie-card-genres {
+    text-align: end;
+}
+.movie-card-details-content {
+    margin: 10px;
+}
 .movie-card img {
     width: 100%;
+
 }
 
 .movie-card h3 {

@@ -16,30 +16,31 @@ html(lang="en")
                     button(type="button" class="button signUpButton") Sign Up
                 section
                     button(type="button" class="button logInButton") Log In
-            button(id="signUp" class="switchButton hide signUpButton") Sign Up
-            button(id="logIn" class="switchButton hide logInButton") Log In 
+            button(id="signUpButton" class="switchButton hide signUpButton") Sign Up
+            button(id="logInButton" class="switchButton hide logInButton") Log In 
             section#signUpContainer.container.hide
                 h1.Title MovieApp
                 section.formContainer 
-                    form(id="signUp" action="/signup" method="POST")
+                    form(id="signUp")
                         label(for="nameSU") name:  
-                        input#nameSU(type="text", name="nameSU")
+                        input#nameSU(type="text", name="nameSU" required)
                         label(for="emailSU") email:  
-                        input#emailSU(type="text", name="emailSU")
+                        input#emailSU(type="text", name="emailSU" required)
                         label(for="passwordSU") Contraseña:
-                        input#passwordSU(type="text", name="passwordSU")
+                        input#passwordSU(type="password", name="passwordSU" required)
                         button(type="submit" class="blueButton") Sign Up
                     img(src="./css/google.png", alt="Google" class="google")
             section#logInContainer.hide.container
                 h1.Title MovieApp
                 section.formContainer 
-                    form(id="logIn" action="/login" method="POST")
+                    form(id="logIn")
                         label(for="emailLI") email: 
-                        input#emailLI(type="text", name="emailLI")
+                        input#emailLI(type="text", name="emailLI" required)
                         label(for="passwordLI") Contraseña:
-                        input#passwordLI(type="text", name="passwordLI")
+                        input#passwordLI(type="password", name="passwordLI" required)
                         button(type="submit" class="blueButton") Log In
                     img(src="./css/google.png", alt="Google" class="google")
 
-        script(src="./script.js") 
+        script(src="./script.js")
+        script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
     
