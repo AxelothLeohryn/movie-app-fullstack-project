@@ -6,6 +6,7 @@ const signupController = require("../controllers/signup.controller");
 const GoogleController = require("../controllers/google.controller");
 const loginController = require("../controllers/login.controller");
 const logoutController = require("../controllers/logout.controller");
+const isAuthenticated = require("../middlewares/isAuthenticated")
 
 const searchController = require("../controllers/search.controller");
 
