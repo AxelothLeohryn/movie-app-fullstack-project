@@ -117,9 +117,31 @@ if (document.title == "Inicio") {
     }); 
     let google = document.querySelectorAll(".google")
     google.forEach(element => {
-        element.addEventListener("click", function() {
-            window.location.href = "http://localhost:3000/api/auth/google";
+        element.addEventListener("click", async function() {
+          window.location.href = "http://localhost:3000/api/auth/google";
+          // let correctAutentification = await fetch("http://localhost:3000/api/auth/google", { mode: 'no-cors' })
+          //       .then(response => response.json())
+          //   if (correctAutentification == "success") {
+          //       window.location.href = "http://localhost:3000/dashboard";
+          //   } else if (correctAutentification == "error") { 
+          //       Swal.fire({
+          //           icon: 'error',
+          //           html: "Ha habido un error en la autenticación",
+          //         })
+          //   } 
         });
+    });
+}
+
+if (document.title == "tokenExpirado") {
+  Swal.fire({
+      icon: "error",
+      title: "La sesión ha expirado",
+      showDenyButton: false,
+      showCancelButton: false,
+      confirmButtonText: "Volver a iniciar sesión"
+    }).then((result) => {
+      window.location.href = "http://localhost:3000/"
     });
 }
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
@@ -212,15 +234,5 @@ if (document.title == "Búsqueda") {
 
     
 
-if (document.title == "tokenExpirado") {
-    Swal.fire({
-        icon: "error",
-        title: "La sesión ha expirado",
-        showDenyButton: false,
-        showCancelButton: false,
-        confirmButtonText: "Volver a iniciar sesión"
-      }).then((result) => {
-        window.location.href = "http://localhost:3000/"
-      });
-}
+
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const isAuthenticated = require("../middlewares/isAuthenticated");
 
 const searchController = require("../controllers/search.controller");
 
@@ -48,6 +49,7 @@ const logoutController = require("../controllers/logout.controller");
 router.post("/signup", signupController.signupFunction);
 router.get("/auth/google", GoogleController.profileFunction);
 router.get("/google/callBack?", GoogleController.loginMiddleware, GoogleController.loginFunction);
+router.get("/google/success", isAuthenticated, GoogleController.cookieFunction);
 router.get("/auth/failure", GoogleController.failureFunction);
 router.post("/login", loginController.loginMiddleware, loginController.loginFunction);
 router.post("/logout", logoutController.logoutFunction);
