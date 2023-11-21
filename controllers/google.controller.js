@@ -38,15 +38,6 @@ const loginMiddleware = function (req, res, next) {
 
 
 const loginFunction = async function (req, res) {
-    let response = await fetch("http://localhost:3000/api/google/success").then(res => res.json());
-    if (response == "success") {
-        res.redirect("/dashboard");
-    } else {
-        res.redirect("/")
-    } 
-}
-
-const cookieFunction = async function (req, res) {
     let email = req.user.email;
     let name = req.user.name;
     const payload = {
@@ -57,13 +48,11 @@ const cookieFunction = async function (req, res) {
     const token = jwt.sign(payload, `${process.env.secret}`, {
         expiresIn: "30m"
     });
-    console.log(token);
     res.cookie("access-token", token, {
         httpOnly: true,
         sameSite: "strict",
-        }).status(200).json("success")
+    }).redirect("/dashboard"); 
 }
-
 
 
 const failureFunction = function (req, res) {
@@ -74,6 +63,5 @@ module.exports = {
     profileFunction,
     loginFunction,
     loginMiddleware,
-    failureFunction,
-    cookieFunction
+    failureFunction
 };

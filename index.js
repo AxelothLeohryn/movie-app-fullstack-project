@@ -14,7 +14,9 @@ const morgan = require("./middlewares/morgan");
 const secret = process.env.secret;
 app.set('trust proxy', 1); 
 
+
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static('public', { index: false, redirect: false }))
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: secret,
@@ -25,7 +27,7 @@ app.use(session({ secret: secret,
                   },}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser());
+
 
 
 // Logger

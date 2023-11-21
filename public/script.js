@@ -119,18 +119,110 @@ if (document.title == "Inicio") {
     google.forEach(element => {
         element.addEventListener("click", async function() {
           window.location.href = "http://localhost:3000/api/auth/google";
-          // let correctAutentification = await fetch("http://localhost:3000/api/auth/google", { mode: 'no-cors' })
-          //       .then(response => response.json())
-          //   if (correctAutentification == "success") {
-          //       window.location.href = "http://localhost:3000/dashboard";
-          //   } else if (correctAutentification == "error") { 
-          //       Swal.fire({
-          //           icon: 'error',
-          //           html: "Ha habido un error en la autenticación",
-          //         })
-          //   } 
         });
     });
+    let recuperar = document.getElementById("recuperar");
+    let recuperarContainer = document.getElementById("recuperarContainer");
+    recuperar.addEventListener("click", function() {
+      recuperarContainer.classList.remove("hide");
+    })
+    let volverRecuperar = document.getElementById("volverRecuperar");
+    volverRecuperar.addEventListener("click", function() {
+      recuperarContainer.classList.add("hide");
+    })
+    let recuperarForm = document.getElementById("recuperarForm");
+    recuperarForm.addEventListener("submit", async function(event) {
+      event.preventDefault();
+      let email = event.target.emailR.value;
+      let alert = "";
+      if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
+        alert += "Introduce un email valido <br>"
+      }
+      if (alert.length > 0) {
+          Swal.fire({
+            icon: 'error',
+            html: alert,
+          })
+      } else {
+        let emailLoged = await fetch(`http://localhost:3000/api/recoverpassword/${email}`)
+            .then(response => response.json())
+        if (emailLoged == "success") {
+          Swal.fire({
+            text: "Se ha enviado un email al correo solicitado",
+            icon: "success"
+          });
+        } else if (emailLoged == "error") {
+          Swal.fire({
+            icon: 'error',
+            html: "Ha habido un error",
+          })
+        } else if (emailLoged == false){
+          Swal.fire({
+            icon: 'error',
+            html: "Este correo no está en uso, procede al sign up",
+          })
+        }
+      }
+    })
+}
+
+if (document.title == "recoverPassword") {
+  let recoverPassword = document.getElementById("recoverPassword");
+  recoverPassword.addEventListener("submit", async function(event) {
+    event.preventDefault();
+    let password1 = event.target.password1.value;
+    let password2 = event.target.password2.value;
+    let alert = "";
+    if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password1)) {
+      alert += "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>"
+    }
+    if (password1 != password2) {
+      alert += "La contraseña tiene que ser la igual en ambos campos <br>"
+    }
+    if (alert.length > 0) {
+        Swal.fire({
+          icon: 'error',
+          html: alert,
+        })
+    } else {
+      const currentUrl = window.location.href;
+      const index = currentUrl.indexOf('/resetpassword/') + '/resetpassword/'.length;
+      const token = currentUrl.substring(index);
+      const datos = {
+        password: password1
+      };
+      const opciones = {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos) 
+      };
+      let passwordChanged = await fetch(`http://localhost:3000/api/resetpassword/${token}`, opciones)
+          .then(response => response.json())
+      if (passwordChanged == "success") {
+        Swal.fire({
+          icon: "success",
+          title: "Contraseña cambiada con exito",
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "Volver a iniciar sesión"
+        }).then((result) => {
+          window.location.href = "http://localhost:3000/"
+        });
+      } else if (passwordChanged == false) {
+          Swal.fire({
+              icon: 'error',
+              html: "Error al guardar la contraseña",
+            })
+      } else if (passwordChanged == "error") {
+          Swal.fire({
+              icon: 'error',
+              html: "Error al encontrar el usuario, por favor intentelo más tarde",
+            })
+      }
+    }
+  })
 }
 
 if (document.title == "tokenExpirado") {
@@ -143,6 +235,15 @@ if (document.title == "tokenExpirado") {
     }).then((result) => {
       window.location.href = "http://localhost:3000/"
     });
+}
+
+if (document.title == "Dashboard") {
+  document.getElementById("dashboardBuscar").addEventListener("click", function() {
+    window.location.href = "http://localhost:3000/search/"
+  })
+  document.getElementById("dashboardFavoritas").addEventListener("click", function() {
+    window.location.href = "http://localhost:3000/movies"
+  })
 }
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
 function printMovieCards(moviesData, section) {
