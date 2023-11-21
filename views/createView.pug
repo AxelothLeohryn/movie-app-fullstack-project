@@ -42,7 +42,7 @@ html
               span#sidenav-footer-logout Cerrar sesion
     main
       h1 Crear Película
-      form#movie_form
+      form#movie_form(action="/createMovie" method="POST")
         label(for='title') Título:
         input(type='text', name='title', required)
         label(for='director') Director:

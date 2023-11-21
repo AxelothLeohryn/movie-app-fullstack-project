@@ -9,7 +9,6 @@ const logoutController = require("../controllers/logout.controller");
 
 const searchController = require("../controllers/search.controller");
 
-
 // Rutas de la API
 router.get("/movies", mongoController.getAllMovies);
 router.post("/createMovie", mongoController.createMovie);
@@ -17,7 +16,7 @@ router.put("/editMovie/:id", mongoController.editMovie);
 router.delete("/deleteMovie/:id", mongoController.deleteMovie);
 router.get("/getFavorites/:email", mongoController.getFavorites);
 
-//RUTA PARA 
+//RUTA PARA
 
 //USER--------------------
 //-----Search
@@ -37,11 +36,17 @@ router.get("/movies/:title", searchController.searchAPI);
 
 router.post("/signup", signupController.signupFunction);
 router.get("/auth/google", GoogleController.profileFunction);
-router.get("/google/callBack?", GoogleController.loginMiddleware, GoogleController.loginFunction);
+router.get(
+  "/google/callBack?",
+  GoogleController.loginMiddleware,
+  GoogleController.loginFunction
+);
 router.get("/auth/failure", GoogleController.failureFunction);
-router.post("/login", loginController.loginMiddleware, loginController.loginFunction);
+router.post(
+  "/login",
+  loginController.loginMiddleware,
+  loginController.loginFunction
+);
 router.post("/logout", logoutController.logoutFunction);
 
-
 module.exports = router;
-
