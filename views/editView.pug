@@ -41,7 +41,7 @@ html
               span#sidenav-footer-logout Cerrar sesion
     main
       h1 Editar Película
-      form#edit_movie_form
+      form#EDIT_form(action="/editMovie/:id" method="PUT")
         label(for='title') Título:
         input(type='text', name='title', required)
         label(for='director') Director:
