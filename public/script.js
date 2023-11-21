@@ -218,8 +218,8 @@ function printMovieCardsAdmin(moviesData, section) {
     //-----------------HTML structure of each movie card------------------------------
     return `<section class="movie-card" data-movie-id="${movie.id}">
               <section class="movie-card-image">
-              <i class="fa-solid fa-gear fa-2xl"></i>
-              <i class="fa-solid fa-trash-can fa-2xl"></i>
+              <i class="edit fa-solid fa-gear fa-2xl"></i>
+              <i class="delete fa-solid fa-trash-can fa-2xl"></i>
                 <img src="${movie.image}" alt="Poster Image">
                 
               </section>
