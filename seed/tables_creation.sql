@@ -9,8 +9,7 @@ ALTER TABLE
 CREATE TABLE "favorite_movies"(
     "favorite_id" BIGINT NOT NULL UNIQUE,
     "email" VARCHAR(255) NOT NULL,
-    "movie_id" BIGINT NOT NULL,
-    "from_api" BOOLEAN NOT NULL
+    "movie_id" BIGINT NOT NULL
 );
 ALTER TABLE
     "favorite_movies" ADD PRIMARY KEY("favorite_id");
