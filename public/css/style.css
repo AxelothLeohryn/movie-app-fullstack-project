@@ -4,11 +4,11 @@
 }
 
 html {
-    /* font-size: 15px; */
+     font-size: 15px; 
 }
 
 body {
-    /* background: url(background.jpg) no-repeat center center; */
+    background: url(background.jpg) no-repeat center center; 
     background-size: cover;
     background-attachment: fixed;
 }
@@ -82,18 +82,29 @@ body {
     border-radius: 20px;
 }
 
-.formContainer form {
+.formContainer form, #recuperarContainer form {
     display: flex;
     flex-direction: column;
     text-align: left;
 }
 
-.formContainer input {
+.formContainer input, #recuperarContainer input {
     height: 25px;
+}
+
+#recuperarContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 139, 139, 0.742);
+    padding: 10px;
+    border-radius: 20px;
 }
 
 .google {
     width: 80vw;
+    max-width: 500px;
     margin: auto;
     cursor: pointer;
 }
@@ -111,8 +122,42 @@ body {
     width: fit-content;
 }
 
+.redButton {
+    cursor: pointer;
+    margin: 20px auto;
+    font-size: 1.5rem;
+    color: black;
+    text-shadow: 2px 2px 1px white;
+    background-color: crimson;
+    border-radius: 20px;
+    box-shadow: -5px -5px 5px black;
+    padding: 5px;
+    width: fit-content;
+}
+
+#recuperar {
+    cursor: pointer;
+    text-align: right;
+}
+
 .hide {
     display: none;
+}
+
+.containerDashboard {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 1px black;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerDashboard h1 {
+    width: 80vw;
 }
 
 
@@ -401,7 +446,7 @@ span:hover {
     height: 400px;
 }
 
-/* @media screen and (min-width: 400px) and (max-width: 600px){
+@media screen and (min-width: 400px) and (max-width: 600px){
     html {
         font-size: 18px;
     }
@@ -426,4 +471,4 @@ span:hover {
     .google {
         width: 40vw;
     }
-} */
+} 

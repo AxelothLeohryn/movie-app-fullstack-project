@@ -1,4 +1,3 @@
-// const { json } = require("express");
 
 //Sección de inicio
 if (document.title == "Inicio") {
@@ -126,24 +125,23 @@ if (document.title == "Inicio") {
             html: "Credenciales incorrectas",
           });
         }
-      }
+    }
+    let google = document.querySelectorAll(".google")
+    google.forEach(element => {
+        element.addEventListener("click", async function() {
+          window.location.href = "http://localhost:3000/api/auth/google";
+          // let correctAutentification = await fetch("http://localhost:3000/api/auth/google", { mode: 'no-cors' })
+          //       .then(response => response.json())
+          //   if (correctAutentification == "success") {
+          //       window.location.href = "http://localhost:3000/dashboard";
+          //   } else if (correctAutentification == "error") { 
+          //       Swal.fire({
+          //           icon: 'error',
+          //           html: "Ha habido un error en la autenticación",
+          //         })
+          //   } 
+        });
     });
-  let google = document.querySelectorAll(".google");
-  google.forEach((element) => {
-    element.addEventListener("click", async function () {
-      window.location.href = "http://localhost:3000/api/auth/google";
-      // let correctAutentification = await fetch("http://localhost:3000/api/auth/google", { mode: 'no-cors' })
-      //       .then(response => response.json())
-      //   if (correctAutentification == "success") {
-      //       window.location.href = "http://localhost:3000/dashboard";
-      //   } else if (correctAutentification == "error") {
-      //       Swal.fire({
-      //           icon: 'error',
-      //           html: "Ha habido un error en la autenticación",
-      //         })
-      //   }
-    });
-  });
 }
 
 if (document.title == "tokenExpirado") {
@@ -157,11 +155,9 @@ if (document.title == "tokenExpirado") {
     window.location.href = "http://localhost:3000/";
   });
 }
-
-/* Funciones generales para usar en toda la web ---------------------------------------------------------------------*/
-/* Función para imrpimir tarjetas de usuario (con boton de fav),hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas */
-function printMovieCardsUser(moviesData, section) {
-  console.log("Movie data to print: " + moviesData);
+/* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
+function printMovieCards(moviesData, section) {
+  // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   let cardNumber = 0;

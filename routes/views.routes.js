@@ -10,12 +10,8 @@ const inicioController = require("../controllers/inicio.controller");
 const dashboardController = require("../controllers/dashboard.controller");
 
 router.get("/", inicioController.getInicio);
-router.get(
-  "/dashboard",
-  isAuthenticated,
-  checkToken,
-  dashboardController.getDashboard
-);
+router.get("/resetpassword/:recoveryToken", inicioController.getRecover);
+router.get("/dashboard", isAuthenticated, checkToken, dashboardController.getDashboard);
 router.get("/search/:id?", searchController.searchView); //search page if no id, search details if id
 router.get("/movies", moviesControllers.getMovies);
 router.get("/createMovie", moviesControllers.createMoviesForm);
