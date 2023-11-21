@@ -1,3 +1,5 @@
+// const { json } = require("express");
+
 //Sección de inicio
 if (document.title == "Inicio") {
   let signUp = document.querySelectorAll(".signUpButton");
@@ -204,9 +206,58 @@ function printMovieCardsUser(moviesData, section) {
   resultsSection.innerHTML = "";
   resultsSection.innerHTML += movieCardContainerHTML;
 }
+function printMovieCardsAdmin(moviesData, section) {
+  console.log("Movie data to print: " + moviesData);
+  const resultsSection = document.getElementById(`${section}`);
+  resultsSection.innerHTML = "";
+  let cardNumber = 0;
+
+  const movieCard = (movie) => {
+    //Store all found genres in a string
+    let genres = movie.genres.map((genre) => genre).join(", ");
+    //-----------------HTML structure of each movie card------------------------------
+    return `<section class="movie-card" data-movie-id="${movie.id}">
+              <section class="movie-card-image">
+              <i class="fa-solid fa-gear fa-2xl"></i>
+              <i class="fa-solid fa-trash-can fa-2xl"></i>
+                <img src="${movie.image}" alt="Poster Image">
+                
+              </section>
+              <section class="movie-card-details">
+                <section class="movie-card-details-header">
+                  <div class="movie-card-year">
+                    <h5>Fecha</h5>
+                    ${movie.year}
+                  </div>
+                  <div class="movie-card-length">
+                    <h5>Duración</h5>
+                    ${movie.length} min
+                  </div>
+                  <div class="movie-card-genres">
+                    <h5>Género</h5>
+                    ${genres}
+                  </div>
+                </section>
+                <section class="movie-card-details-content">
+                  <h3>${movie.title}</h3>
+                  <h4>Director</h4>
+                  <h4>${movie.director}</h4>
+                </section>
+              </section>
+            </section>`;
+  };
+  // console.log(moviesData);
+  let movieCardContainerHTML = `<section class="movie-card-container">`;
+  moviesData.forEach((movie) => {
+    movieCardContainerHTML += movieCard(movie);
+  });
+  movieCardContainerHTML += `</section>`;
+  resultsSection.innerHTML = "";
+  resultsSection.innerHTML += movieCardContainerHTML;
+}
 //Event listener de click en tarjeta ----- AÑADIR A CADA SECCIÓN DONDE IMPRIMAMOS TARJETAS, PARA PODER CLICKEAR EN ELLAS
-function listenForClicks() {
-  document.addEventListener("click", async (event) => {
+function listenForClicks(section) {
+  document.getElementById(section).addEventListener("click", async (event) => {
     event.preventDefault();
     // console.log("He clickeado!");
     const movieCard = event.target.closest(".movie-card");
@@ -221,22 +272,25 @@ function listenForClicks() {
   });
 }
 //Side nav-----------------------------------------------------
-function openNav() {
-  document.getElementById("sidenav").style.width = "calc(100vw - 56px)";
-}
-function closeNav() {
-  document.getElementById("sidenav").style.width = "0px";
-}
-document.getElementById("topnav-menu").addEventListener("click", (event) => {
-  event.preventDefault();
-  openNav();
-});
-document
-  .getElementById("sidenav-header-close")
-  .addEventListener("click", (event) => {
+if (document.title != "Inicio") {
+  function openNav() {
+    document.getElementById("sidenav").style.width = "calc(100vw - 56px)";
+  }
+  function closeNav() {
+    document.getElementById("sidenav").style.width = "0px";
+  }
+  document.getElementById("topnav-menu").addEventListener("click", (event) => {
     event.preventDefault();
-    closeNav();
+    openNav();
   });
+  document
+    .getElementById("sidenav-header-close")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      closeNav();
+    });
+}
+
 //Sección de búsqueda-----------------------------------------------------------------------------------
 
 async function searchFilms(title) {
@@ -263,7 +317,7 @@ if (document.title == "Búsqueda") {
     const results = await searchFilms(query);
     console.log(results);
     printMovieCardsUser(results, "search-results"); //Imprimir tarjetas
-    listenForClicks(); //Escuchar clicks en tarjetas
+    listenForClicks("search-results"); //Escuchar clicks en tarjetas
   });
 }
 
@@ -329,73 +383,91 @@ if (document.title == "tokenExpirado") {
   });
 }
 //*---------Sección de formularios create/edit movies------------*//
-// FORMULARIO CREAR PELICULA
-const createMovieForm = document.getElementById("movie_form");
-
-createMovieForm.addEventListener("submit", async function (event) {
-  event.preventDefault();
-
-  const formData = new FormData(this);
-
-  const movieData = {
-    title: formData.get("title"),
-    director: formData.get("director"),
-    year: formData.get("year"),
-    length: formData.get("length"),
-    image: formData.get("image"),
-    genres: formData.get("genres"),
-    actors: formData.get("actors"),
-    trailer: formData.get("trailer"),
-    overview: formData.get("overview"),
-  };
-
-  try {
-    const response = await fetch("http://localhost:3000/api/createMovie", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(movieData),
-    });
-    const responseData = await response.json();
-    console.log(responseData);
-  } catch (error) {
-    console.error(error.message);
+async function getLocalMovies() {
+  return await fetch("http://localhost:3000/api/movies").then((res) =>
+    res.json()
+  );
+}
+if (document.title == "Movies: Admin") {
+  async function printLocalMovies() {
+    let localMovies = await getLocalMovies();
+    console.log(localMovies);
+    printMovieCardsAdmin(localMovies, "admincards");
+    listenForClicks("admincards");
   }
-});
+  printLocalMovies();
+}
+// FORMULARIO CREAR PELICULA
+if (document.title == "Movies: Crear Película") {
+  const createMovieForm = document.getElementById("movie_form");
+
+  createMovieForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+
+    const movieData = {
+      title: formData.get("title"),
+      director: formData.get("director"),
+      year: formData.get("year"),
+      length: formData.get("length"),
+      image: formData.get("image"),
+      genres: formData.get("genres"),
+      actors: formData.get("actors"),
+      trailer: formData.get("trailer"),
+      overview: formData.get("overview"),
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/api/createMovie", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(movieData),
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+}
 
 // FORMULARIO EDITAR PELICULA
-const editMovieForm = document.getElementById("edit_movie_form");
+if (document.title == "Movies: Editar Película") {
+  const editMovieForm = document.getElementById("edit_movie_form");
 
-editMovieForm.addEventListener("submit", async function (event) {
-  event.preventDefault();
+  editMovieForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-  const formData = new FormData(this);
+    const formData = new FormData(this);
 
-  const editedMovieData = {
-    title: formData.get("title"),
-    director: formData.get("director"),
-    year: formData.get("year"),
-    length: formData.get("length"),
-    image: formData.get("image"),
-    genres: formData.get("genres"),
-    actors: formData.get("actors"),
-    trailer: formData.get("trailer"),
-    overview: formData.get("overview"),
-  };
+    const editedMovieData = {
+      title: formData.get("title"),
+      director: formData.get("director"),
+      year: formData.get("year"),
+      length: formData.get("length"),
+      image: formData.get("image"),
+      genres: formData.get("genres"),
+      actors: formData.get("actors"),
+      trailer: formData.get("trailer"),
+      overview: formData.get("overview"),
+    };
 
-  try {
-    const response = await fetch("http://localhost:3000/api/editMovie/:id", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedMovieData),
-    });
+    try {
+      const response = await fetch("http://localhost:3000/api/editMovie/:id", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedMovieData),
+      });
 
-    const responseData = await response.json();
-    console.log(responseData);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+}
