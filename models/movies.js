@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('../config/db_mongo') // Conexión a BBDD MongoDB
+// require('../config/db_mongo') // Conexión a BBDD MongoDB
 
 // año, director,género,duración, actores, rating, descripcion
 
