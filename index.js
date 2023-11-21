@@ -18,8 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public', { index: false, redirect: false }))
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  session({
+app.use(session({
     secret: secret,
     resave: false,
     saveUninitialized: true,

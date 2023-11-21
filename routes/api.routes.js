@@ -12,8 +12,6 @@ const logoutController = require("../controllers/logout.controller");
 const recoverController = require("../controllers/recover.controller");
 const searchController = require("../controllers/search.controller");
 
-const isAuthenticated = require("../middlewares/isAuthenticated");
-
 // Rutas de la API
 router.get("/movies", mongoController.getAllMovies);
 router.get("/movies/:title", searchController.searchAPI);
