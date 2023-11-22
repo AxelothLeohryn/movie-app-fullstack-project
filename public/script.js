@@ -57,11 +57,11 @@ if (document.title == "Inicio") {
         body: JSON.stringify(datos),
       };
       let emailAvailable = await fetch(
-        "http://localhost:3000/api/signup",
+        "https://movie-app-fullstack.onrender.com/api/signup",
         opciones
       ).then((response) => response.json());
       if (emailAvailable == "success") {
-        window.location.href = "http://localhost:3000/dashboard";
+        window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
       } else if (emailAvailable == false) {
         Swal.fire({
           icon: "error",
@@ -105,11 +105,11 @@ if (document.title == "Inicio") {
         body: JSON.stringify(datos),
       };
       let emailSigned = await fetch(
-        "http://localhost:3000/api/login",
+        "https://movie-app-fullstack.onrender.com/api/login",
         opciones
       ).then((response) => response.json());
       if (emailSigned == "success") {
-        window.location.href = "http://localhost:3000/dashboard";
+        window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
       } else if (emailSigned == false) {
         Swal.fire({
           icon: "error",
@@ -126,7 +126,7 @@ if (document.title == "Inicio") {
   let google = document.querySelectorAll(".google")
   google.forEach(element => {
       element.addEventListener("click", async function() {
-        window.location.href = "http://localhost:3000/api/auth/google";
+        window.location.href = "https://movie-app-fullstack.onrender.com/api/auth/google";
       });
   });
 }
@@ -163,7 +163,7 @@ if (document.title == "recoverPassword") {
           },
           body: JSON.stringify(datos) 
       };
-      let passwordChanged = await fetch(`http://localhost:3000/api/resetpassword/${token}`, opciones)
+      let passwordChanged = await fetch(`https://movie-app-fullstack.onrender.com/api/resetpassword/${token}`, opciones)
           .then(response => response.json())
       if (passwordChanged == "success") {
         Swal.fire({
@@ -173,7 +173,7 @@ if (document.title == "recoverPassword") {
           showCancelButton: false,
           confirmButtonText: "Volver a iniciar sesión"
         }).then((result) => {
-          window.location.href = "http://localhost:3000/"
+          window.location.href = "https://movie-app-fullstack.onrender.com/"
         });
       } else if (passwordChanged == false) {
           Swal.fire({
@@ -198,7 +198,7 @@ if (document.title == "tokenExpirado") {
     showCancelButton: false,
     confirmButtonText: "Volver a iniciar sesión",
   }).then((result) => {
-    window.location.href = "http://localhost:3000/";
+    window.location.href = "https://movie-app-fullstack.onrender.com/";
   });
 }
 
@@ -210,7 +210,7 @@ if (document.title == "inicioExito") {
     showCancelButton: false,
     confirmButtonText: "Entrar",
   }).then((result) => {
-    window.location.href = "http://localhost:3000/dashboard";
+    window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
   });
 }
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
@@ -320,7 +320,7 @@ function listenForClicks(section) {
       if (movieId) {
         // Redirect a la vista detalles de la película clickeada
         console.log("La id de la película clickeada es: " + movieId);
-        window.location.href = `http://localhost:3000/search/${movieId}`;
+        window.location.href = `https://movie-app-fullstack.onrender.com/search/${movieId}`;
       }
     }
   });
@@ -348,12 +348,12 @@ if (document.title != "Inicio" && document.title != "inicioExito" && document.ti
 //Sección de búsqueda-----------------------------------------------------------------------------------
 
 async function searchFilms(title) {
-  return await fetch(`http://localhost:3000/api/movies/${title}`).then((res) =>
+  return await fetch(`https://movie-app-fullstack.onrender.com/api/movies/${title}`).then((res) =>
     res.json()
   );
 }
 async function searchFilmDetails(id) {
-  return await fetch(`http://localhost:3000/api/movies/details/${id}`).then(
+  return await fetch(`https://movie-app-fullstack.onrender.com/api/movies/details/${id}`).then(
     (res) => res.json()
   );
 }
@@ -421,7 +421,7 @@ async function displayMovieDetails(id, section) {
   </section>
 </section>`;
   console.log("I'm displaying details");
-  let critics = await fetch(`http://localhost:3000/api/movies/details/${movieDetails.title}`)
+  let critics = await fetch(`https://movie-app-fullstack.onrender.com/api/movies/details/${movieDetails.title}`)
     .then((res) => res.json());
   let criticsContainer = document.getElementById("criticsContainer");
   if (critics == false) {
@@ -448,7 +448,7 @@ if (document.title === "Detalles de la película") {
 
 //*---------Sección de formularios create/edit movies------------*//
 async function getLocalMovies() {
-  return await fetch("http://localhost:3000/api/movies").then((res) =>
+  return await fetch("https://movie-app-fullstack.onrender.com/api/movies").then((res) =>
     res.json()
   );
 }
@@ -483,7 +483,7 @@ if (document.title == "Movies: Crear Película") {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/createMovie", {
+      const response = await fetch("https://movie-app-fullstack.onrender.com/api/createMovie", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -520,7 +520,7 @@ if (document.title == "Movies: Editar Película") {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/editMovie/:id", {
+      const response = await fetch("https://movie-app-fullstack.onrender.com/api/editMovie/:id", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
