@@ -218,12 +218,12 @@ function printMovieCardsUser(moviesData, section) {
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   let cardNumber = 0;
+  if (moviesData.length == 0) {
+    resultsSection.innerHTML =
+      "No se han encontrado películas con ese nombre.";
 
+  } else {
   const movieCard = (movie) => {
-    if (movie.length == 0) {
-      resultsSection.innerHTML =
-        "No se han encontrado películas con ese nombre.";
-    } else {
       //Store all found genres in a string
       let genres = movie.genres.map((genre) => genre).join(", ");
       //-----------------HTML structure of each movie card------------------------------
@@ -281,7 +281,7 @@ function printMovieCardsAdmin(moviesData, section) {
   console.log("Movie data to print: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
-  if (movie.length == 0) {
+  if (moviesData.length == 0) {
     resultsSection.innerHTML = "No hay películas creadas en la base de datos.";
   } else {
     let cardNumber = 0;
