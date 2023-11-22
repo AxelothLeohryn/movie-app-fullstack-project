@@ -366,6 +366,10 @@ if (document.title != "Inicio") {
       event.preventDefault();
       closeNav();
     });
+    document.getElementById("sidenav-footer-logout").addEventListener("click", event => {
+      event.preventDefault();
+      window.location.href = "https://movie-app-fullstack.onrender.com";
+    })
 }
 
 //Sección de búsqueda-----------------------------------------------------------------------------------
