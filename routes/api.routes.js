@@ -26,7 +26,7 @@ router.put("/editMovie/:id", isAuthenticated, checkToken, isAdmin, mongoControll
 router.delete("/deleteMovie/:id", isAuthenticated, checkToken, isAdmin, mongoController.deleteMovie);
 router.get("/getFavorites/:email", isAuthenticated, checkToken, mongoController.getFavorites);
 router.post("/favorites", isAuthenticated, checkToken, favoritesController.createFavorite)
-// router.delete("/deleteFavorites/:id", isAuthenticated, checkToken, favoritesController.);
+router.delete("/deleteFavorites/:id", isAuthenticated, checkToken, favoritesController.);
 
 
 

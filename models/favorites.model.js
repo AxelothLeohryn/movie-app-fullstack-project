@@ -20,16 +20,15 @@ const getFavoritesByEmail = async (email) => {
 }
 
 
-const deleteById = async (id) => {
-    const {movie_id} = id;
+const deleteById = async (id, email) => {
     let client, result;
     try {
         client = await pool.connect(); 
-        const data = await client.query(queries.deleteFavoriteById, [movie_id]) //pasamos por parámetro la id a borrar
-        result = data.rowCount
+        const data = await client.query(queries.deleteFavoriteById, [id, email]) //pasamos por parámetro la id a borrar
+        return "Success!"
     } catch (err) {
         console.log(err);
-        throw err;
+        return "Error";
     } finally {
         client.release();
     }

@@ -24,9 +24,19 @@ const createFavorite = async (req, res) => {
         res.status(201).json({msg:'guardado en favoritos'})
     };
 
-
+    const deleteFavorite = async (req, res) => {
+        const id = req.params.id;
+        const email = req.user.email;
+        const response = await queriesFunctions.deleteById(id, email);
+        if (response === "Success!") {
+            res.status(200).json("Success!")
+        } else {
+            res.status(400).json("Error")
+        }
+        };
 
 module.exports = {  
     getFavorites,
-    createFavorite
+    createFavorite,
+    deleteFavorite
 }

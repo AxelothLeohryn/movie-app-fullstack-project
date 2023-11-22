@@ -231,15 +231,42 @@ function KeepFavoriteButton() {
     heartButton.addEventListener("click", async function (event) {
       event.preventDefault();
       const movieId = event.target.getAttribute("heart-id");
-      await fetch("http://localhost:3000/api/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: movieId,
-        }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
-      });
+      await fetch(
+        "http://https://movie-app-fullstack.onrender.com/api/favorites",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: movieId,
+          }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
+        }
+      );
+    });
+  });
+}
+function unKeepFavoriteButton() {
+  const heartButtons = document.querySelectorAll(".unkeep");
+  heartButtons.forEach((heartButton) => {
+    heartButton.addEventListener("click", async function (event) {
+      event.preventDefault();
+      const movieId = event.target.getAttribute("heart-id");
+      let response = await fetch(
+        `http://https://movie-app-fullstack.onrender.com/api/deleteFavorite/${movieId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then(res => res.json());
+      if (response == "Success") {
+        Swal.fire({
+          icon: "success",
+          text: "Se ha eliminado la película de favoritos",
+        });
+      }
     });
   });
 }
@@ -259,6 +286,7 @@ function printMovieCardsUser(moviesData, section) {
                 <section class="movie-card-image">
                   <img src="${movie.image}" alt="Poster Image">
                     <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>
+                    <i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>
                 </section>
                 <section class="movie-card-details" data-movie-id="${movie.id}">
                                 <section class=" movie-card-details-header">
@@ -436,6 +464,7 @@ if (document.title == "Búsqueda") {
     console.log(results);
     printMovieCardsUser(results, "search-results"); //Imprimir tarjetas
     KeepFavoriteButton();
+    unKeepFavoriteButton();
     listenForClicks("search-results");
   });
 }
@@ -606,22 +635,23 @@ if (document.title == "Movies: Editar Película") {
     }
   });
 
-  async function getFavoriteMovies() {
-    let registeredemail = document.getElementById("registereduser");
-    // console.log(registeredemail.innerHTML);
-    let favorites = await fetch(
-      `http://localhost:3000/api/getFavorites/${registeredemail}`
-    ).then((res) => res.json());
-    console.log(favorites);
-  }
+  // async function getFavoriteMovies() {
+  //   let registeredemail = document.getElementById("registereduser");
+  //   // console.log(registeredemail.innerHTML);
+  //   let favorites = await fetch(
+  //     `http://https://movie-app-fullstack.onrender.com/api/getFavorites/${registeredemail}`
+  //   ).then((res) => res.json());
+  //   console.log(favorites);
+  // }
 
-  async function printFavoriteMovies() {
-    const favoriteMovies = await getFavoriteMovies();
-    printMovieCardsUser(favoriteMovies, "favorites");
-  }
+  // async function printFavoriteMovies() {
+  //   const favoriteMovies = await getFavoriteMovies();
+  //   printMovieCardsUser(favoriteMovies, "favorites");
+  // }
   // let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
   if (document.title == "Mis películas") {
     // primero cogemos los favoritos, luego los pintamos con las tarjetas
     printFavoriteMovies();
+    unKeepFavoriteButton();
   }
 }
