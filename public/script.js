@@ -1,5 +1,3 @@
-// const { json } = require("express");
-
 //Sección de inicio
 if (document.title == "Inicio") {
   let signUp = document.querySelectorAll(".signUpButton");
@@ -206,6 +204,16 @@ function printMovieCardsUser(moviesData, section) {
   resultsSection.innerHTML = "";
   resultsSection.innerHTML += movieCardContainerHTML;
 }
+function editButtonMovie() {
+  const editButtons = document.querySelectorAll(".edit");
+  editButtons.forEach((editButton) => {
+    editButton.addEventListener("click", function () {
+      const movieId = this.closest(".movie-card").getAttribute("data-movie-id");
+      window.location.href = `http://localhost:3000/editMovie/${movieId}`;
+    });
+  });
+}
+
 function printMovieCardsAdmin(moviesData, section) {
   console.log("Movie data to print: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
@@ -215,15 +223,14 @@ function printMovieCardsAdmin(moviesData, section) {
   const movieCard = (movie) => {
     //Store all found genres in a string
     let genres = movie.genres.map((genre) => genre).join(", ");
+    // <i class="edit fa-solid fa-gear fa-2xl"></i> // boton editar de momento dejarlo comentado
     //-----------------HTML structure of each movie card------------------------------
-    return `<section class="movie-card" data-movie-id="${movie.id}">
+    return `<section class="movie-card">
               <section class="movie-card-image">
-              <i class="edit fa-solid fa-gear fa-2xl"></i>
+              <img src="${movie.image}" alt="Poster Image">  
               <i class="delete fa-solid fa-trash-can fa-2xl"></i>
-                <img src="${movie.image}" alt="Poster Image">
-                
               </section>
-              <section class="movie-card-details">
+              <section class="movie-card-details" data-movie-id="${movie.id}">
                 <section class="movie-card-details-header">
                   <div class="movie-card-year">
                     <h5>Fecha</h5>
@@ -255,12 +262,13 @@ function printMovieCardsAdmin(moviesData, section) {
   resultsSection.innerHTML = "";
   resultsSection.innerHTML += movieCardContainerHTML;
 }
+
 //Event listener de click en tarjeta ----- AÑADIR A CADA SECCIÓN DONDE IMPRIMAMOS TARJETAS, PARA PODER CLICKEAR EN ELLAS
 function listenForClicks(section) {
   document.getElementById(section).addEventListener("click", async (event) => {
     event.preventDefault();
     // console.log("He clickeado!");
-    const movieCard = event.target.closest(".movie-card");
+    const movieCard = event.target.closest(".movie-card-details");
     if (movieCard) {
       const movieId = movieCard.getAttribute("data-movie-id");
       if (movieId) {
@@ -271,6 +279,7 @@ function listenForClicks(section) {
     }
   });
 }
+
 //Side nav-----------------------------------------------------
 if (document.title != "Inicio") {
   function openNav() {
@@ -397,6 +406,7 @@ if (document.title == "Movies: Admin") {
   }
   printLocalMovies();
 }
+
 // FORMULARIO CREAR PELICULA
 if (document.title == "Movies: Crear Película") {
   const createMovieForm = document.getElementById("movie_form");
