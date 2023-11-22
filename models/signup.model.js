@@ -29,6 +29,7 @@ const createGoogle = async (email, name) => {
         let admin = false;
         const data = await client.query(queries.createGoogle, [email, name, admin])
         result = data.rows
+        return undefined;
     } catch (err) {
         console.log(err);
         return err;

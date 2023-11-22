@@ -38,8 +38,15 @@ html(lang="en")
                         input#emailLI(type="text", name="emailLI" required)
                         label(for="passwordLI") Contraseña:
                         input#passwordLI(type="password", name="passwordLI" required)
+                        p#recuperar He olvidado mi contraseña
                         button(type="submit" class="blueButton") Log In
                     img(src="./css/google.png", alt="Google" class="google")
+            section#recuperarContainer.hide
+                form(id="recuperarForm")
+                        label(for="emailR") email del que deseas recuperar la contraseña: 
+                        input#emailR(type="text", name="emailR" required)
+                        button(type="submit" class="redButton") Recuperar contraseña
+                        button(type="button" id="volverRecuperar" class="blueButton") Volver
 
         script(src="./script.js")
         script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")

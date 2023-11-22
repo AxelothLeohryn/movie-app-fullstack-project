@@ -3,19 +3,17 @@ html
   head
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title Movies: Crear Película
-    link(rel="stylesheet", href="./css/style.css")
-    link(rel="shortcut icon", href="./css/favicon.png", type="image/x-icon")
+    title Movies: Editar Película
+    link(rel="stylesheet", href="../css/style.css")
+    link(rel="shortcut icon", href="../css/favicon.png", type="image/x-icon")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css", integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==", crossorigin="anonymous", referrerpolicy="no-referrer")
-
   body
     header 
-      //---------Navbars----------------------------------------
       nav#topnav 
           section#topnav-left.topnav-section
               a(onclick="history.back()")#topnav-back.topnav-button
                   i#topnav-back-icon.fa-solid.fa-arrow-left.fa-xl
-          h1#page-title.topnav-section Crear película
+          h1#page-title.topnav-section Editar película
           section#topnav-right.topnav-section
               a(href="/search")#topnav-search.topnav-button
                   i#topnav-search-icon.fa-solid.fa-magnifying-glass.fa-xl
@@ -42,8 +40,8 @@ html
           section#sidenav-footer
               span#sidenav-footer-logout Cerrar sesion
     main
-      h1 Crear Película
-      form#movie_form(action="/createMovie" method="POST")
+      h1 Editar Película
+      form#EDIT_form(action="/editMovie/:id" method="PUT")
         label(for='title') Título:
         input(type='text', name='title', required)
         label(for='director') Director:
@@ -59,9 +57,9 @@ html
         label(for='actors') Actores:
         input(type='text', name='actors', required)
         label(for='trailer') URL del tráiler:
-        input(type='text', name='trailer',value="https://www.youtube.com/embed/", required)
+        input(type='text', name='trailer', required)
         label(for='overview') Resumen:
         textarea(name='overview', required)
-        button(type='submit') Crear Película
+        button(type='submit') Editar Película
     footer
     script(src="./script.js")

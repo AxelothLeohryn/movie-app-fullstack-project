@@ -5,6 +5,7 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title Movies: Admin
     link(rel="stylesheet", href="./css/style.css")
+    link(rel="shortcut icon", href="./css/favicon.png", type="image/x-icon")
     //- -----------link para los iconos del nav-------------------
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css", integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==", crossorigin="anonymous", referrerpolicy="no-referrer")
     //------------------------------------------------------------
@@ -40,11 +41,10 @@ html
                 //-     li.sidenav-main-link Ajustes
             section#sidenav-footer
                 span#sidenav-footer-logout Cerrar sesion
-    main
-      h1 Administrador
-      a(href='/createMovie')
-        button#create_movie_button Crear Película
-      a(href='/editMovie/:id')
-        button#edit_movie_button Editar Película
-    footer 
-    script(src="./script.js")
+  main
+    h1#admh1 Espacio de Administrador
+    a(href='/createMovie')
+      button#create_movie_button.blueButton Crear Película
+    section#admincards
+  footer 
+  script(src="./script.js")

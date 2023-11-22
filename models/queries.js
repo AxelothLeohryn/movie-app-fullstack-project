@@ -11,6 +11,9 @@ const queries = {
     datosEmail: `SELECT email, password, admin, name
     FROM users
     WHERE email=$1`,
+    putPassword: `UPDATE users
+    SET password=$2
+    WHERE email=$1`,
 }
 
 module.exports = queries;
