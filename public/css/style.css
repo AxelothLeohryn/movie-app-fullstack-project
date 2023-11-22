@@ -411,10 +411,6 @@ span:hover {
     margin-top: 8px;
 }
 
-.movie-card:hover {
-    
-}
-
 /*Search Section -----------------------------------------------------*/
 #search-form {
     width: 100%;
@@ -503,11 +499,44 @@ span:hover {
     margin: 30px auto;
 }
 #admh1 {
+    margin-top: 5%;
     color: white;
     text-align: center;
 }
-#create_movie_button {
-    margin: 30px auto;
+#userFavourites {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
+#details-section {
+    margin: auto;
+}
+#createh1 {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
+#movie_form {
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+#edith1 {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
+#EDIT_form {
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+#pelish1 {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
 }
 
 
