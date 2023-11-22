@@ -323,6 +323,7 @@ span:hover {
 
 
 .movie-card-image {
+    position: relative;
     animation: 0.25s ease-in-out 0s 1 zoomIn;
     width: 100%;
     height: 480px;
@@ -333,6 +334,16 @@ span:hover {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+}
+.edit {
+    position: absolute;
+    top: 20px;
+    right: 80px;
+}
+.delete {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .movie-card-details {
@@ -348,6 +359,10 @@ span:hover {
     background-color: rgb(242, 242, 242);
     backdrop-filter: blur(20px);
     cursor: pointer;
+    transition: 0.5s;
+}
+.movie-card-details:hover {
+    transform: scale(1.05);
 }
 
 .movie-card-details-header {
@@ -398,7 +413,7 @@ span:hover {
 }
 
 .movie-card:hover {
-    transform: scale(1.05);
+    
 }
 /* Movie details -----------------------------------------------------*/
 .movie-details {

@@ -1,5 +1,9 @@
 const getDashboard = function (req, res) {
-    res.render("dashboard");
+    if (req.user.admin === true) {
+        res.redirect("/movies")
+    } else {
+        res.render("dashboard");
+    }
 };
 
 module.exports = {

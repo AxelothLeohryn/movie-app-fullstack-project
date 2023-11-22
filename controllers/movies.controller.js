@@ -1,7 +1,8 @@
 const getMovies = (req, res) => {
-  const admin = true;
+  const admin = req.user.admin;
+  console.log(admin);
 
-  if (admin) {
+  if (admin === true) {
     res.render("admView");
   } else {
     res.render("userView");

@@ -250,8 +250,11 @@ function printMovieCards(moviesData, section) {
 function editButtonMovie() {
   const editButtons = document.querySelectorAll(".edit");
   editButtons.forEach((editButton) => {
-    editButton.addEventListener("click", function () {
-      const movieId = this.closest(".movie-card").getAttribute("data-movie-id");
+    editButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      console.log("Me has clickeado!", event.target);
+      const movieId = event.target.getAttribute("data-movie-id");
+      console.log(movieId);
       window.location.href = `http://localhost:3000/editMovie/${movieId}`;
     });
   });
@@ -266,12 +269,13 @@ function printMovieCardsAdmin(moviesData, section) {
   const movieCard = (movie) => {
     //Store all found genres in a string
     let genres = movie.genres.map((genre) => genre).join(", ");
-    // <i class="edit fa-solid fa-gear fa-2xl"></i> // boton editar de momento dejarlo comentado
+    //  // boton editar de momento dejarlo comentado
     //-----------------HTML structure of each movie card------------------------------
     return `<section class="movie-card">
               <section class="movie-card-image">
-              <img src="${movie.image}" alt="Poster Image">  
-              <i class="delete fa-solid fa-trash-can fa-2xl"></i>
+                <img src="${movie.image}" alt="Poster Image">
+                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i><br>
+                <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
               </section>
               <section class="movie-card-details" data-movie-id="${movie.id}">
                 <section class="movie-card-details-header">
@@ -446,6 +450,7 @@ if (document.title == "Movies: Admin") {
     console.log(localMovies);
     printMovieCardsAdmin(localMovies, "admincards");
     listenForClicks("admincards");
+    editButtonMovie();
   }
   printLocalMovies();
 }
