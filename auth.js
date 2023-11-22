@@ -6,7 +6,7 @@ require('dotenv').config();
 passport.use(new GoogleStrategy({
     clientID: `${process.env.CLIENT_ID}`,
     clientSecret: `${process.env.CLIENT_SECRET}`,
-    callbackURL: `http://localhost:3000/api/google/callBack`,
+    callbackURL: `https://movie-app-fullstack.onrender.com/api/google/callBack`,
     proxy: true
   },
   function(request, accessToken, refreshToken, profile, done) {
