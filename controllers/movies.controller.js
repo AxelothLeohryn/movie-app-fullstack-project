@@ -1,10 +1,10 @@
 const getMovies = (req, res) => {
-  const admin = true;
+  const admin = req.user.admin;
 
   if (admin) {
     res.render("admView");
   } else {
-    res.render("userView");
+    res.render("userView", {email:req.user.email});
   }
 };
 

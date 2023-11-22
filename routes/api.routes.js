@@ -1,21 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const mongoController = require("../controllers/bbdd.controller");
+const bbddController = require("../controllers/bbdd.controller");
 
 const signupController = require("../controllers/signup.controller");
 const GoogleController = require("../controllers/google.controller");
 const loginController = require("../controllers/login.controller");
 const logoutController = require("../controllers/logout.controller");
+const favoritesController = require("../controllers/favorites.controller");
 
 const searchController = require("../controllers/search.controller");
 
 
 // Rutas de la API
-router.get("/movies", mongoController.getAllMovies);
-router.post("/createMovie", mongoController.createMovie);
-router.put("/editMovie/:id", mongoController.editMovie);
-router.delete("/deleteMovie/:id", mongoController.deleteMovie);
-router.get("/getFavorites/:email", mongoController.getFavorites);
+router.get("/movies", bbddController.getAllMovies);
+router.post("/createMovie", bbddController.createMovie);
+router.put("/editMovie/:id", bbddController.editMovie);
+router.delete("/deleteMovie/:id", bbddController.deleteMovie);
+router.get("/getFavorites/:email", favoritesController.getFavorites);
+router.post("/favorites",favoritesController.createFavorite)
+// router.delete("/deleteFavorites/:id", favoritesController.);
+
 
 //RUTA PARA 
 
@@ -26,8 +30,7 @@ router.get("/getFavorites/:email", mongoController.getFavorites);
 // get (/movies/:title)  --> por dentro va a buscar en nuestra BBDD + en API externa
 router.get("/movies/:title", searchController.searchAPI);
 
-//RUTA PARA OBTENER FAVORITOS POR USUARIO
-//get(/favorites/:email)  <--- checkear que el usuario logueado es el del email
+
 
 //RUTA PARA AÑADIR PELICULA A FAVORITOS (BBDD SQL)
 //post(/favorites)
