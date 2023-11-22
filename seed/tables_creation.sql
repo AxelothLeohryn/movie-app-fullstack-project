@@ -7,7 +7,7 @@ CREATE TABLE "users"(
 ALTER TABLE
     "users" ADD PRIMARY KEY("email");
 CREATE TABLE "favorite_movies"(
-    "favorite_id" BIGINT NOT NULL UNIQUE,
+    "favorite_id" SERIAL,
     "email" VARCHAR(255) NOT NULL,
     "movie_id" BIGINT NOT NULL
 );
