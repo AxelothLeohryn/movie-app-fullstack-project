@@ -168,9 +168,9 @@ function KeepFavoriteButton() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(document.cookie, movieId) //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
-
-      })
+        body: JSON.stringify({
+          id: movieId}), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
+      });
     });
   });
 }
@@ -187,7 +187,7 @@ function printMovieCardsUser(moviesData, section) {
     return `<section class="movie-card" data-movie-id="${movie.id}">
               <section class="movie-card-image">
                 <img src="${movie.image}" alt="Poster Image">
-                <i heart-id="${movie.id}" class="keep fa-solid fa-heart fa-2x1" style="color: #fc2222;"></i>
+                <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>
               </section>
               <section class="movie-card-details">
                 <section class="movie-card-details-header">
@@ -328,8 +328,8 @@ if (document.title == "Búsqueda") {
     const results = await searchFilms(query);
     console.log(results);
     printMovieCardsUser(results, "search-results"); //Imprimir tarjetas
+    KeepFavoriteButton();
     listenForClicks("search-results");
-    KeepFavoriteButton(); 
   });
 }
 //*---------Sección de movie-details------------*//
@@ -471,31 +471,21 @@ if (document.title == "Movies: Editar Película") {
   });
 }
 
-
-
-
-async function getFavoriteMovies(){
-  let registeredemail = document.getElementById('registereduser'); 
-  let favorites = await fetch (`http://localhost:3000/api/getFavorites/${registeredemail}`); 
-
-  let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli 
- 
-
+async function getFavoriteMovies() {
+  let registeredemail = document.getElementById("registereduser");
+  // console.log(registeredemail.innerHTML);
+  let favorites = await fetch(
+    `http://localhost:3000/api/getFavorites/${registeredemail}`
+  ).then((res) => res.json());
+  console.log(favorites);
 }
 
-if(document.title == 'Mis películas'){
+async function printFavoriteMovies() {
+  const favoriteMovies = await getFavoriteMovies();
+  printMovieCardsUser(favoriteMovies, "favorites");
+}
+// let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
+if (document.title == "Mis películas") {
   // primero cogemos los favoritos, luego los pintamos con las tarjetas
-  
-  
-
-  
+  printFavoriteMovies();
 }
-
-
-
-
-
-
-
-
-
