@@ -58,11 +58,12 @@ if (document.title == "Inicio") {
           body: JSON.stringify(datos),
         };
         let emailAvailable = await fetch(
-          "http://localhost:3000/api/signup",
+          "https://movie-app-fullstack.onrender.com/api/signup",
           opciones
         ).then((response) => response.json());
         if (emailAvailable == "success") {
-          window.location.href = "http://localhost:3000/dashboard";
+          window.location.href =
+            "https://movie-app-fullstack.onrender.com/dashboard";
         } else if (emailAvailable == false) {
           Swal.fire({
             icon: "error",
@@ -108,11 +109,12 @@ if (document.title == "Inicio") {
           body: JSON.stringify(datos),
         };
         let emailSigned = await fetch(
-          "http://localhost:3000/api/login",
+          "https://movie-app-fullstack.onrender.com/api/login",
           opciones
         ).then((response) => response.json());
         if (emailSigned == "success") {
-          window.location.href = "http://localhost:3000/dashboard";
+          window.location.href =
+            "https://movie-app-fullstack.onrender.com/dashboard";
         } else if (emailSigned == false) {
           Swal.fire({
             icon: "error",
@@ -129,7 +131,8 @@ if (document.title == "Inicio") {
   let google = document.querySelectorAll(".google");
   google.forEach((element) => {
     element.addEventListener("click", async function () {
-      window.location.href = "http://localhost:3000/api/auth/google";
+      window.location.href =
+        "https://movie-app-fullstack.onrender.com/api/auth/google";
     });
   });
 }
@@ -169,7 +172,7 @@ if (document.title == "recoverPassword") {
         body: JSON.stringify(datos),
       };
       let passwordChanged = await fetch(
-        `http://localhost:3000/api/resetpassword/${token}`,
+        `https://movie-app-fullstack.onrender.com/api/resetpassword/${token}`,
         opciones
       ).then((response) => response.json());
       if (passwordChanged == "success") {
@@ -180,7 +183,7 @@ if (document.title == "recoverPassword") {
           showCancelButton: false,
           confirmButtonText: "Volver a iniciar sesión",
         }).then((result) => {
-          window.location.href = "http://localhost:3000/";
+          window.location.href = "https://movie-app-fullstack.onrender.com/";
         });
       } else if (passwordChanged == false) {
         Swal.fire({
@@ -205,55 +208,70 @@ if (document.title == "tokenExpirado") {
     showCancelButton: false,
     confirmButtonText: "Volver a iniciar sesión",
   }).then((result) => {
-    window.location.href = "http://localhost:3000/";
+    window.location.href = "https://movie-app-fullstack.onrender.com/";
+  });
+}
+
+if (document.title == "inicioExito") {
+  Swal.fire({
+    icon: "success",
+    title: "Inicio de sesión con exito",
+    showDenyButton: false,
+    showCancelButton: false,
+    confirmButtonText: "Entrar",
+  }).then((result) => {
+    window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
   });
 }
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
-function printMovieCards(moviesData, section) {
+function printMovieCardsUser(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   let cardNumber = 0;
-
-  const movieCard = (movie) => {
-    //Store all found genres in a string
-    let genres = movie.genres.map((genre) => genre).join(", ");
-    //-----------------HTML structure of each movie card------------------------------
-    return `<section class="movie-card" data-movie-id="${movie.id}">
-              <section class="movie-card-image">
-                <img src="${movie.image}" alt="Poster Image">
-              </section>
-              <section class="movie-card-details">
-                <section class="movie-card-details-header">
-                  <div class="movie-card-year">
-                    <h5>Fecha</h5>
-                    ${movie.year}
-                  </div>
-                  <div class="movie-card-length">
-                    <h5>Duración</h5>
-                    ${movie.length} min
-                  </div>
-                  <div class="movie-card-genres">
-                    <h5>Género</h5>
-                    ${genres}
-                  </div>
+  if (moviesData.length == 0) {
+    resultsSection.innerHTML = "No se han encontrado películas con ese nombre.";
+  } else {
+    const movieCard = (movie) => {
+      //Store all found genres in a string
+      let genres = movie.genres.map((genre) => genre).join(", ");
+      //-----------------HTML structure of each movie card------------------------------
+      return `<section class="movie-card" data-movie-id="${movie.id}">
+                  <section class="movie-card-image">
+                    <img src="${movie.image}" alt="Poster Image">
+                  </section>
+                  <section class="movie-card-details" data-movie-id="${movie.id}">
+                                  <section class=" movie-card-details-header">
+                    <div class="movie-card-year">
+                      <h5>Fecha</h5>
+                      ${movie.year}
+                    </div>
+                    <div class="movie-card-length">
+                      <h5>Duración</h5>
+                      ${movie.length} min
+                    </div>
+                    <div class="movie-card-genres">
+                      <h5>Género</h5>
+                      ${genres}
+                    </div>
+                  </section>
+                  <section class="movie-card-details-content">
+                    <h3>${movie.title}</h3>
+                    <h4>Director</h4>
+                    <h4>${movie.director}</h4>
+                  </section>
                 </section>
-                <section class="movie-card-details-content">
-                  <h3>${movie.title}</h3>
-                  <h4>Director</h4>
-                  <h4>${movie.director}</h4>
-                </section>
-              </section>
-            </section>`;
-  };
-  // console.log(moviesData);
-  let movieCardContainerHTML = `<section class="movie-card-container">`;
-  moviesData.forEach((movie) => {
-    movieCardContainerHTML += movieCard(movie);
-  });
-  movieCardContainerHTML += `</section>`;
-  resultsSection.innerHTML = "";
-  resultsSection.innerHTML += movieCardContainerHTML;
+      </section>`;
+    };
+    // console.log(moviesData);
+    let movieCardContainerHTML = `<section class="movie-card-container">`;
+    moviesData.forEach((movie) => {
+      movieCardContainerHTML += movieCard(movie);
+    });
+    movieCardContainerHTML += `</section>`;
+    resultsSection.innerHTML = "";
+    resultsSection.innerHTML += movieCardContainerHTML;
+  }
 }
 function editButtonMovie() {
   const editButtons = document.querySelectorAll(".edit");
@@ -263,7 +281,7 @@ function editButtonMovie() {
       console.log("Me has clickeado!", event.target);
       const movieId = event.target.getAttribute("data-movie-id");
       console.log(movieId);
-      window.location.href = `http://localhost:3000/editMovie/${movieId}`;
+      window.location.href = `https://movie-app-fullstack.onrender.com/editMovie/${movieId}`;
     });
   });
 }
@@ -272,50 +290,54 @@ function printMovieCardsAdmin(moviesData, section) {
   console.log("Movie data to print: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
-  let cardNumber = 0;
+  if (moviesData.length == 0) {
+    resultsSection.innerHTML = "No hay películas creadas en la base de datos.";
+  } else {
+    let cardNumber = 0;
 
-  const movieCard = (movie) => {
-    //Store all found genres in a string
-    let genres = movie.genres.map((genre) => genre).join(", ");
-    //  // boton editar de momento dejarlo comentado
-    //-----------------HTML structure of each movie card------------------------------
-    return `<section class="movie-card">
-              <section class="movie-card-image">
-                <img src="${movie.image}" alt="Poster Image">
-                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i><br>
-                <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
-              </section>
-              <section class="movie-card-details" data-movie-id="${movie.id}">
-                <section class="movie-card-details-header">
-                  <div class="movie-card-year">
-                    <h5>Fecha</h5>
-                    ${movie.year}
-                  </div>
-                  <div class="movie-card-length">
-                    <h5>Duración</h5>
-                    ${movie.length} min
-                  </div>
-                  <div class="movie-card-genres">
-                    <h5>Género</h5>
-                    ${genres}
-                  </div>
+    const movieCard = (movie) => {
+      //Store all found genres in a string
+      let genres = movie.genres.map((genre) => genre).join(", ");
+      //  // boton editar de momento dejarlo comentado
+      //-----------------HTML structure of each movie card------------------------------
+      return `<section class="movie-card">
+                <section class="movie-card-image">
+                  <img src="${movie.image}" alt="Poster Image">
+                  <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i>
+                  <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
                 </section>
-                <section class="movie-card-details-content">
-                  <h3>${movie.title}</h3>
-                  <h4>Director</h4>
-                  <h4>${movie.director}</h4>
+                <section class="movie-card-details" data-movie-id="${movie.id}">
+                  <section class="movie-card-details-header">
+                    <div class="movie-card-year">
+                      <h5>Fecha</h5>
+                      ${movie.year}
+                    </div>
+                    <div class="movie-card-length">
+                      <h5>Duración</h5>
+                      ${movie.length} min
+                    </div>
+                    <div class="movie-card-genres">
+                      <h5>Género</h5>
+                      ${genres}
+                    </div>
+                  </section>
+                  <section class="movie-card-details-content">
+                    <h3>${movie.title}</h3>
+                    <h4>Director</h4>
+                    <h4>${movie.director}</h4>
+                  </section>
                 </section>
-              </section>
-            </section>`;
-  };
-  // console.log(moviesData);
-  let movieCardContainerHTML = `<section class="movie-card-container">`;
-  moviesData.forEach((movie) => {
-    movieCardContainerHTML += movieCard(movie);
-  });
-  movieCardContainerHTML += `</section>`;
-  resultsSection.innerHTML = "";
-  resultsSection.innerHTML += movieCardContainerHTML;
+              </section>`;
+    };
+    // console.log(moviesData);
+    let movieCardContainerHTML = `<section class="movie-card-container">`;
+    moviesData.forEach((movie) => {
+      movieCardContainerHTML += movieCard(movie);
+    });
+    movieCardContainerHTML += `</section>`;
+    resultsSection.innerHTML = "";
+    resultsSection.innerHTML += movieCardContainerHTML;
+  }
 }
 
 //Event listener de click en tarjeta ----- AÑADIR A CADA SECCIÓN DONDE IMPRIMAMOS TARJETAS, PARA PODER CLICKEAR EN ELLAS
@@ -329,14 +351,20 @@ function listenForClicks(section) {
       if (movieId) {
         // Redirect a la vista detalles de la película clickeada
         console.log("La id de la película clickeada es: " + movieId);
-        window.location.href = `http://localhost:3000/search/${movieId}`;
+        window.location.href = `https://movie-app-fullstack.onrender.com/search/${movieId}`;
       }
     }
   });
 }
 
 //Side nav-----------------------------------------------------
-if (document.title != "Inicio") {
+if (
+  document.title != "Inicio" &&
+  document.title != "inicioExito" &&
+  document.title != "inicioExito" &&
+  document.title != "recoverPassword" &&
+  document.title != "tokenExpirado"
+) {
   function openNav() {
     document.getElementById("sidenav").style.width = "calc(100vw - 56px)";
   }
@@ -353,19 +381,25 @@ if (document.title != "Inicio") {
       event.preventDefault();
       closeNav();
     });
+  document
+    .getElementById("sidenav-footer-logout")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      window.location.href = "https://movie-app-fullstack.onrender.com";
+    });
 }
 
 //Sección de búsqueda-----------------------------------------------------------------------------------
 
 async function searchFilms(title) {
-  return await fetch(`http://localhost:3000/api/movies/${title}`).then((res) =>
-    res.json()
-  );
+  return await fetch(
+    `https://movie-app-fullstack.onrender.com/api/movies/${title}`
+  ).then((res) => res.json());
 }
 async function searchFilmDetails(id) {
-  return await fetch(`http://localhost:3000/api/movies/details/${id}`).then(
-    (res) => res.json()
-  );
+  return await fetch(
+    `https://movie-app-fullstack.onrender.com/api/movies/details/${id}`
+  ).then((res) => res.json());
 }
 
 //Event listener of search button: GET (/api/movies/title), then print cards
@@ -389,68 +423,79 @@ if (document.title == "Búsqueda") {
 async function displayMovieDetails(id, section) {
   const movieDetails = await searchFilmDetails(id);
   console.log(movieDetails);
-  //Aqui podria ir la funcionalidad del scrapping:
 
-  //Vista de detalles de una película: --------------------------------------
+  //Vista de detalles de una película: -------------------------------------
   document.getElementById(section).innerHTML = `
-  <section class="movie-details">
-    <section class="movie-header">
-      <section class="movie-image">
-          <img src="${movieDetails.image}" alt="Movie Poster">
-      </section>
-      <section class="movie-info">
-          <h1 class="movie-title">${
-            movieDetails.title
-          } <span class="movie-year">(${movieDetails.year})</span></h1>
-          <div class="movie-length"><b>Duration:</b> ${
-            movieDetails.length
-          } min</div>
-          <div class="movie-genres"><b>Genres:</b> ${movieDetails.genres.join(
-            ", "
-          )}</div>
-          <div class="movie-director"><b>Director:</b> ${
-            movieDetails.director
-          }</div>
-          <div class="movie-actors"><b>Cast:</b> ${movieDetails.actors.join(
-            ", "
-          )}</div>
-      </section>
-  </section>
-  <section class="movie-overview">
-      <h2>Overview</h2>
-      <p>${movieDetails.overview}</p>
-  </section>
-  <section class="movie-trailer">
-      <h2>Trailer</h2>
-      <iframe src="${
-        movieDetails.trailer
-      }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </section>
-</section>`;
-
+    <section class="movie-details">
+      <section class="movie-header">
+        <section class="movie-image">
+            <img src="${movieDetails.image}" alt="Movie Poster">
+        </section>
+        <section class="movie-info">
+            <h1 class="movie-title">${
+              movieDetails.title
+            } <span class="movie-year">(${movieDetails.year})</span></h1>
+            <div class="movie-length"><b>Duration:</b> ${
+              movieDetails.length
+            } min</div>
+            <div class="movie-genres"><b>Genres:</b> ${movieDetails.genres.join(
+              ", "
+            )}</div>
+            <div class="movie-director"><b>Director:</b> ${
+              movieDetails.director
+            }</div>
+            <div class="movie-actors"><b>Cast:</b> ${movieDetails.actors.join(
+              ", "
+            )}</div>
+        </section>
+    </section>
+    <section class="movie-overview">
+        <h2>Overview</h2>
+        <p>${movieDetails.overview}</p>
+    </section>
+    <section class="movie-trailer">
+        <h2>Trailer</h2>
+        <iframe src="${
+          movieDetails.trailer
+        }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </section>
+    <section class="critics">
+        <h2>Criticas</h2>
+        <section id="criticsContainer"></section>
+    </section>
+  </section>`;
   console.log("I'm displaying details");
+  let critics = await fetch(
+    `https://movie-app-fullstack.onrender.com/api/movies/details/${movieDetails.title}`
+  ).then((res) => res.json());
+  let criticsContainer = document.getElementById("criticsContainer");
+  if (critics == false) {
+    criticsContainer.innerHTML = `<p>No hay criticas para esta pelicula</p>`;
+  } else if (critics == "error") {
+    criticsContainer.innerHTML = `<p>Ha habido un error</p>`;
+  } else {
+    for (let i = 0; i < critics.length; i++) {
+      criticsContainer.innerHTML += `
+          <section class="criticsArticle">
+            <p class="author">${critics[i].author}</p>
+            <p class="company">${critics[i].company}</p>
+            <p class="critic">${critics[i].critica}</p>
+          </section>`;
+    }
+  }
 }
+
 if (document.title === "Detalles de la película") {
-  const movieId = window.location.href.split("/").pop();
+  const movieId = window.location.pathname.split("/").pop();
   console.log(movieId);
   displayMovieDetails(movieId, "details-section");
 }
-if (document.title == "tokenExpirado") {
-  Swal.fire({
-    icon: "error",
-    title: "La sesión ha expirado",
-    showDenyButton: false,
-    showCancelButton: false,
-    confirmButtonText: "Volver a iniciar sesión",
-  }).then((result) => {
-    window.location.href = "http://localhost:3000/";
-  });
-}
+
 //*---------Sección de formularios create/edit movies------------*//
 async function getLocalMovies() {
-  return await fetch("http://localhost:3000/api/movies").then((res) =>
-    res.json()
-  );
+  return await fetch(
+    "https://movie-app-fullstack.onrender.com/api/movies"
+  ).then((res) => res.json());
 }
 if (document.title == "Movies: Admin") {
   async function printLocalMovies() {
@@ -485,13 +530,16 @@ if (document.title == "Movies: Crear Película") {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/createMovie", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(movieData),
-      });
+      const response = await fetch(
+        "https://movie-app-fullstack.onrender.com/api/createMovie",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(movieData),
+        }
+      );
       const responseData = await response.json();
       console.log(responseData);
     } catch (error) {
@@ -500,56 +548,58 @@ if (document.title == "Movies: Crear Película") {
   });
 }
 
-// FORMULARIO EDITAR
-async function handleMovieForm(formateMovieId) {
+async function handleMovieForm(formateMovieId, movieId) {
   try {
     await dataEditForm(formateMovieId);
   } catch (error) {
     console.error(error.message);
   }
 
-  const editMovieForm = document.getElementById("edit_movie_form");
+  if (document.title == "Movies: Editar Película") {
+    const editMovieForm = document.getElementById("edit_movie_form");
 
-  editMovieForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
+    editMovieForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
 
-    const formData = new FormData(this);
+      const formData = new FormData(this);
 
-    const editedMovieData = {
-      title: formData.get("title"),
-      director: formData.get("director"),
-      year: formData.get("year"),
-      length: formData.get("length"),
-      image: formData.get("image"),
-      genres: formData.get("genres"),
-      actors: formData.get("actors"),
-      trailer: formData.get("trailer"),
-      overview: formData.get("overview"),
-    };
-    console.log(editedMovieData);
+      const editedMovieData = {
+        title: formData.get("title"),
+        director: formData.get("director"),
+        year: formData.get("year"),
+        length: formData.get("length"),
+        image: formData.get("image"),
+        genres: formData.get("genres"),
+        actors: formData.get("actors"),
+        trailer: formData.get("trailer"),
+        overview: formData.get("overview"),
+      };
 
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/editMovie/${movieId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(editedMovieData),
-        }
-      );
-      await response.json();
-    } catch (error) {
-      console.error(error.message);
-    }
-  });
+      try {
+        const response = await fetch(
+          `https://movie-app-fullstack.onrender.com/api/editMovie/api/movies/details/${movieId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(editedMovieData),
+          }
+        );
+
+        const responseData = await response.json();
+        console.log(responseData);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+  }
 }
 
 async function dataEditForm(movieId) {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/editMovie/${movieId}`
+      `https://movie-app-fullstack.onrender.com/api/movies/details/${movieId}`
     );
     const movieData = await response.json();
 
@@ -595,7 +645,7 @@ document.addEventListener("click", async function (event) {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/deleteMovie/${movieId}`,
+        `https://movie-app-fullstack.onrender.com/api/deleteMovie/${movieId}`,
         {
           method: "DELETE",
           headers: {
