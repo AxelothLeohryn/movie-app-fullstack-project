@@ -20,128 +20,173 @@ if (document.title == "Inicio") {
       document.getElementById("logInButton").classList.add("hide");
     });
   });
-  document
-    .getElementById("signUp")
-    .addEventListener("submit", async function (event) {
-      event.preventDefault();
-      let name = event.target.nameSU.value;
-      let email = event.target.emailSU.value;
-      let password = event.target.passwordSU.value;
-      let alert = "";
-      if (!/^[A-Za-z\ ]{2,30}$/.test(name)) {
-        alert +=
-          "El nombre tiene que tener entre 2 y 30 caracteres y contener solo letras <br>";
-      }
-      if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
-        alert += "Introduce un email valido <br>";
-      }
-      if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
-        alert +=
-          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
-      }
-      if (alert.length > 0) {
+  document.getElementById("signUp").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    let name = event.target.nameSU.value;
+    let email = event.target.emailSU.value;
+    let password = event.target.passwordSU.value;
+    let alert = "";
+    if (!/^[A-Za-z\ ]{2,30}$/.test(name)) {
+      alert +=
+        "El nombre tiene que tener entre 2 y 30 caracteres y contener solo letras <br>";
+    }
+    if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
+      alert += "Introduce un email valido <br>";
+    }
+    if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
+      alert +=
+        "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
+    }
+    if (alert.length > 0) {
+      Swal.fire({
+        icon: "error",
+        html: alert,
+      });
+    } else {
+      const datos = {
+        name: name,
+        email: email,
+        password: password,
+      };
+      const opciones = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos),
+      };
+      let emailAvailable = await fetch(
+        "http://localhost:3000/api/signup",
+        opciones
+      ).then((response) => response.json());
+      if (emailAvailable == "success") {
+        window.location.href = "http://localhost:3000/dashboard";
+      } else if (emailAvailable == false) {
         Swal.fire({
           icon: "error",
-          html: alert,
+          html: "Ese email ya está en uso, por favor proceda a log in.",
         });
-      } else {
-        const datos = {
-          name: name,
-          email: email,
-          password: password,
-        };
-        const opciones = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(datos),
-        };
-        let emailAvailable = await fetch(
-          "http://localhost:3000/api/signup",
-          opciones
-        ).then((response) => response.json());
-        if (emailAvailable == "success") {
-          window.location.href = "http://localhost:3000/dashboard";
-        } else if (emailAvailable == false) {
-          Swal.fire({
-            icon: "error",
-            html: "Ese email ya está en uso, por favor proceda a log in.",
-          });
-        } else if (emailAvailable == "error") {
-          Swal.fire({
-            icon: "error",
-            html: "Ha habido un error en la creación del usuario",
-          });
-        }
-      }
-    });
-  document
-    .getElementById("logIn")
-    .addEventListener("submit", async function (event) {
-      event.preventDefault();
-      let email = event.target.emailLI.value;
-      let password = event.target.passwordLI.value;
-      let alert = "";
-      if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
-        alert += "Introduce un email valido <br>";
-      }
-      if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
-        alert +=
-          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
-      }
-      if (alert.length > 0) {
+      } else if (emailAvailable == "error") {
         Swal.fire({
           icon: "error",
-          html: alert,
+          html: "Ha habido un error en la creación del usuario",
         });
-      } else {
-        const datos = {
-          email: email,
-          password: password,
-        };
-        const opciones = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(datos),
-        };
-        let emailSigned = await fetch(
-          "http://localhost:3000/api/login",
-          opciones
-        ).then((response) => response.json());
-        if (emailSigned == "success") {
-          window.location.href = "http://localhost:3000/dashboard";
-        } else if (emailSigned == false) {
-          Swal.fire({
-            icon: "error",
-            html: "Este email no esta registrado, por favor proceda a Sign up.",
-          });
-        } else if (emailSigned == "error") {
-          Swal.fire({
-            icon: "error",
-            html: "Credenciales incorrectas",
-          });
-        }
       }
-    });
-  let google = document.querySelectorAll(".google");
-  google.forEach((element) => {
-    element.addEventListener("click", async function () {
-      window.location.href = "http://localhost:3000/api/auth/google";
-      // let correctAutentification = await fetch("http://localhost:3000/api/auth/google", { mode: 'no-cors' })
-      //       .then(response => response.json())
-      //   if (correctAutentification == "success") {
-      //       window.location.href = "http://localhost:3000/dashboard";
-      //   } else if (correctAutentification == "error") {
-      //       Swal.fire({
-      //           icon: 'error',
-      //           html: "Ha habido un error en la autenticación",
-      //         })
-      //   }
-    });
+    }
   });
+  document.getElementById("logIn").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    let email = event.target.emailLI.value;
+    let password = event.target.passwordLI.value;
+    let alert = "";
+    if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
+      alert += "Introduce un email valido <br>";
+    }
+    if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
+      alert +=
+        "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
+    }
+    if (alert.length > 0) {
+      Swal.fire({
+        icon: "error",
+        html: alert,
+      });
+    } else {
+      const datos = {
+        email: email,
+        password: password,
+      };
+      const opciones = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos),
+      };
+      let emailSigned = await fetch(
+        "http://localhost:3000/api/login",
+        opciones
+      ).then((response) => response.json());
+      if (emailSigned == "success") {
+        window.location.href = "http://localhost:3000/dashboard";
+      } else if (emailSigned == false) {
+        Swal.fire({
+          icon: "error",
+          html: "Este email no esta registrado, por favor proceda a Sign up.",
+        });
+      } else if (emailSigned == "error") {
+        Swal.fire({
+          icon: "error",
+          html: "Credenciales incorrectas",
+        });
+      }
+    }
+  })
+  let google = document.querySelectorAll(".google")
+  google.forEach(element => {
+      element.addEventListener("click", async function() {
+        window.location.href = "http://localhost:3000/api/auth/google";
+      });
+  });
+}
+
+if (document.title == "recoverPassword") {
+  let recoverPassword = document.getElementById("recoverPassword");
+  recoverPassword.addEventListener("submit", async function(event) {
+    event.preventDefault();
+    let password1 = event.target.password1.value;
+    let password2 = event.target.password2.value;
+    let alert = "";
+    if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password1)) {
+      alert += "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>"
+    }
+    if (password1 != password2) {
+      alert += "La contraseña tiene que ser la igual en ambos campos <br>"
+    }
+    if (alert.length > 0) {
+        Swal.fire({
+          icon: 'error',
+          html: alert,
+        })
+    } else {
+      const currentUrl = window.location.href;
+      const index = currentUrl.indexOf('/resetpassword/') + '/resetpassword/'.length;
+      const token = currentUrl.substring(index);
+      const datos = {
+        password: password1
+      };
+      const opciones = {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos) 
+      };
+      let passwordChanged = await fetch(`http://localhost:3000/api/resetpassword/${token}`, opciones)
+          .then(response => response.json())
+      if (passwordChanged == "success") {
+        Swal.fire({
+          icon: "success",
+          title: "Contraseña cambiada con exito",
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "Volver a iniciar sesión"
+        }).then((result) => {
+          window.location.href = "http://localhost:3000/"
+        });
+      } else if (passwordChanged == false) {
+          Swal.fire({
+              icon: 'error',
+              html: "Error al guardar la contraseña",
+            })
+      } else if (passwordChanged == "error") {
+          Swal.fire({
+              icon: 'error',
+              html: "Error al encontrar el usuario, por favor intentelo más tarde",
+            })
+      }
+    }
+  })
 }
 
 if (document.title == "tokenExpirado") {
@@ -155,11 +200,9 @@ if (document.title == "tokenExpirado") {
     window.location.href = "http://localhost:3000/";
   });
 }
-
-/* Funciones generales para usar en toda la web ---------------------------------------------------------------------*/
-/* Función para imrpimir tarjetas de usuario (con boton de fav),hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas */
-function printMovieCardsUser(moviesData, section) {
-  console.log("Movie data to print: " + moviesData);
+/* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
+function printMovieCards(moviesData, section) {
+  // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   let cardNumber = 0;

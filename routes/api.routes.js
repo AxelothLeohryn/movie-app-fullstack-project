@@ -2,12 +2,14 @@ const express = require("express");
 const router = express.Router();
 const mongoController = require("../controllers/bbdd.controller");
 
+const isAuthenticated = require("../middlewares/isAuthenticated");
+const checkToken = require("../middlewares/checkToken");
+
 const signupController = require("../controllers/signup.controller");
 const GoogleController = require("../controllers/google.controller");
 const loginController = require("../controllers/login.controller");
 const logoutController = require("../controllers/logout.controller");
-const isAuthenticated = require("../middlewares/isAuthenticated");
-
+const recoverController = require("../controllers/recover.controller");
 const searchController = require("../controllers/search.controller");
 
 // Rutas de la API
@@ -23,19 +25,12 @@ router.get("/getFavorites/:email", mongoController.getFavorites);
 
 router.post("/signup", signupController.signupFunction);
 router.get("/auth/google", GoogleController.profileFunction);
-router.get(
-  "/google/callBack?",
-  GoogleController.loginMiddleware,
-  GoogleController.loginFunction
-);
-router.get("/google/success", isAuthenticated, GoogleController.cookieFunction);
+router.get("/google/callBack?", GoogleController.loginMiddleware, GoogleController.loginFunction);
 router.get("/auth/failure", GoogleController.failureFunction);
-router.post(
-  "/login",
-  loginController.loginMiddleware,
-  loginController.loginFunction
-);
+router.post("/login", loginController.loginMiddleware, loginController.loginFunction);
 router.post("/logout", logoutController.logoutFunction);
+router.get('/recoverpassword/:email', recoverController.recoverPassword);
+router.put('/resetpassword/:recoverToken', recoverController.resetPassword);
 
 //RUTA PARA
 
@@ -53,20 +48,4 @@ router.post("/logout", logoutController.logoutFunction);
 
 //RUTA PARA BORRAR DE FAVORITOS
 //delete(/favorites/:favorites.id)
-
-router.post("/signup", signupController.signupFunction);
-router.get("/auth/google", GoogleController.profileFunction);
-router.get(
-  "/google/callBack?",
-  GoogleController.loginMiddleware,
-  GoogleController.loginFunction
-);
-router.get("/auth/failure", GoogleController.failureFunction);
-router.post(
-  "/login",
-  loginController.loginMiddleware,
-  loginController.loginFunction
-);
-router.post("/logout", logoutController.logoutFunction);
-
 module.exports = router;
