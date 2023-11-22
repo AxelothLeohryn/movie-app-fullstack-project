@@ -201,7 +201,7 @@ if (document.title == "tokenExpirado") {
   });
 }
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
-function printMovieCards(moviesData, section) {
+function printMovieCardsUser(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
