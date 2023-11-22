@@ -8,7 +8,7 @@ html {
 }
 
 body {
-    background: url(background.jpg) no-repeat center center; 
+    background: linear-gradient(to bottom, rgb(35, 33, 33), rgb(100, 94, 94)); 
     background-size: cover;
     background-attachment: fixed;
 }
@@ -367,7 +367,6 @@ span:hover {
 
 .movie-card-year {
     text-align: start;
-
 }
 
 .movie-card-length {
@@ -445,6 +444,41 @@ span:hover {
     width: 100%;
     height: 400px;
 }
+.critics {
+    padding: 20px;
+}
+#criticsContainer {
+    margin-top: 10px;
+}
+.criticsArticle {
+    margin: 10px;
+}
+.author, .company {
+    text-align: right;
+}
+#searchh1 {
+    margin-top: 10%;
+    color: white;
+    text-align: center;
+}
+#search-form {
+    display: flex;
+    flex-direction: column;
+    margin: 30px auto;
+}
+#search-bar {
+    width: 200px;
+    transform: scale(2);
+    margin: 30px auto;
+}
+#admh1 {
+    color: white;
+    text-align: center;
+}
+#create_movie_button {
+    margin: 30px auto;
+}
+
 
 @media screen and (min-width: 400px) and (max-width: 600px){
     html {

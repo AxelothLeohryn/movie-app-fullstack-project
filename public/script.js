@@ -201,6 +201,18 @@ if (document.title == "tokenExpirado") {
     window.location.href = "http://localhost:3000/";
   });
 }
+
+if (document.title == "inicioExito") {
+  Swal.fire({
+    icon: "success",
+    title: "Inicio de sesión con exito",
+    showDenyButton: false,
+    showCancelButton: false,
+    confirmButtonText: "Entrar",
+  }).then((result) => {
+    window.location.href = "http://localhost:3000/dashboard";
+  });
+}
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
 function printMovieCards(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
@@ -314,7 +326,7 @@ function listenForClicks(section) {
   });
 }
 //Side nav-----------------------------------------------------
-if (document.title != "Inicio") {
+if (document.title != "Inicio" && document.title != "inicioExito" && document.title != "inicioExito" && document.title != "recoverPassword" && document.title != "tokenExpirado") {
   function openNav() {
     document.getElementById("sidenav").style.width = "calc(100vw - 56px)";
   }
@@ -367,9 +379,8 @@ if (document.title == "Búsqueda") {
 async function displayMovieDetails(id, section) {
   const movieDetails = await searchFilmDetails(id);
   console.log(movieDetails);
-  //Aqui podria ir la funcionalidad del scrapping:
 
-  //Vista de detalles de una película: --------------------------------------
+  //Vista de detalles de una película: -------------------------------------
   document.getElementById(section).innerHTML = `
   <section class="movie-details">
     <section class="movie-header">
@@ -404,26 +415,37 @@ async function displayMovieDetails(id, section) {
         movieDetails.trailer
       }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </section>
+  <section class="critics">
+      <h2>Criticas</h2>
+      <section id="criticsContainer"></section>
+  </section>
 </section>`;
-
   console.log("I'm displaying details");
+  let critics = await fetch(`http://localhost:3000/api/movies/details/${movieDetails.title}`)
+    .then((res) => res.json());
+  let criticsContainer = document.getElementById("criticsContainer");
+  if (critics == false) {
+    criticsContainer.innerHTML = `<p>No hay criticas para esta pelicula</p>`;
+  } else if (critics == "error") {
+    criticsContainer.innerHTML = `<p>Ha habido un error</p>`;
+  } else {
+    for (let i = 0; i < critics.length; i++) {
+      criticsContainer.innerHTML += `
+        <section class="criticsArticle">
+          <p class="author">${critics[i].author}</p>
+          <p class="company">${critics[i].company}</p>
+          <p class="critic">${critics[i].critica}</p>
+        </section>`;
+    }
+  }
 }
+
 if (document.title === "Detalles de la película") {
   const movieId = window.location.pathname.split("/").pop();
   console.log(movieId);
   displayMovieDetails(movieId, "details-section");
 }
-if (document.title == "tokenExpirado") {
-  Swal.fire({
-    icon: "error",
-    title: "La sesión ha expirado",
-    showDenyButton: false,
-    showCancelButton: false,
-    confirmButtonText: "Volver a iniciar sesión",
-  }).then((result) => {
-    window.location.href = "http://localhost:3000/";
-  });
-}
+
 //*---------Sección de formularios create/edit movies------------*//
 async function getLocalMovies() {
   return await fetch("http://localhost:3000/api/movies").then((res) =>
