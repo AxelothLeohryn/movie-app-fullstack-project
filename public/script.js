@@ -215,7 +215,7 @@ function printMovieCardsUser(moviesData, section) {
               <section class="movie-card-image">
                 <img src="${movie.image}" alt="Poster Image">
               </section>
-              <section class="movie-card-details">
+              <section class="movie-card-details" data-movie-id="${movie.id}>
                 <section class="movie-card-details-header">
                   <div class="movie-card-year">
                     <h5>Fecha</h5>
@@ -237,6 +237,7 @@ function printMovieCardsUser(moviesData, section) {
                 </section>
               </section>
             </section>`;
+
   };
   // console.log(moviesData);
   let movieCardContainerHTML = `<section class="movie-card-container">`;
