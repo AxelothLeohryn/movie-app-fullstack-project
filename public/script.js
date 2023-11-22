@@ -20,120 +20,113 @@ if (document.title == "Inicio") {
       document.getElementById("logInButton").classList.add("hide");
     });
   });
-  document
-    .getElementById("signUp")
-    .addEventListener("submit", async function (event) {
-      event.preventDefault();
-      let name = event.target.nameSU.value;
-      let email = event.target.emailSU.value;
-      let password = event.target.passwordSU.value;
-      let alert = "";
-      if (!/^[A-Za-z\ ]{2,30}$/.test(name)) {
-        alert +=
-          "El nombre tiene que tener entre 2 y 30 caracteres y contener solo letras <br>";
-      }
-      if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
-        alert += "Introduce un email valido <br>";
-      }
-      if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
-        alert +=
-          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
-      }
-      if (alert.length > 0) {
+  document.getElementById("signUp").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    let name = event.target.nameSU.value;
+    let email = event.target.emailSU.value;
+    let password = event.target.passwordSU.value;
+    let alert = "";
+    if (!/^[A-Za-z\ ]{2,30}$/.test(name)) {
+      alert +=
+        "El nombre tiene que tener entre 2 y 30 caracteres y contener solo letras <br>";
+    }
+    if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
+      alert += "Introduce un email valido <br>";
+    }
+    if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
+      alert +=
+        "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
+    }
+    if (alert.length > 0) {
+      Swal.fire({
+        icon: "error",
+        html: alert,
+      });
+    } else {
+      const datos = {
+        name: name,
+        email: email,
+        password: password,
+      };
+      const opciones = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos),
+      };
+      let emailAvailable = await fetch(
+        "https://movie-app-fullstack.onrender.com/api/signup",
+        opciones
+      ).then((response) => response.json());
+      if (emailAvailable == "success") {
+        window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
+      } else if (emailAvailable == false) {
         Swal.fire({
           icon: "error",
-          html: alert,
+          html: "Ese email ya está en uso, por favor proceda a log in.",
         });
-      } else {
-        const datos = {
-          name: name,
-          email: email,
-          password: password,
-        };
-        const opciones = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(datos),
-        };
-        let emailAvailable = await fetch(
-          "https://movie-app-fullstack.onrender.com/api/signup",
-          opciones
-        ).then((response) => response.json());
-        if (emailAvailable == "success") {
-          window.location.href =
-            "https://movie-app-fullstack.onrender.com/dashboard";
-        } else if (emailAvailable == false) {
-          Swal.fire({
-            icon: "error",
-            html: "Ese email ya está en uso, por favor proceda a log in.",
-          });
-        } else if (emailAvailable == "error") {
-          Swal.fire({
-            icon: "error",
-            html: "Ha habido un error en la creación del usuario",
-          });
-        }
-      }
-    });
-  document
-    .getElementById("logIn")
-    .addEventListener("submit", async function (event) {
-      event.preventDefault();
-      let email = event.target.emailLI.value;
-      let password = event.target.passwordLI.value;
-      let alert = "";
-      if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
-        alert += "Introduce un email valido <br>";
-      }
-      if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
-        alert +=
-          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
-      }
-      if (alert.length > 0) {
+      } else if (emailAvailable == "error") {
         Swal.fire({
           icon: "error",
-          html: alert,
+          html: "Ha habido un error en la creación del usuario",
         });
-      } else {
-        const datos = {
-          email: email,
-          password: password,
-        };
-        const opciones = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(datos),
-        };
-        let emailSigned = await fetch(
-          "https://movie-app-fullstack.onrender.com/api/login",
-          opciones
-        ).then((response) => response.json());
-        if (emailSigned == "success") {
-          window.location.href =
-            "https://movie-app-fullstack.onrender.com/dashboard";
-        } else if (emailSigned == false) {
-          Swal.fire({
-            icon: "error",
-            html: "Este email no esta registrado, por favor proceda a Sign up.",
-          });
-        } else if (emailSigned == "error") {
-          Swal.fire({
-            icon: "error",
-            html: "Credenciales incorrectas",
-          });
-        }
       }
-    });
-  let google = document.querySelectorAll(".google");
-  google.forEach((element) => {
-    element.addEventListener("click", async function () {
-      window.location.href =
-        "https://movie-app-fullstack.onrender.com/api/auth/google";
-    });
+    }
+  });
+  document.getElementById("logIn").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    let email = event.target.emailLI.value;
+    let password = event.target.passwordLI.value;
+    let alert = "";
+    if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
+      alert += "Introduce un email valido <br>";
+    }
+    if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
+      alert +=
+        "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
+    }
+    if (alert.length > 0) {
+      Swal.fire({
+        icon: "error",
+        html: alert,
+      });
+    } else {
+      const datos = {
+        email: email,
+        password: password,
+      };
+      const opciones = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos),
+      };
+      let emailSigned = await fetch(
+        "https://movie-app-fullstack.onrender.com/api/login",
+        opciones
+      ).then((response) => response.json());
+      if (emailSigned == "success") {
+        window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
+      } else if (emailSigned == false) {
+        Swal.fire({
+          icon: "error",
+          html: "Este email no esta registrado, por favor proceda a Sign up.",
+        });
+      } else if (emailSigned == "error") {
+        Swal.fire({
+          icon: "error",
+          html: "Credenciales incorrectas",
+        });
+      }
+    }
+  })
+  let google = document.querySelectorAll(".google")
+  google.forEach(element => {
+      element.addEventListener("click", async function() {
+        window.location.href = "https://movie-app-fullstack.onrender.com/api/auth/google";
+      });
   });
 }
 
@@ -171,10 +164,8 @@ if (document.title == "recoverPassword") {
         },
         body: JSON.stringify(datos),
       };
-      let passwordChanged = await fetch(
-        `https://movie-app-fullstack.onrender.com/api/resetpassword/${token}`,
-        opciones
-      ).then((response) => response.json());
+      let passwordChanged = await fetch(`https://movie-app-fullstack.onrender.com/api/resetpassword/${token}`, opciones)
+          .then(response => response.json())
       if (passwordChanged == "success") {
         Swal.fire({
           icon: "success",
@@ -183,8 +174,7 @@ if (document.title == "recoverPassword") {
           showCancelButton: false,
           confirmButtonText: "Volver a iniciar sesión",
         }).then((result) => {
-          window.location.href =
-            "https://movie-app-fullstack.onrender.com:3000/";
+          window.location.href = "https://movie-app-fullstack.onrender.com/"
         });
       } else if (passwordChanged == false) {
         Swal.fire({
@@ -209,7 +199,19 @@ if (document.title == "tokenExpirado") {
     showCancelButton: false,
     confirmButtonText: "Volver a iniciar sesión",
   }).then((result) => {
-    window.location.href = "https://movie-app-fullstack.onrender.com:3000/";
+    window.location.href = "https://movie-app-fullstack.onrender.com/";
+  });
+}
+
+if (document.title == "inicioExito") {
+  Swal.fire({
+    icon: "success",
+    title: "Inicio de sesión con exito",
+    showDenyButton: false,
+    showCancelButton: false,
+    confirmButtonText: "Entrar",
+  }).then((result) => {
+    window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
   });
 }
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
@@ -349,7 +351,7 @@ function listenForClicks(section) {
 }
 
 //Side nav-----------------------------------------------------
-if (document.title != "Inicio") {
+if (document.title != "Inicio" && document.title != "inicioExito" && document.title != "inicioExito" && document.title != "recoverPassword" && document.title != "tokenExpirado") {
   function openNav() {
     document.getElementById("sidenav").style.width = "calc(100vw - 56px)";
   }
@@ -375,14 +377,14 @@ if (document.title != "Inicio") {
 //Sección de búsqueda-----------------------------------------------------------------------------------
 
 async function searchFilms(title) {
-  return await fetch(
-    `https://movie-app-fullstack.onrender.com/api/movies/${title}`
-  ).then((res) => res.json());
+  return await fetch(`https://movie-app-fullstack.onrender.com/api/movies/${title}`).then((res) =>
+    res.json()
+  );
 }
 async function searchFilmDetails(id) {
-  return await fetch(
-    `https://movie-app-fullstack.onrender.com/api/movies/details/${id}`
-  ).then((res) => res.json());
+  return await fetch(`https://movie-app-fullstack.onrender.com/api/movies/details/${id}`).then(
+    (res) => res.json()
+  );
 }
 
 //Event listener of search button: GET (/api/movies/title), then print cards
@@ -406,9 +408,8 @@ if (document.title == "Búsqueda") {
 async function displayMovieDetails(id, section) {
   const movieDetails = await searchFilmDetails(id);
   console.log(movieDetails);
-  //Aqui podria ir la funcionalidad del scrapping:
 
-  //Vista de detalles de una película: --------------------------------------
+  //Vista de detalles de una película: -------------------------------------
   document.getElementById(section).innerHTML = `
   <section class="movie-details">
     <section class="movie-header">
@@ -443,31 +444,42 @@ async function displayMovieDetails(id, section) {
         movieDetails.trailer
       }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </section>
+  <section class="critics">
+      <h2>Criticas</h2>
+      <section id="criticsContainer"></section>
+  </section>
 </section>`;
-
   console.log("I'm displaying details");
+  let critics = await fetch(`https://movie-app-fullstack.onrender.com/api/movies/details/${movieDetails.title}`)
+    .then((res) => res.json());
+  let criticsContainer = document.getElementById("criticsContainer");
+  if (critics == false) {
+    criticsContainer.innerHTML = `<p>No hay criticas para esta pelicula</p>`;
+  } else if (critics == "error") {
+    criticsContainer.innerHTML = `<p>Ha habido un error</p>`;
+  } else {
+    for (let i = 0; i < critics.length; i++) {
+      criticsContainer.innerHTML += `
+        <section class="criticsArticle">
+          <p class="author">${critics[i].author}</p>
+          <p class="company">${critics[i].company}</p>
+          <p class="critic">${critics[i].critica}</p>
+        </section>`;
+    }
+  }
 }
+
 if (document.title === "Detalles de la película") {
   const movieId = window.location.pathname.split("/").pop();
   console.log(movieId);
   displayMovieDetails(movieId, "details-section");
 }
-if (document.title == "tokenExpirado") {
-  Swal.fire({
-    icon: "error",
-    title: "La sesión ha expirado",
-    showDenyButton: false,
-    showCancelButton: false,
-    confirmButtonText: "Volver a iniciar sesión",
-  }).then((result) => {
-    window.location.href = "https://movie-app-fullstack.onrender.com/";
-  });
-}
+
 //*---------Sección de formularios create/edit movies------------*//
 async function getLocalMovies() {
-  return await fetch(
-    "https://movie-app-fullstack.onrender.com/api/movies"
-  ).then((res) => res.json());
+  return await fetch("https://movie-app-fullstack.onrender.com/api/movies").then((res) =>
+    res.json()
+  );
 }
 if (document.title == "Movies: Admin") {
   async function printLocalMovies() {
@@ -502,16 +514,13 @@ if (document.title == "Movies: Crear Película") {
     };
 
     try {
-      const response = await fetch(
-        "https://movie-app-fullstack.onrender.com/api/createMovie",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(movieData),
-        }
-      );
+      const response = await fetch("https://movie-app-fullstack.onrender.com/api/createMovie", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(movieData),
+      });
       const responseData = await response.json();
       console.log(responseData);
     } catch (error) {
@@ -542,16 +551,13 @@ if (document.title == "Movies: Editar Película") {
     };
 
     try {
-      const response = await fetch(
-        "https://movie-app-fullstack.onrender.com/api/editMovie/:id",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(editedMovieData),
-        }
-      );
+      const response = await fetch("https://movie-app-fullstack.onrender.com/api/editMovie/:id", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedMovieData),
+      });
 
       const responseData = await response.json();
       console.log(responseData);

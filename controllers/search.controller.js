@@ -1,6 +1,7 @@
 //Importaciones
 const fetch = require("../utils/fetch");
 const searchModel = require("../models/search.model");
+const puppeteer = require("../models/puppeteer");
 //Funciones (req,res)
 const searchView = async (req, res) => {
   try {
@@ -56,9 +57,23 @@ const getDetails = async (req, res) => {
   }
 };
 
+const getCritics = async (req, res) => {
+  const title = req.params.title;
+  try {
+    const critics = await puppeteer.getRatings(title);
+    if (critics.length == 0 || critics.message) {
+      res.status(400).json(false);
+    }
+    res.status(200).json(critics);
+  } catch (error) {
+    res.status(400).json("error");
+  }
+};
+
 //Exportaciones
 module.exports = {
   searchView,
   searchAPI,
   getDetails,
+  getCritics
 };

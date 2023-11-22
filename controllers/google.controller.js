@@ -51,7 +51,7 @@ const loginFunction = async function (req, res) {
     res.cookie("access-token", token, {
         httpOnly: true,
         sameSite: "strict",
-    }).redirect("/dashboard"); 
+    }).redirect("/inicioExito"); 
 }
 
 

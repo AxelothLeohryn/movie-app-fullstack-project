@@ -6,7 +6,12 @@ const getRecover = function (req, res) {
     res.render("recoverPassword");
 };
 
+const getGoogle = function (req, res) {
+    res.render("inicioExito");
+};
+
 module.exports = {
     getInicio,
-    getRecover
+    getRecover,
+    getGoogle
 };
