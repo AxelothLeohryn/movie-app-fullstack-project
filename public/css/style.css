@@ -347,6 +347,7 @@ span:hover {
     border-radius: 10px;
     background-color: rgb(242, 242, 242);
     backdrop-filter: blur(20px);
+    cursor: pointer;
 }
 
 .movie-card-details-header {
@@ -398,7 +399,6 @@ span:hover {
 
 .movie-card:hover {
     transform: scale(1.05);
-    cursor: pointer;
 }
 /* Movie details -----------------------------------------------------*/
 .movie-details {
