@@ -335,6 +335,13 @@ span:hover {
     justify-content: center;
     overflow: hidden;
 }
+
+.keep {
+    z-index: 1000;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+
 .edit {
     position: absolute;
     top: 20px;
@@ -509,6 +516,8 @@ span:hover {
 #create_movie_button {
     margin: 30px auto;
 }
+
+
 
 
 @media screen and (min-width: 400px) and (max-width: 600px){

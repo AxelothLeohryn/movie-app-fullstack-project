@@ -1,3 +1,4 @@
+// const { json } = require("express");
 //Sección de inicio
 if (document.title == "Inicio") {
   let signUp = document.querySelectorAll(".signUpButton");
@@ -199,10 +200,9 @@ if (document.title == "tokenExpirado") {
     showCancelButton: false,
     confirmButtonText: "Volver a iniciar sesión",
   }).then((result) => {
-    window.location.href = "https://movie-app-fullstack.onrender.com/";
+        window.location.href = "https://movie-app-fullstack.onrender.com/";
   });
 }
-
 if (document.title == "inicioExito") {
   Swal.fire({
     icon: "success",
@@ -214,7 +214,26 @@ if (document.title == "inicioExito") {
     window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
   });
 }
+
+
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
+function KeepFavoriteButton() {
+  const heartButtons = document.querySelectorAll(".keep");
+  heartButtons.forEach((heartButton) => {
+    heartButton.addEventListener("click", async function (event) {
+      event.preventDefault();
+      const movieId = event.target.getAttribute("heart-id");
+      await fetch("http://localhost:3000/api/favorites", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: movieId}), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
+      });
+    });
+  });
+}
 function printMovieCardsUser(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
   const resultsSection = document.getElementById(`${section}`);
@@ -232,6 +251,7 @@ function printMovieCardsUser(moviesData, section) {
       return `<section class="movie-card" data-movie-id="${movie.id}">
                 <section class="movie-card-image">
                   <img src="${movie.image}" alt="Poster Image">
+                    <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>
                 </section>
                 <section class="movie-card-details" data-movie-id="${movie.id}">
                                 <section class=" movie-card-details-header">
@@ -348,7 +368,11 @@ function listenForClicks(section) {
       }
     }
   });
-}
+
+
+
+
+
 
 //Side nav-----------------------------------------------------
 if (document.title != "Inicio" && document.title != "inicioExito" && document.title != "inicioExito" && document.title != "recoverPassword" && document.title != "tokenExpirado") {
@@ -370,10 +394,9 @@ if (document.title != "Inicio" && document.title != "inicioExito" && document.ti
     });
     document.getElementById("sidenav-footer-logout").addEventListener("click", event => {
       event.preventDefault();
-      window.location.href = "https://movie-app-fullstack.onrender.com";
+      window.location.href = "https://movie-app-fullstack.onrender.com/api/logout";
     })
 }
-
 //Sección de búsqueda-----------------------------------------------------------------------------------
 
 async function searchFilms(title) {
@@ -400,9 +423,11 @@ if (document.title == "Búsqueda") {
     const results = await searchFilms(query);
     console.log(results);
     printMovieCardsUser(results, "search-results"); //Imprimir tarjetas
-    listenForClicks("search-results"); //Escuchar clicks en tarjetas
+    KeepFavoriteButton();
+    listenForClicks("search-results");
   });
 }
+
 
 //*---------Sección de movie-details------------*//
 async function displayMovieDetails(id, section) {
@@ -500,7 +525,6 @@ if (document.title == "Movies: Crear Película") {
     event.preventDefault();
 
     const formData = new FormData(this);
-
     const movieData = {
       title: formData.get("title"),
       director: formData.get("director"),
@@ -512,7 +536,6 @@ if (document.title == "Movies: Crear Película") {
       trailer: formData.get("trailer"),
       overview: formData.get("overview"),
     };
-
     try {
       const response = await fetch("https://movie-app-fullstack.onrender.com/api/createMovie", {
         method: "POST",
@@ -528,6 +551,7 @@ if (document.title == "Movies: Crear Película") {
     }
   });
 }
+
 
 // FORMULARIO EDITAR PELICULA
 if (document.title == "Movies: Editar Película") {
@@ -549,7 +573,6 @@ if (document.title == "Movies: Editar Película") {
       trailer: formData.get("trailer"),
       overview: formData.get("overview"),
     };
-
     try {
       const response = await fetch("https://movie-app-fullstack.onrender.com/api/editMovie/:id", {
         method: "PUT",
@@ -565,4 +588,23 @@ if (document.title == "Movies: Editar Película") {
       console.error(error.message);
     }
   });
+
+    async function getFavoriteMovies() {
+  let registeredemail = document.getElementById("registereduser");
+  // console.log(registeredemail.innerHTML);
+  let favorites = await fetch(
+    `http://localhost:3000/api/getFavorites/${registeredemail}`
+  ).then((res) => res.json());
+  console.log(favorites);
 }
+
+async function printFavoriteMovies() {
+  const favoriteMovies = await getFavoriteMovies();
+  printMovieCardsUser(favoriteMovies, "favorites");
+  }
+// let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
+if (document.title == "Mis películas") {
+  // primero cogemos los favoritos, luego los pintamos con las tarjetas
+  printFavoriteMovies();
+}
+

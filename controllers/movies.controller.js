@@ -5,7 +5,7 @@ const getMovies = (req, res) => {
   if (admin === true) {
     res.render("admView");
   } else {
-    res.render("userView");
+    res.render("userView", {email:req.user.email});
   }
 };
 

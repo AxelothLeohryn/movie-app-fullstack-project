@@ -46,8 +46,12 @@ html
       main 
          section.containerDashboard
             h1 Bienvenido al espacio de navegación, aquí podrás buscar nuevas películas o echar un vistazo a tu perfil.
-
-            button(type="button" class="redButton" id="dashboardBuscar") Buscar una película
-            button(type="button" class="redButton" id="dashboardFavoritas") Mis peliculas favoritas
+            a(href="/search") 
+              button(type="button" class="redButton" id="dashboardBuscar") Buscar una película
+            a(href="/movies") 
+              button(type="button" class="redButton" id="dashboardFavoritas") Mis peliculas favoritas
       footer 
       script(src="./script.js") 
+
+
+      
