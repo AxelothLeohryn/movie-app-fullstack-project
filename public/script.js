@@ -228,11 +228,11 @@ function printMovieCardsUser(moviesData, section) {
       let genres = movie.genres.map((genre) => genre).join(", ");
       //-----------------HTML structure of each movie card------------------------------
       return `<section class="movie-card" data-movie-id="${movie.id}">
-              <section class="movie-card-image">
-                <img src="${movie.image}" alt="Poster Image">
-              </section>
-              <section class="movie-card-details" data-movie-id="${movie.id}>
-                <section class="movie-card-details-header">
+                <section class="movie-card-image">
+                  <img src="${movie.image}" alt="Poster Image">
+                </section>
+                <section class="movie-card-details" data-movie-id="${movie.id}">
+                                <section class=" movie-card-details-header">
                   <div class="movie-card-year">
                     <h5>Fecha</h5>
                     ${movie.year}
@@ -252,7 +252,7 @@ function printMovieCardsUser(moviesData, section) {
                   <h4>${movie.director}</h4>
                 </section>
               </section>
-            </section>`;
+    </section>`;
     }
     // console.log(moviesData);
     let movieCardContainerHTML = `<section class="movie-card-container">`;
@@ -294,7 +294,7 @@ function printMovieCardsAdmin(moviesData, section) {
       return `<section class="movie-card">
               <section class="movie-card-image">
                 <img src="${movie.image}" alt="Poster Image">
-                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i><br>
+                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i>
                 <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
               </section>
               <section class="movie-card-details" data-movie-id="${movie.id}">
