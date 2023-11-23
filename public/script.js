@@ -582,7 +582,7 @@ if (document.title == "Movies: Crear Película") {
     };
     try {
       const response = await fetch(
-        "https://movie-app-fullstack.onrender.com/api/createMovie",
+        "/api/createMovie",
         {
           method: "POST",
           headers: {
