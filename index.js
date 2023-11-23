@@ -30,15 +30,15 @@ app.use(session({
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(
-  //fix de helmet para que se muestren las imagenes de las tarjetas
-  helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-      "img-src": ["'self'", "https: data:"]
-    }
-  })
-)
+// app.use(
+//   //fix de helmet para que se muestren las imagenes de las tarjetas
+//   helmet.contentSecurityPolicy({
+//     useDefaults: true,
+//     directives: {
+//       "img-src": ["'self'", "https: data:"]
+//     }
+//   })
+// )
 
 
 // Logger
