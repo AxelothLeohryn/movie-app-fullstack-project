@@ -235,7 +235,6 @@ function KeepFavoriteButton() {
           id: movieId,
         }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
       });
-
     });
   });
 }
@@ -545,6 +544,21 @@ if (document.title == "Movies: Admin") {
 }
 
 // FORMULARIO CREAR PELICULA
+async function createMovie(movieData) {
+  try {
+    const response = await fetch("/api/createMovie", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(movieData),
+    });
+    const responseData = await response.json();
+    console.log(responseData);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 if (document.title == "Movies: Crear Película") {
   const createMovieForm = document.getElementById("movie_form");
 
@@ -564,22 +578,39 @@ if (document.title == "Movies: Crear Película") {
       overview: formData.get("overview"),
     };
     console.log("Este es el objeto que se envia por fetch: " + movieData);
-    try {
-      const response = await fetch("/api/createMovie", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(movieData),
-      });
-      const responseData = await response.json();
-      console.log(responseData);
-    } catch (error) {
-      console.error(error.message);
-    }
+    Swal.fire({
+      title: "¿Quieres crear esta película?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Sí",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Película creada!", "", "success");
+        createMovie(movieData).then((window.location.href = "/movies"));
+      } else if (result.isDenied) {
+        Swal.fire("La película no se ha creado", "", "info");
+      }
+    });
   });
 }
 
+async function editMovie(editedMovieData, movieId) {
+  try {
+    const response = await fetch(`/api/editMovie/${movieId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedMovieData),
+    });
+
+    const responseData = await response.json();
+    console.log(responseData);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 async function handleMovieForm(movieId) {
   const editMovieForm = document.getElementById("EDIT_form");
 
@@ -598,21 +629,22 @@ async function handleMovieForm(movieId) {
       trailer: formData.get("trailer"),
       overview: formData.get("overview"),
     };
-
-    try {
-      const response = await fetch(`/api/editMovie/${movieId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editedMovieData),
-      });
-
-      const responseData = await response.json();
-      console.log(responseData);
-    } catch (error) {
-      console.error(error.message);
-    }
+    Swal.fire({
+      title: "¿Quieres editar esta película?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Sí",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Editado!", "", "success");
+        editMovie(editedMovieData, movieId).then(
+          (window.location.href = "/movies")
+        );
+      } else if (result.isDenied) {
+        Swal.fire("La película no se ha editado", "", "info");
+      }
+    });
   });
 }
 
@@ -664,21 +696,37 @@ if (document.title === "Movies: Editar Película") {
 }
 
 // FUNCIONALIDAD BORRAR PELÍCULA
+async function deleteMovie(movieId) {
+  try {
+    const response = await fetch(`/api/deleteMovie/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": "yourAuthTokenHere",
+      },
+    });
+    response.json();
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 document.addEventListener("click", async function (event) {
+  const movieId = event.target.getAttribute("data-movie-id");
   if (event.target.classList.contains("delete")) {
-    const movieId = event.target.getAttribute("data-movie-id");
-    try {
-      const response = await fetch(`/api/deleteMovie/${movieId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": "yourAuthTokenHere",
-        },
-      });
-      response.json();
-    } catch (error) {
-      console.error(error.message);
-    }
+    Swal.fire({
+      title: "¿Quieres borrar esta película?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Sí",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Borrado!", "", "success");
+        deleteMovie(movieId).then(location.reload());
+      } else if (result.isDenied) {
+        Swal.fire("La película no se ha borrado", "", "info");
+      }
+    });
   }
 });
 
