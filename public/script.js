@@ -228,7 +228,8 @@ function KeepFavoriteButton() {
       event.preventDefault();
       let cadena = event.target.getAttribute("id");
       let movieId = cadena.slice(6);
-      if (objectFavoritos.hasOwnProperty(`${movieId}`) && objectFavoritos[`${movieId}`] == false) {
+      console.log(objectFavoritos);
+      if (objectFavoritos[`${movieId}`] == false) {
         let response = await fetch("/api/favorites", {
             method: "POST",
             headers: {
@@ -539,11 +540,28 @@ if (document.title == "Búsqueda") {
  */
 async function displayMovieDetails(id, section) {
   const movieDetails = await searchFilmDetails(id);
-  console.log(movieDetails);
+  objectFavoritos = {}
+  let favoritos = await fetch("/api/getFavorites").then(res => res.json());
+  console.log(favoritos);
+  let encontrado = false;
+  for (let j = 0; j < favoritos.length; j++) {
+    if (id == favoritos[j].movie_id) {
+      encontrado = true;
+      break;
+    }
+  }
+  objectFavoritos[`${id}`] = encontrado;
+  let heart;
+  if (objectFavoritos[`${id}`] == true) {
+    heart = `<i id="heart-${id}" class="keep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>`;
+  } else {
+    heart = `<i id="heart-${id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>`
+  }
 
   //Vista de detalles de una película: -------------------------------------
   document.getElementById(section).innerHTML = `
   <section class="movie-details">
+    ${heart}
     <section class="movie-header">
       <section class="movie-image">
           <img src="${movieDetails.image}" alt="Movie Poster">
@@ -582,6 +600,7 @@ async function displayMovieDetails(id, section) {
   </section>
 </section>`;
   console.log("I'm displaying details");
+  KeepFavoriteButton()
   let critics = await fetch(`/api/movies/detail/${movieDetails.title}`).then(
     (res) => res.json()
   );
@@ -600,6 +619,7 @@ async function displayMovieDetails(id, section) {
         </section>`;
     }
   }
+  
 }
 
 if (document.title === "Detalles de la película") {
