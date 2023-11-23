@@ -34,7 +34,7 @@ const getRatings = async (title) => {
         const criticas = [2, 3]; 
         for (let i = 0; i < criticas.length; i++) {
             let criticasObject = {};
-            let divReviewBody = await page.$(`#pro-reviews > li:nth-child(${criticas[i]}) > div > div:nth-child(1)`);
+            let divReviewBody = await page.$(`#pro-reviews > li:nth-child(${criticas[i]}) > div > div:nth-child(1)`) || await page.$(`#pro-reviews > li:nth-child(${criticas[i]}) > div > a > div:nth-child(1)`);
             let aAuthor = await page.$(`#pro-reviews > li:nth-child(${criticas[i]}) > div > div.pro-crit-med > a:nth-child(1)`);
             let aCompany = await page.$(`#pro-reviews > li:nth-child(${criticas[i]}) > div > div.pro-crit-med > a:nth-child(2)`);
             criticasObject.critica = await page.evaluate(div => div.innerText, divReviewBody);
