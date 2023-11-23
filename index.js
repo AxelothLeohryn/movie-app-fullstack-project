@@ -10,8 +10,25 @@ require("./auth.js");
 const port = 3000;
 require("./config/mongo_atlas.js"); // Conexión a BBDD MongoDB
 
-//documentación
-require("swagger-jsdoc"), require("swagger-ui-express");
+//docuemntación
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const { swaggerDocs } = require("./routes/swagger");
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API MOVIES",
+      version: "1.0.0",
+    },
+  },
+  apis: ["./routes/api.routes.js"],
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+
+app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const morgan = require("./middlewares/morgan");
 const secret = process.env.secret;
@@ -63,7 +80,7 @@ app.use("*", (req, res) => {
     message: "route not found",
   });
 });
-
 app.listen(port, () => {
   console.log(`Movie app listening on port http://localhost:${port}`);
+  swaggerDocs(app, port);
 });
