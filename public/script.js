@@ -422,6 +422,10 @@ if (
     event.preventDefault();
     openNav();
   });
+  document.getElementById("topnav-back").addEventListener("click", (event) => {
+    event.preventDefault();
+    history.back();
+  });
   document
     .getElementById("sidenav-header-close")
     .addEventListener("click", (event) => {
