@@ -543,7 +543,7 @@ async function displayMovieDetails(id, section) {
       }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </section>
   <section class="critics">
-      <h2>Criticas</h2>
+      <h2>Críticas</h2>
       <section id="criticsContainer"></section>
   </section>
 </section>`;

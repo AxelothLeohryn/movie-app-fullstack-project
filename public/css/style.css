@@ -148,14 +148,13 @@ body {
 .redButton {
     cursor: pointer;
     margin: 20px auto;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: black;
-    text-shadow: 2px 2px 1px white;
-    background-color: var(--blue);
+    background-color: var(--green);
     border-radius: 20px;
-    box-shadow: -5px -5px 5px black;
     padding: 5px;
     width: fit-content;
+   
 }
 
 #recuperar {
@@ -328,6 +327,7 @@ span:hover {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    width: min-content;
 }
 
 .movie-card {
@@ -432,6 +432,8 @@ span:hover {
     text-align: start;
 }
 
+
+
 .movie-card-length {
     text-align: center;
     margin: 0px 10px;
@@ -462,6 +464,8 @@ span:hover {
 .cardbutton {
     padding: 15px;
     background-color: var(--grey);
+    border-radius: 10px;
+  
 }
 
 /*Search Section -----------------------------------------------------*/
@@ -479,6 +483,7 @@ span:hover {
 #search-bar {
     min-width: 30%;
     max-width: 50%;
+    background-color:var(--white);
     
 }
 #search-button {
@@ -525,6 +530,7 @@ span:hover {
 .movie-image img {
     width: 100%;
     border-radius: 5px;
+    padding-bottom: 13px;
 }
 
 .movie-info {
@@ -539,6 +545,7 @@ span:hover {
 .movie-year {
     color: #666;
 }
+
 
 .movie-length,
 .movie-genres,
@@ -649,7 +656,9 @@ span:hover {
     color: white;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 7px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 #pelish1 {
     margin-top: 5%;
@@ -660,7 +669,29 @@ span:hover {
     height: 50px;
 }
 
+input, textarea {
+    background-color: #041e30;
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    height: 35px;
+    padding-left: 10px;
+    
+}
 
+textarea {
+    padding-top: 10px;
+
+}
+
+label { 
+    margin-top:9px;
+}
+
+
+.submitbutton {
+    font-size:medium;
+}
 @media screen and (min-width: 400px) and (max-width: 600px) {
     html {
         font-size: 18px;
