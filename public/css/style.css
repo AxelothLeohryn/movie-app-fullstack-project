@@ -353,13 +353,13 @@ span:hover {
 
 .edit {
     position: absolute;
-    top: 20px;
+    top: 40px;
     right: 80px;
 }
 
 .delete {
     position: absolute;
-    top: 20px;
+    top: 40px;
     right: 20px;
 }
 
@@ -570,6 +570,7 @@ span:hover {
     color: white;
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 #edith1 {
     margin-top: 5%;
@@ -581,6 +582,7 @@ span:hover {
     color: white;
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 #pelish1 {
     margin-top: 5%;
