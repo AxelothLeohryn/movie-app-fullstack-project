@@ -14,7 +14,7 @@ const morgan = require("./middlewares/morgan");
 const secret = process.env.secret;
 app.set("trust proxy", 1);
 
-
+app.use('/api-jsdoc', express.static(path.join(__dirname, '/jsondocs')));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public', { index: false, redirect: false }))
