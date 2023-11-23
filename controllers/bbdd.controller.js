@@ -14,7 +14,9 @@ const getAllMovies = async (req, res) => {
 const createMovie = async (req, res) => {
   try {
     const newMovie = new Movie(req.body);
+    console.log("Objeto pelicula: " + newMovie);
     const savedMovie = await newMovie.save();
+    console.log(savedMovie);
     res.json(savedMovie);
   } catch (error) {
     res.status(500).json(error.message);
