@@ -409,7 +409,6 @@ function listenForClicks(section) {
 if (
   document.title != "Inicio" &&
   document.title != "inicioExito" &&
-  document.title != "inicioExito" &&
   document.title != "recoverPassword" &&
   document.title != "tokenExpirado"
 ) {
