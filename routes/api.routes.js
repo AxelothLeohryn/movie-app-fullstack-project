@@ -31,8 +31,8 @@ const mongoController = require("../controllers/bbdd.controller");
  */
 router.get(
   "/movies",
-  //   isAuthenticated,
-  //   checkToken,
+    isAuthenticated,
+    checkToken,
   mongoController.getAllMovies
 );
 
@@ -80,9 +80,9 @@ router.get(
 
 router.post(
   "/createMovie",
-  // isAuthenticated,
-  // checkToken,
-  // isAdmin,
+  isAuthenticated,
+  checkToken,
+  isAdmin,
   mongoController.createMovie
 );
 /**
@@ -109,9 +109,9 @@ router.post(
 
 router.put(
   "/editMovie/:id",
-  //   isAuthenticated,
-  //   checkToken,
-  //   isAdmin,
+    isAuthenticated,
+    checkToken,
+    isAdmin,
   mongoController.editMovie
 );
 
@@ -139,14 +139,14 @@ router.put(
 
 router.delete(
   "/deleteMovie/:id",
-  //   isAuthenticated,
-  //   checkToken,
-  //   isAdmin,
+  isAuthenticated,
+  checkToken,
+  isAdmin,
   mongoController.deleteMovie
 );
 
 router.get(
-  "/getFavorites/:email",
+  "/getFavorites",
   isAuthenticated,
   checkToken,
   mongoController.getFavorites
