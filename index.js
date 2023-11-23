@@ -6,6 +6,7 @@ const passport = require("./config/passport-config");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const helmet = require('helmet');
+const path = require('path'); 
 require("./auth.js");
 const port = 3000;
 require("./config/mongo_atlas.js"); // Conexión a BBDD MongoDB
