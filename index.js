@@ -37,7 +37,8 @@ app.use(
     useDefaults: true,
     directives: {
       "img-src": ["'self'", "https: data:"],
-      "script-src": ["'self'", "https://cdn.jsdelivr.net"]
+      "script-src": ["'self'", "https://cdn.jsdelivr.net"],
+      "frame-src": ["'self'", "https://www.youtube.com"]
     }
   })
 )

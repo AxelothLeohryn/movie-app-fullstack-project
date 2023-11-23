@@ -582,7 +582,7 @@ async function displayMovieDetails(id, section) {
   </section>
 </section>`;
   console.log("I'm displaying details");
-  let critics = await fetch(`/api/movies/details/${movieDetails.title}`).then(
+  let critics = await fetch(`/api/movies/detail/${movieDetails.title}`).then(
     (res) => res.json()
   );
   let criticsContainer = document.getElementById("criticsContainer");
