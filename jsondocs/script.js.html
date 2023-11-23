@@ -1,4 +1,32 @@
-// const { json } = require("express");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// const { json } = require("express");
 //Sección de inicio
 if (document.title == "Inicio") {
   let signUp = document.querySelectorAll(".signUpButton");
@@ -31,14 +59,14 @@ if (document.title == "Inicio") {
       let alert = "";
       if (!/^[A-Za-z\ ]{2,30}$/.test(name)) {
         alert +=
-          "El nombre tiene que tener entre 2 y 30 caracteres y contener solo letras <br>";
+          "El nombre tiene que tener entre 2 y 30 caracteres y contener solo letras &lt;br>";
       }
       if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
-        alert += "Introduce un email valido <br>";
+        alert += "Introduce un email valido &lt;br>";
       }
       if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
         alert +=
-          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
+          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) &lt;br>";
       }
       if (alert.length > 0) {
         Swal.fire({
@@ -86,11 +114,11 @@ if (document.title == "Inicio") {
       let password = event.target.passwordLI.value;
       let alert = "";
       if (!/^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(email)) {
-        alert += "Introduce un email valido <br>";
+        alert += "Introduce un email valido &lt;br>";
       }
       if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password)) {
         alert +=
-          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
+          "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) &lt;br>";
       }
       if (alert.length > 0) {
         Swal.fire({
@@ -147,10 +175,10 @@ if (document.title == "recoverPassword") {
     let alert = "";
     if (!/^[A-Za-z0-9\-_#@]{6,30}$/.test(password1)) {
       alert +=
-        "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) <br>";
+        "La contraseña tiene que ser alfanumerica entre 6 y 30 caracteres y puede contener (-,_,@,#) &lt;br>";
     }
     if (password1 != password2) {
-      alert += "La contraseña tiene que ser la igual en ambos campos <br>";
+      alert += "La contraseña tiene que ser la igual en ambos campos &lt;br>";
     }
     if (alert.length > 0) {
       Swal.fire({
@@ -290,41 +318,41 @@ function printMovieCardsUser(moviesData, section) {
       //Store all found genres in a string
       let genres = movie.genres.map((genre) => genre).join(", ");
       //-----------------HTML structure of each movie card------------------------------
-      return `<section class="movie-card" data-movie-id="${movie.id}">
-                <section class="movie-card-image">
-                  <img src="${movie.image}" alt="Poster Image">
-                    <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>
-                    <i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>
-                </section>
-                <section class="movie-card-details" data-movie-id="${movie.id}">
-                                <section class=" movie-card-details-header">
-                  <div class="movie-card-year">
-                    <h5>Fecha</h5>
+      return `&lt;section class="movie-card" data-movie-id="${movie.id}">
+                &lt;section class="movie-card-image">
+                  &lt;img src="${movie.image}" alt="Poster Image">
+                    &lt;i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;">&lt;/i>
+                    &lt;i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;">&lt;/i>
+                &lt;/section>
+                &lt;section class="movie-card-details" data-movie-id="${movie.id}">
+                                &lt;section class=" movie-card-details-header">
+                  &lt;div class="movie-card-year">
+                    &lt;h5>Fecha&lt;/h5>
                     ${movie.year}
-                  </div>
-                  <div class="movie-card-length">
-                    <h5>Duración</h5>
+                  &lt;/div>
+                  &lt;div class="movie-card-length">
+                    &lt;h5>Duración&lt;/h5>
                     ${movie.length} min
-                  </div>
-                  <div class="movie-card-genres">
-                    <h5>Género</h5>
+                  &lt;/div>
+                  &lt;div class="movie-card-genres">
+                    &lt;h5>Género&lt;/h5>
                     ${genres}
-                  </div>
-                </section>
-                <section class="movie-card-details-content">
-                  <h3>${movie.title}</h3>
-                  <h4>Director</h4>
-                  <h4>${movie.director}</h4>
-                </section>
-              </section>
-    </section>`;
+                  &lt;/div>
+                &lt;/section>
+                &lt;section class="movie-card-details-content">
+                  &lt;h3>${movie.title}&lt;/h3>
+                  &lt;h4>Director&lt;/h4>
+                  &lt;h4>${movie.director}&lt;/h4>
+                &lt;/section>
+              &lt;/section>
+    &lt;/section>`;
     };
     // console.log(moviesData);
-    let movieCardContainerHTML = `<section class="movie-card-container">`;
+    let movieCardContainerHTML = `&lt;section class="movie-card-container">`;
     moviesData.forEach((movie) => {
       movieCardContainerHTML += movieCard(movie);
     });
-    movieCardContainerHTML += `</section>`;
+    movieCardContainerHTML += `&lt;/section>`;
     resultsSection.innerHTML = "";
     resultsSection.innerHTML += movieCardContainerHTML;
   }
@@ -364,41 +392,41 @@ function printMovieCardsAdmin(moviesData, section) {
       let genres = movie.genres.map((genre) => genre).join(", ");
       //  // boton editar de momento dejarlo comentado
       //-----------------HTML structure of each movie card------------------------------
-      return `<section class="movie-card">
-              <section class="movie-card-image">
-                <img src="${movie.image}" alt="Poster Image">
-                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i>
-                <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
-              </section>
-                <section class="movie-card-details" data-movie-id="${movie.id}">
-                  <section class="movie-card-details-header">
-                    <div class="movie-card-year">
-                      <h5>Fecha</h5>
+      return `&lt;section class="movie-card">
+              &lt;section class="movie-card-image">
+                &lt;img src="${movie.image}" alt="Poster Image">
+                &lt;i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl">&lt;/i>
+                &lt;i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl">&lt;/i>
+              &lt;/section>
+                &lt;section class="movie-card-details" data-movie-id="${movie.id}">
+                  &lt;section class="movie-card-details-header">
+                    &lt;div class="movie-card-year">
+                      &lt;h5>Fecha&lt;/h5>
                       ${movie.year}
-                    </div>
-                    <div class="movie-card-length">
-                      <h5>Duración</h5>
+                    &lt;/div>
+                    &lt;div class="movie-card-length">
+                      &lt;h5>Duración&lt;/h5>
                       ${movie.length} min
-                    </div>
-                    <div class="movie-card-genres">
-                      <h5>Género</h5>
+                    &lt;/div>
+                    &lt;div class="movie-card-genres">
+                      &lt;h5>Género&lt;/h5>
                       ${genres}
-                    </div>
-                  </section>
-                  <section class="movie-card-details-content">
-                    <h3>${movie.title}</h3>
-                    <h4>Director</h4>
-                    <h4>${movie.director}</h4>
-                  </section>
-                </section>
-              </section>`;
+                    &lt;/div>
+                  &lt;/section>
+                  &lt;section class="movie-card-details-content">
+                    &lt;h3>${movie.title}&lt;/h3>
+                    &lt;h4>Director&lt;/h4>
+                    &lt;h4>${movie.director}&lt;/h4>
+                  &lt;/section>
+                &lt;/section>
+              &lt;/section>`;
     };
     // console.log(moviesData);
-    let movieCardContainerHTML = `<section class="movie-card-container">`;
+    let movieCardContainerHTML = `&lt;section class="movie-card-container">`;
     moviesData.forEach((movie) => {
       movieCardContainerHTML += movieCard(movie);
     });
-    movieCardContainerHTML += `</section>`;
+    movieCardContainerHTML += `&lt;/section>`;
     resultsSection.innerHTML = "";
     resultsSection.innerHTML += movieCardContainerHTML;
   }
@@ -430,9 +458,9 @@ function listenForClicks(section) {
 
 //Side nav-----------------------------------------------------
 if (
-  document.title != "Inicio" &&
-  document.title != "inicioExito" &&
-  document.title != "recoverPassword" &&
+  document.title != "Inicio" &amp;&amp;
+  document.title != "inicioExito" &amp;&amp;
+  document.title != "recoverPassword" &amp;&amp;
   document.title != "tokenExpirado"
 ) {
   function openNav() {
@@ -497,7 +525,7 @@ if (document.title == "Búsqueda") {
   searchButton.addEventListener("click", async (event) => {
     event.preventDefault();
     resultsSection.innerHTML =
-      '<i class="fa-solid fa-spinner fa-spin fa-2xl"></i>';
+      '&lt;i class="fa-solid fa-spinner fa-spin fa-2xl">&lt;/i>';
     const query = document.getElementById("search-bar").value;
     //Fetch from our API to search for the film/s.
     const results = await searchFilms(query);
@@ -525,61 +553,61 @@ async function displayMovieDetails(id, section) {
 
   //Vista de detalles de una película: -------------------------------------
   document.getElementById(section).innerHTML = `
-  <section class="movie-details">
-    <section class="movie-header">
-      <section class="movie-image">
-          <img src="${movieDetails.image}" alt="Movie Poster">
-      </section>
-      <section class="movie-info">
-          <h1 class="movie-title">${
+  &lt;section class="movie-details">
+    &lt;section class="movie-header">
+      &lt;section class="movie-image">
+          &lt;img src="${movieDetails.image}" alt="Movie Poster">
+      &lt;/section>
+      &lt;section class="movie-info">
+          &lt;h1 class="movie-title">${
             movieDetails.title
-          } <span class="movie-year">(${movieDetails.year})</span></h1>
-          <div class="movie-length"><b>Duration:</b> ${
+          } &lt;span class="movie-year">(${movieDetails.year})&lt;/span>&lt;/h1>
+          &lt;div class="movie-length">&lt;b>Duration:&lt;/b> ${
             movieDetails.length
-          } min</div>
-          <div class="movie-genres"><b>Genres:</b> ${movieDetails.genres.join(
+          } min&lt;/div>
+          &lt;div class="movie-genres">&lt;b>Genres:&lt;/b> ${movieDetails.genres.join(
             ", "
-          )}</div>
-          <div class="movie-director"><b>Director:</b> ${
+          )}&lt;/div>
+          &lt;div class="movie-director">&lt;b>Director:&lt;/b> ${
             movieDetails.director
-          }</div>
-          <div class="movie-actors"><b>Cast:</b> ${movieDetails.actors.join(
+          }&lt;/div>
+          &lt;div class="movie-actors">&lt;b>Cast:&lt;/b> ${movieDetails.actors.join(
             ", "
-          )}</div>
-      </section>
-  </section>
-  <section class="movie-overview">
-      <h2>Overview</h2>
-      <p>${movieDetails.overview}</p>
-  </section>
-  <section class="movie-trailer">
-      <h2>Trailer</h2>
-      <iframe src="${
+          )}&lt;/div>
+      &lt;/section>
+  &lt;/section>
+  &lt;section class="movie-overview">
+      &lt;h2>Overview&lt;/h2>
+      &lt;p>${movieDetails.overview}&lt;/p>
+  &lt;/section>
+  &lt;section class="movie-trailer">
+      &lt;h2>Trailer&lt;/h2>
+      &lt;iframe src="${
         movieDetails.trailer
-      }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </section>
-  <section class="critics">
-      <h2>Criticas</h2>
-      <section id="criticsContainer"></section>
-  </section>
-</section>`;
+      }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>&lt;/iframe>
+  &lt;/section>
+  &lt;section class="critics">
+      &lt;h2>Criticas&lt;/h2>
+      &lt;section id="criticsContainer">&lt;/section>
+  &lt;/section>
+&lt;/section>`;
   console.log("I'm displaying details");
   let critics = await fetch(
     `https://movie-app-fullstack.onrender.com/api/movies/details/${movieDetails.title}`
   ).then((res) => res.json());
   let criticsContainer = document.getElementById("criticsContainer");
   if (critics == false) {
-    criticsContainer.innerHTML = `<p>No hay criticas para esta pelicula</p>`;
+    criticsContainer.innerHTML = `&lt;p>No hay criticas para esta pelicula&lt;/p>`;
   } else if (critics == "error") {
-    criticsContainer.innerHTML = `<p>Ha habido un error</p>`;
+    criticsContainer.innerHTML = `&lt;p>Ha habido un error&lt;/p>`;
   } else {
-    for (let i = 0; i < critics.length; i++) {
+    for (let i = 0; i &lt; critics.length; i++) {
       criticsContainer.innerHTML += `
-        <section class="criticsArticle">
-          <p class="author">${critics[i].author}</p>
-          <p class="company">${critics[i].company}</p>
-          <p class="critic">${critics[i].critica}</p>
-        </section>`;
+        &lt;section class="criticsArticle">
+          &lt;p class="author">${critics[i].author}&lt;/p>
+          &lt;p class="company">${critics[i].company}&lt;/p>
+          &lt;p class="critic">${critics[i].critica}&lt;/p>
+        &lt;/section>`;
     }
   }
 }
@@ -705,7 +733,7 @@ async function dataEditForm(movieId) {
     );
     const movieData = await response.json();
 
-    if (movieData && movieData.title) {
+    if (movieData &amp;&amp; movieData.title) {
       document.querySelector('#EDIT_form input[name="title"]').value =
         movieData.title;
       document.querySelector('#EDIT_form input[name="director"]').value =
@@ -781,3 +809,26 @@ if (document.title == "Mis películas") {
   printFavoriteMovies();
   unKeepFavoriteButton();
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#displayMovieDetails">displayMovieDetails</a></li><li><a href="global.html#getLocalMovies">getLocalMovies</a></li><li><a href="global.html#listenForClicks">listenForClicks</a></li><li><a href="global.html#printMovieCardsAdmin">printMovieCardsAdmin</a></li><li><a href="global.html#printMovieCardsUser">printMovieCardsUser</a></li><li><a href="global.html#searchFilmDetails">searchFilmDetails</a></li><li><a href="global.html#searchFilms">searchFilms</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Nov 23 2023 13:38:55 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
