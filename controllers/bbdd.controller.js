@@ -13,6 +13,7 @@ const getAllMovies = async (req, res) => {
 
 const createMovie = async (req, res) => {
   try {
+    console.log(req.body);
     const newMovie = new Movie(req.body);
     const savedMovie = await newMovie.save();
     res.json(savedMovie);
