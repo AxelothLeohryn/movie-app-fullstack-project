@@ -39,17 +39,13 @@ html
                       a(href="/search") Buscador
                     li.sidenav-main-link 
                       a(href="/movies") Mis películas
-                //- Here we can add another section with more buttons:
-                //- ul#sidenav-main-navigation 
-                //-     li.sidenav-main-link Mi perfil
-                //-     li.sidenav-main-link Ajustes
             section#sidenav-footer
                 span#sidenav-footer-logout Cerrar sesión
   main
     h1#admh1 Espacio de administrador
-    a(href='/createMovie')
     section#create_movie_section
-      button#create_movie_button.blueButton Crear película
+      a(href='/createMovie')
+        button#create_movie_button.blueButton Crear película
     section#admincards
   footer 
   script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")

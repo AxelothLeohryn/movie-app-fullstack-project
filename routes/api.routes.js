@@ -49,7 +49,7 @@ router.get(
   searchController.getDetails
 );
 router.get(
-  "/movies/details/:title",
+  "/movies/detail/:title",
   isAuthenticated,
   checkToken,
   searchController.getCritics
