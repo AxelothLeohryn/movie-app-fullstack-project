@@ -184,7 +184,7 @@ header a {
     align-items: center;
 
     height: 56px;
-    background-color: gray;
+    background-color: #3b6eb1;
 }
 
 .topnav-section {
@@ -210,7 +210,7 @@ header a {
 
 /* Side Navbar------------------------------------------------------- */
 #sidenav {
-    background-color: rgb(143, 143, 143);
+    background-color: #6695d3;
     height: 100%;
     position: fixed;
     z-index: 100;
@@ -429,7 +429,6 @@ span:hover {
     margin-top: 8px;
 }
 
-
 /*Search Section -----------------------------------------------------*/
 #search-form {
     width: 100%;
@@ -542,15 +541,52 @@ span:hover {
 }
 
 #admh1 {
+    margin-top: 5%;
     color: white;
     text-align: center;
 }
-
-#create_movie_button {
-    margin: 30px auto;
+.userFavourites {
+    margin-top: 20px;
+    color: white;
+    text-align: center;
 }
-
-
+#registereduser {
+    color: white;
+    text-align: center;
+}
+#favorites{
+    margin: auto;
+}
+#details-section {
+    margin: auto;
+}
+#createh1 {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
+#movie_form {
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+#edith1 {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
+#EDIT_form {
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+#pelish1 {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
 
 
 @media screen and (min-width: 400px) and (max-width: 600px) {
