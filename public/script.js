@@ -283,11 +283,12 @@ function KeepFavoriteButton() {
 }
 function printMovieCardsUser(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
+  console.log("moviesData received: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   let cardNumber = 0;
   if (moviesData.length == 0) {
-    resultsSection.innerHTML = "No se han encontrado películas con ese nombre.";
+    resultsSection.innerHTML = "No se han encontrado películas.";
   } else {
     async function getFavourites() {
       objectFavoritos = {}
@@ -850,6 +851,19 @@ document.addEventListener("click", async function (event) {
 //   printMovieCardsUser(favoriteMovies, "favorites");
 // }
 // let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
+// Sección favoritos ---------------------------------------------------------------------------------
+async function printFavoriteMovies() {
+  const favoritesIds = await fetch("/api/getFavorites").then(res => res.json());
+  // console.log("Favorite movies ids: ", favoritesIds);
+  let favoritesData = [];
+  for (const favoriteId of favoritesIds) {
+    const favoriteData = await fetch(`/api/movies/details/${favoriteId.movie_id}`).then(res => res.json());
+    console.log("Favorite Data: ", favoriteData);
+    favoritesData.push(favoriteData);
+  }
+  // console.log("Favorites Data: ", favoritesData);
+  printMovieCardsUser(favoritesData, "favorites");
+}
 if (document.title == "Mis películas") {
   // primero cogemos los favoritos, luego los pintamos con las tarjetas
   printFavoriteMovies();
