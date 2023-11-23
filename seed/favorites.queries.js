@@ -1,7 +1,7 @@
 
 const favQueries = {
 
-    getAllFavoritesByEmail: `SELECT * 
+    getAllFavoritesByEmail: `SELECT movie_id 
     FROM favorite_movies 
     WHERE email =$1;`,
     deleteFavoriteById:`DELETE FROM favorite_movies

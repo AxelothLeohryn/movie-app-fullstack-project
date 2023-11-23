@@ -19,12 +19,12 @@ async function searchFilms(title) {
   let results = [];
   let internalDBResults = await searchFilmsLocalDB(title);
   // console.log("Internal DB results: " + internalDBResults);
-  for (result of internalDBResults) {
+  for (const result of internalDBResults) {
     results.push(result);
   }
   let externalApiResults = await fetch.searchFilmsExternalAPI(title);
-  // console.log(externalApiResults);
-  for (result of externalApiResults) {
+  console.log(externalApiResults);
+  for (const result of externalApiResults) {
     results.push(result);
   }
   // console.log(results);

@@ -3,6 +3,7 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(http-equiv="Content-Security-Policy", content="script-src 'self' https://cdn.jsdelivr.net;")
         title Detalles de la película
         link(rel="stylesheet", href="../css/style.css")
         link(rel="shortcut icon", href="../css/favicon.png", type="image/x-icon")
@@ -50,4 +51,5 @@ html(lang="en")
         main 
             section#details-section
         footer
-        script(src="../script.js")  
+        script(src="../script.js")
+        script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")  

@@ -20,15 +20,14 @@ const mongoController = require("../controllers/bbdd.controller");
 router.get("/movies", isAuthenticated, checkToken, mongoController.getAllMovies);
 router.get("/movies/:title", isAuthenticated, checkToken, searchController.searchAPI);
 router.get("/movies/details/:id", isAuthenticated, checkToken, searchController.getDetails);
-router.get("/movies/details/:title", isAuthenticated, checkToken, searchController.getCritics);
-router.post("/createMovie", mongoController.createMovie);
+router.get("/movies/detail/:title", isAuthenticated, checkToken, searchController.getCritics);
+router.post("/createMovie", isAuthenticated, checkToken, isAdmin, mongoController.createMovie);
 router.put("/editMovie/:id", isAuthenticated, checkToken, isAdmin, mongoController.editMovie);
 router.delete("/deleteMovie/:id", isAuthenticated, checkToken, isAdmin, mongoController.deleteMovie);
-router.get("/getFavorites/:email", isAuthenticated, checkToken, mongoController.getFavorites);
+router.get("/getFavorites", isAuthenticated, checkToken, mongoController.getFavorites);
 router.post("/favorites", isAuthenticated, checkToken, favoritesController.createFavorite)
 router.delete("/deleteFavorites/:id", isAuthenticated, checkToken, favoritesController.deleteFavorite);
 
-// isAuthenticated, checkToken, isAdmin,
 
 
 

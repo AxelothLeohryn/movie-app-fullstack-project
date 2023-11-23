@@ -1,4 +1,3 @@
-// const { json } = require("express");
 //Sección de inicio
 if (document.title == "Inicio") {
   let signUp = document.querySelectorAll(".signUpButton");
@@ -220,62 +219,92 @@ if (document.title == "inicioExito") {
 }
 
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
+let objectFavoritos = {};
 function KeepFavoriteButton() {
   const heartButtons = document.querySelectorAll(".keep");
   heartButtons.forEach((heartButton) => {
     heartButton.addEventListener("click", async function (event) {
       event.preventDefault();
-      const movieId = event.target.getAttribute("heart-id");
-      await fetch("/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: movieId,
-        }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
-      });
+      let cadena = event.target.getAttribute("id");
+      let movieId = cadena.slice(6);
+      console.log(objectFavoritos);
+      if (objectFavoritos[`${movieId}`] == false) {
+        let response = await fetch("/api/favorites", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: movieId,
+            }),
+        }).then(res => res.json());
+        if (response == "Success!") {
+          Swal.fire({
+            icon: "success",
+            text: "Se ha añadido la película a favoritos",
+          });
+          objectFavoritos[`${movieId}`] = true;
+          heartButton.classList.remove("fa-heart-circle-plus");
+          heartButton.classList.add("fa-heart-circle-minus");
+        } else {
+          Swal.fire({
+            icon: "error",
+            text: "No se ha podido añadir la película a favoritos",
+          });
+        }
+      } else {
+        let response = await fetch(
+          `/api/deleteFavorites/${movieId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        ).then(res => res.json());
+        if (response == "Success!") {
+          Swal.fire({
+            icon: "success",
+            text: "Se ha eliminado la película de favoritos",
+          });
+          objectFavoritos[`${movieId}`] = false;
+          heartButton.classList.remove("fa-heart-circle-minus");
+          heartButton.classList.add("fa-heart-circle-plus");
+        } else {
+          Swal.fire({
+            icon: "error",
+            text: "No se ha podido eliminar la película de favoritos",
+          });
+        }
+      } 
     });
   });
 }
-function unKeepFavoriteButton() {
-  const heartButtons = document.querySelectorAll(".unkeep");
-  heartButtons.forEach((heartButton) => {
-    heartButton.addEventListener("click", async function (event) {
-      event.preventDefault();
-      const movieId = event.target.getAttribute("heart-id");
-      let response = await fetch(`/api/deleteFavorite/${movieId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
-      if (response == "Success") {
-        Swal.fire({
-          icon: "success",
-          text: "Se ha eliminado la película de favoritos",
-        });
-      }
-    });
-  });
-}
-
-/**
- * Esta función generará y hará visibles las tarjetas informativas sobre cada película.
- * @method printMovieCardsUser 
- * @param {Object[]} moviesData El objeto debe contener la información necesaria sobre la película.
- * @param {string} section Id de la secciónn en la que se van a mostar las tarjetas
- * @returns {string} Devolverá un template string que contiene la estructura y datos correspondientes de las tarjetas, dentro de variables
-*/
 function printMovieCardsUser(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
+  console.log("moviesData received: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   let cardNumber = 0;
   if (moviesData.length == 0) {
-    resultsSection.innerHTML = "No se han encontrado películas con ese nombre.";
+    resultsSection.innerHTML = `<p class="NoResult"> No se han encontrado películas</p>`;
   } else {
-    const movieCard = (movie) => {
+    async function getFavourites() {
+      objectFavoritos = {}
+      let favoritos = await fetch("/api/getFavorites").then(res => res.json());
+      console.log(favoritos);
+      for (let i = 0; i < moviesData.length; i++) {
+        let encontrado = false;
+        for (let j = 0; j < favoritos.length; j++) {
+          if (moviesData[i].id == favoritos[j].movie_id) {
+            encontrado = true;
+            break;
+          }
+        }
+        objectFavoritos[`${moviesData[i].id}`] = encontrado;
+      }
+      console.log(objectFavoritos);
+     const movieCard = (movie) => {
       //Store all found genres in a string
       let genres = movie.genres.map((genre) => genre).join(", ");
       //-----------------HTML structure of each movie card------------------------------
@@ -304,18 +333,20 @@ function printMovieCardsUser(moviesData, section) {
                   <h3>${movie.title}</h3>
                   <h4>Director</h4>
                   <h4>${movie.director}</h4>
-                </section>
-              </section>
-    </section>`;
-    };
-    // console.log(moviesData);
-    let movieCardContainerHTML = `<section class="movie-card-container">`;
-    moviesData.forEach((movie) => {
-      movieCardContainerHTML += movieCard(movie);
-    });
-    movieCardContainerHTML += `</section>`;
-    resultsSection.innerHTML = "";
-    resultsSection.innerHTML += movieCardContainerHTML;
+                 </section>
+      </section>`;
+      };
+      // console.log(moviesData);
+      let movieCardContainerHTML = `<section class="movie-card-container">`;
+      moviesData.forEach(movie => {
+        movieCardContainerHTML += movieCard(movie);
+      });
+      movieCardContainerHTML += `</section>`;
+      resultsSection.innerHTML = "";
+      resultsSection.innerHTML += movieCardContainerHTML;
+      KeepFavoriteButton();
+    }
+    getFavourites();
   }
 }
 function editButtonMovie() {
@@ -485,10 +516,7 @@ if (document.title == "Búsqueda") {
     const query = document.getElementById("search-bar").value;
     //Fetch from our API to search for the film/s.
     const results = await searchFilms(query);
-    console.log(results);
     printMovieCardsUser(results, "search-results"); //Imprimir tarjetas
-    KeepFavoriteButton();
-    unKeepFavoriteButton();
     listenForClicks("search-results");
   });
 }
@@ -505,11 +533,28 @@ if (document.title == "Búsqueda") {
  */
 async function displayMovieDetails(id, section) {
   const movieDetails = await searchFilmDetails(id);
-  console.log(movieDetails);
+  objectFavoritos = {}
+  let favoritos = await fetch("/api/getFavorites").then(res => res.json());
+  console.log(favoritos);
+  let encontrado = false;
+  for (let j = 0; j < favoritos.length; j++) {
+    if (id == favoritos[j].movie_id) {
+      encontrado = true;
+      break;
+    }
+  }
+  objectFavoritos[`${id}`] = encontrado;
+  let heart;
+  if (objectFavoritos[`${id}`] == true) {
+    heart = `<i id="heart-${id}" class="keep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>`;
+  } else {
+    heart = `<i id="heart-${id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>`
+  }
 
   //Vista de detalles de una película: -------------------------------------
   document.getElementById(section).innerHTML = `
   <section class="movie-details">
+    ${heart}
     <section class="movie-header">
       <section class="movie-image">
           <img src="${movieDetails.image}" alt="Movie Poster">
@@ -548,7 +593,8 @@ async function displayMovieDetails(id, section) {
   </section>
 </section>`;
   console.log("I'm displaying details");
-  let critics = await fetch(`/api/movies/details/${movieDetails.title}`).then(
+  KeepFavoriteButton()
+  let critics = await fetch(`/api/movies/detail/${movieDetails.title}`).then(
     (res) => res.json()
   );
   let criticsContainer = document.getElementById("criticsContainer");
@@ -566,6 +612,7 @@ async function displayMovieDetails(id, section) {
         </section>`;
     }
   }
+  
 }
 
 if (document.title === "Detalles de la película") {
@@ -782,22 +829,23 @@ document.addEventListener("click", async function (event) {
   }
 });
 
-// async function getFavoriteMovies() {
-//   let registeredemail = document.getElementById("registereduser");
-//   // console.log(registeredemail.innerHTML);
-//   let favorites = await fetch(
-//     `/api/getFavorites/${registeredemail}`
-//   ).then((res) => res.json());
-//   console.log(favorites);
-// }
 
-// async function printFavoriteMovies() {
-//   const favoriteMovies = await getFavoriteMovies();
-//   printMovieCardsUser(favoriteMovies, "favorites");
-// }
-// let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
+// Sección favoritos ---------------------------------------------------------------------------------
+async function printFavoriteMovies() {
+  const favoritesIds = await fetch("/api/getFavorites").then(res => res.json());
+  // console.log("Favorite movies ids: ", favoritesIds);
+  let favoritesData = [];
+  for (const favoriteId of favoritesIds) {
+    const favoriteData = await fetch(`/api/movies/details/${favoriteId.movie_id}`).then(res => res.json());
+    console.log("Favorite Data: ", favoriteData);
+    favoriteData.id = favoriteId.movie_id;
+    favoritesData.push(favoriteData);
+  }
+  // console.log("Favorites Data: ", favoritesData);
+  printMovieCardsUser(favoritesData, "favorites");
+  listenForClicks("favorites")
+}
 if (document.title == "Mis películas") {
   // primero cogemos los favoritos, luego los pintamos con las tarjetas
   printFavoriteMovies();
-  unKeepFavoriteButton();
 }

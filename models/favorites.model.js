@@ -7,16 +7,17 @@ const getFavoritesByEmail = async (email) => {
     let client, result;
     try {
         client = await pool.connect(); // cuand haya alguien conectado, es decir, registrado
+        console.log("conectando a sql favoritos");
         const data = await client.query(queries.getAllFavoritesByEmail, [email]) // nos dará todas las pelis que haya guardado ese email
         result = data.rows;
-        console.log(result);
+        console.log("Resultado de favoritos sql: " + result);
+        return result
     } catch (err) {
         console.log(err);
-        throw err;
+        return "error"
     } finally {
         client.release();
     }
-    return result
 }
 
 
@@ -32,7 +33,6 @@ const deleteById = async (id, email) => {
     } finally {
         client.release();
     }
-    return result
 }
 
 // cuando demos el botón de corazón, ejecuta esta función 
@@ -46,13 +46,13 @@ const createFavorite = async (movie) => {
         client = await pool.connect(); // Espera a abrir conexion
         const data = await client.query(queries.createFavorite,[email,movie_id])
         result = data.rowCount
+        return "Success!"
     } catch (err) {
         console.log(err);
-        throw err;
+        return "error"
     } finally {
         client.release();
     }
-    return result
 }
 
 
