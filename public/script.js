@@ -4,7 +4,7 @@ if (document.title == "Inicio") {
   let signUp = document.querySelectorAll(".signUpButton");
   signUp.forEach((element) => {
     element.addEventListener("click", function () {
-      document.getElementById("container").classList.add("hide");
+      document.getElementById("container").style.display = "none";
       document.getElementById("signUpContainer").classList.remove("hide");
       document.getElementById("logInContainer").classList.add("hide");
       document.getElementById("signUpButton").classList.add("hide");
@@ -14,7 +14,7 @@ if (document.title == "Inicio") {
   let logIn = document.querySelectorAll(".logInButton");
   logIn.forEach((element) => {
     element.addEventListener("click", function () {
-      document.getElementById("container").classList.add("hide");
+      document.getElementById("container").style.display = "none";
       document.getElementById("logInContainer").classList.remove("hide");
       document.getElementById("signUpContainer").classList.add("hide");
       document.getElementById("signUpButton").classList.remove("hide");
@@ -282,8 +282,8 @@ function printMovieCardsUser(moviesData, section) {
       return `<section class="movie-card" data-movie-id="${movie.id}">
                 <section class="movie-card-image">
                   <img src="${movie.image}" alt="Poster Image">
-                    <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>
-                    <i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>
+                    <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl cardbutton" style="color: #fc2222;"></i>
+                    <i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl cardbutton" style="color: #fc2222;"></i>
                 </section>
                 <section class="movie-card-details" data-movie-id="${movie.id}">
                                 <section class=" movie-card-details-header">
@@ -356,8 +356,8 @@ function printMovieCardsAdmin(moviesData, section) {
       return `<section class="movie-card">
               <section class="movie-card-image">
                 <img src="${movie.image}" alt="Poster Image">
-                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i>
-                <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
+                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl cardbutton"></i>
+                <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl cardbutton"></i>
               </section>
                 <section class="movie-card-details" data-movie-id="${movie.id}">
                   <section class="movie-card-details-header">
