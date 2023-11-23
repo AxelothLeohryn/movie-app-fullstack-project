@@ -177,6 +177,7 @@ header a {
 }
 
 #topnav {
+    z-index: 2;
     width: 100vw;
     display: flex;
     flex-direction: row;
@@ -210,6 +211,7 @@ header a {
 
 /* Side Navbar------------------------------------------------------- */
 #sidenav {
+    z-index: 2;
     background-color: #6695d3;
     height: 100%;
     position: fixed;
@@ -339,16 +341,11 @@ span:hover {
 }
 
 .keep {
-    z-index: 1000;
+    z-index: 1;
     position: absolute;
     top: 20px;
-    right: 50px;
-}
-.unkeep {
-    z-index: 1000;
-    position: absolute;
-    top: 20px;
-    right: 10px;
+    right: 20px;
+    display: none;
 }
 
 .edit {
@@ -535,8 +532,8 @@ span:hover {
 }
 
 #search-bar {
-    width: 200px;
-    transform: scale(2);
+    width: 80vw;
+    height: 5vh;
     margin: 30px auto;
 }
 
