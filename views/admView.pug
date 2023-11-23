@@ -13,7 +13,7 @@ html
     header 
         nav#topnav 
             section#topnav-left.topnav-section
-                a(onclick="history.back()")#topnav-back.topnav-button
+                a#topnav-back.topnav-button
                     i#topnav-back-icon.fa-solid.fa-arrow-left.fa-xl
             h1#page-title.topnav-section Administrar películas
             section#topnav-right.topnav-section
@@ -42,9 +42,9 @@ html
             section#sidenav-footer
                 span#sidenav-footer-logout Cerrar sesion
   main
-    h1 Administrador
+    h1#admh1 Espacio de Administrador
     a(href='/createMovie')
-      button#create_movie_button Crear Película
+      button#create_movie_button.blueButton Crear Película
     section#admincards
   footer 
   script(src="./script.js")

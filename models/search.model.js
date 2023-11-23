@@ -2,7 +2,6 @@
 require("../config/mongo_atlas.js");
 const fetch = require("../utils/fetch");
 const Movie = require("../models/movies");
-const movie = require("../models/movies");
 // const api = require("../controllers/bbdd.controller");
 
 //funcion de busqueda en nuestra BBDD morgan

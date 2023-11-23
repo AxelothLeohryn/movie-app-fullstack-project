@@ -11,7 +11,7 @@ html
     header 
       nav#topnav 
           section#topnav-left.topnav-section
-              a(onclick="history.back()")#topnav-back.topnav-button
+              a#topnav-back.topnav-button
                   i#topnav-back-icon.fa-solid.fa-arrow-left.fa-xl
           h1#page-title.topnav-section Editar película
           section#topnav-right.topnav-section
@@ -40,7 +40,7 @@ html
           section#sidenav-footer
               span#sidenav-footer-logout Cerrar sesion
     main
-      h1 Editar Película
+      h1#edith1 Editar Película
       form#EDIT_form(action="/editMovie/:id" method="PUT")
         label(for='title') Título:
         input(type='text', name='title', required)
@@ -60,6 +60,6 @@ html
         input(type='text', name='trailer', required)
         label(for='overview') Resumen:
         textarea(name='overview', required)
-        button(type='submit') Editar Película
+        button(type='submit' class="blueButton") Editar Película
     footer
     script(src="./script.js")

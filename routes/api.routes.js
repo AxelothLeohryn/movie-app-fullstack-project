@@ -1,36 +1,45 @@
 const express = require("express");
 const router = express.Router();
-const mongoController = require("../controllers/bbdd.controller");
+
+
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const checkToken = require("../middlewares/checkToken");
+const isAdmin = require("../middlewares/isAdmin");
 
 const signupController = require("../controllers/signup.controller");
 const GoogleController = require("../controllers/google.controller");
 const loginController = require("../controllers/login.controller");
 const logoutController = require("../controllers/logout.controller");
+const favoritesController = require("../controllers/favorites.controller");
 const recoverController = require("../controllers/recover.controller");
 const searchController = require("../controllers/search.controller");
+const mongoController = require("../controllers/bbdd.controller");
 
-// Rutas de la API
-router.get("/movies", mongoController.getAllMovies);
-router.get("/movies/:title", searchController.searchAPI);
-router.get("/movies/details/:id", searchController.getDetails);
-router.post("/createMovie", mongoController.createMovie);
-router.put("/editMovie/:id", mongoController.editMovie);
-router.delete("/deleteMovie/:id", mongoController.deleteMovie);
-router.get("/getFavorites/:email", mongoController.getFavorites);
+// Rutas de la API con protección
+router.get("/movies", isAuthenticated, checkToken, mongoController.getAllMovies);
+router.get("/movies/:title", isAuthenticated, checkToken, searchController.searchAPI);
+router.get("/movies/details/:id", isAuthenticated, checkToken, searchController.getDetails);
+router.get("/movies/details/:title", isAuthenticated, checkToken, searchController.getCritics);
+router.post("/createMovie", isAuthenticated, checkToken, isAdmin, mongoController.createMovie);
+router.put("/editMovie/:id", isAuthenticated, checkToken, isAdmin, mongoController.editMovie);
+router.delete("/deleteMovie/:id", isAuthenticated, checkToken, isAdmin, mongoController.deleteMovie);
+router.get("/getFavorites/:email", isAuthenticated, checkToken, mongoController.getFavorites);
+router.post("/favorites", isAuthenticated, checkToken, favoritesController.createFavorite)
+router.delete("/deleteFavorites/:id", isAuthenticated, checkToken, favoritesController.deleteFavorite);
 
-//RUTA PARA
 
+
+//Rutas sin protección
 router.post("/signup", signupController.signupFunction);
 router.get("/auth/google", GoogleController.profileFunction);
 router.get("/google/callBack?", GoogleController.loginMiddleware, GoogleController.loginFunction);
 router.get("/auth/failure", GoogleController.failureFunction);
 router.post("/login", loginController.loginMiddleware, loginController.loginFunction);
-router.post("/logout", logoutController.logoutFunction);
+router.get("/logout", logoutController.logoutFunction);
 router.get('/recoverpassword/:email', recoverController.recoverPassword);
 router.put('/resetpassword/:recoverToken', recoverController.resetPassword);
+
 
 //RUTA PARA
 
@@ -40,8 +49,7 @@ router.put('/resetpassword/:recoverToken', recoverController.resetPassword);
 //RUTA PARA OBTENER RESULTADOS BUSQUEDA
 // get (/movies/:title)  --> por dentro va a buscar en nuestra BBDD + en API externa
 
-//RUTA PARA OBTENER FAVORITOS POR USUARIO
-//get(/favorites/:email)  <--- checkear que el usuario logueado es el del email
+
 
 //RUTA PARA AÑADIR PELICULA A FAVORITOS (BBDD SQL)
 //post(/favorites)

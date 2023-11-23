@@ -15,7 +15,7 @@ html(lang="en")
             //---------Navbars----------------------------------------
             nav#topnav 
                 section#topnav-left.topnav-section
-                    a(onclick="history.back()")#topnav-back.topnav-button
+                    a#topnav-back.topnav-button
                         i#topnav-back-icon.fa-solid.fa-arrow-left.fa-xl
                 h1#page-title.topnav-section Buscador
                 section#topnav-right.topnav-section
@@ -45,10 +45,12 @@ html(lang="en")
                     span#sidenav-footer-logout Cerrar sesion
             //------------------------------------------------------------------------
         main 
-            h1 Soy la página de busqueda 
+
+            h1#searchh1 Aquí puedes buscar tus peliculas favoritas 
             form#search-form()
                 input#search-bar(type="text" placeholder="Busca una película..." required) 
-                input#search-button(type="submit") 
+                input#search-button(type="submit" class="redButton") 
             section#search-results
         footer
-        script(src="./script.js")  
+        script(src="./script.js") 
+        script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11") 
