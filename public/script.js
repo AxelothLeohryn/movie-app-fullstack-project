@@ -1,10 +1,9 @@
-// const { json } = require("express");
 //Sección de inicio
 if (document.title == "Inicio") {
   let signUp = document.querySelectorAll(".signUpButton");
   signUp.forEach((element) => {
     element.addEventListener("click", function () {
-      document.getElementById("container").classList.add("hide");
+      document.getElementById("container").style.display = "none";
       document.getElementById("signUpContainer").classList.remove("hide");
       document.getElementById("logInContainer").classList.add("hide");
       document.getElementById("signUpButton").classList.add("hide");
@@ -14,7 +13,7 @@ if (document.title == "Inicio") {
   let logIn = document.querySelectorAll(".logInButton");
   logIn.forEach((element) => {
     element.addEventListener("click", function () {
-      document.getElementById("container").classList.add("hide");
+      document.getElementById("container").style.display = "none";
       document.getElementById("logInContainer").classList.remove("hide");
       document.getElementById("signUpContainer").classList.add("hide");
       document.getElementById("signUpButton").classList.remove("hide");
@@ -305,43 +304,36 @@ function printMovieCardsUser(moviesData, section) {
         objectFavoritos[`${moviesData[i].id}`] = encontrado;
       }
       console.log(objectFavoritos);
-      const movieCard = (movie) => {
-        //Store all found genres in a string
-        let heart;
-        if (objectFavoritos[`${movie.id}`] == true) {
-          heart = `<i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>`;
-        } else {
-          heart = `<i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>`
-        }
-        let genres = movie.genres.map((genre) => genre).join(", ");
-        //-----------------HTML structure of each movie card------------------------------
-        //
-        return `<section class="movie-card" data-movie-id="${movie.id}">
-                  <section class="movie-card-image">
-                    <img src="${movie.image}" alt="Poster Image">
-                      ${heart}
-                  </section>
-                  <section class="movie-card-details" data-movie-id="${movie.id}">
-                                  <section class=" movie-card-details-header">
-                    <div class="movie-card-year">
-                      <h5>Fecha</h5>
-                      ${movie.year}
-                    </div>
-                    <div class="movie-card-length">
-                      <h5>Duración</h5>
-                      ${movie.length} min
-                    </div>
-                    <div class="movie-card-genres">
-                      <h5>Género</h5>
-                      ${genres}
-                    </div>
-                  </section>
-                  <section class="movie-card-details-content">
-                    <h3>${movie.title}</h3>
-                    <h4>Director</h4>
-                    <h4>${movie.director}</h4>
-                  </section>
+     const movieCard = (movie) => {
+      //Store all found genres in a string
+      let genres = movie.genres.map((genre) => genre).join(", ");
+      //-----------------HTML structure of each movie card------------------------------
+      return `<section class="movie-card" data-movie-id="${movie.id}">
+                <section class="movie-card-image">
+                  <img src="${movie.image}" alt="Poster Image">
+                    <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl cardbutton" style="color: #fc2222;"></i>
+                    <i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl cardbutton" style="color: #fc2222;"></i>
                 </section>
+                <section class="movie-card-details" data-movie-id="${movie.id}">
+                                <section class=" movie-card-details-header">
+                  <div class="movie-card-year">
+                    <h5>Fecha</h5>
+                    ${movie.year}
+                  </div>
+                  <div class="movie-card-length">
+                    <h5>Duración</h5>
+                    ${movie.length} min
+                  </div>
+                  <div class="movie-card-genres">
+                    <h5>Género</h5>
+                    ${genres}
+                  </div>
+                </section>
+                <section class="movie-card-details-content">
+                  <h3>${movie.title}</h3>
+                  <h4>Director</h4>
+                  <h4>${movie.director}</h4>
+                 </section>
       </section>`;
       };
       // console.log(moviesData);
@@ -395,8 +387,8 @@ function printMovieCardsAdmin(moviesData, section) {
       return `<section class="movie-card">
               <section class="movie-card-image">
                 <img src="${movie.image}" alt="Poster Image">
-                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i>
-                <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
+                <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl cardbutton"></i>
+                <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl cardbutton"></i>
               </section>
                 <section class="movie-card-details" data-movie-id="${movie.id}">
                   <section class="movie-card-details-header">
@@ -596,7 +588,7 @@ async function displayMovieDetails(id, section) {
       }" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </section>
   <section class="critics">
-      <h2>Criticas</h2>
+      <h2>Críticas</h2>
       <section id="criticsContainer"></section>
   </section>
 </section>`;
@@ -837,20 +829,7 @@ document.addEventListener("click", async function (event) {
   }
 });
 
-// async function getFavoriteMovies() {
-//   let registeredemail = document.getElementById("registereduser");
-//   // console.log(registeredemail.innerHTML);
-//   let favorites = await fetch(
-//     `/api/getFavorites/${registeredemail}`
-//   ).then((res) => res.json());
-//   console.log(favorites);
-// }
 
-// async function printFavoriteMovies() {
-//   const favoriteMovies = await getFavoriteMovies();
-//   printMovieCardsUser(favoriteMovies, "favorites");
-// }
-// let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
 // Sección favoritos ---------------------------------------------------------------------------------
 async function printFavoriteMovies() {
   const favoritesIds = await fetch("/api/getFavorites").then(res => res.json());
