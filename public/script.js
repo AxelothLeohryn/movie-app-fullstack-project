@@ -354,28 +354,28 @@ function printMovieCardsAdmin(moviesData, section) {
                 <i data-movie-id="${movie.id}" class="edit fa-solid fa-gear fa-2xl"></i>
                 <i data-movie-id="${movie.id}" class="delete fa-solid fa-trash-can fa-2xl"></i>
               </section>
-              <section class="movie-card-details" data-movie-id="${movie.id}">
-                <section class="movie-card-details-header">
-                  <div class="movie-card-year">
-                    <h5>Fecha</h5>
-                    ${movie.year}
-                  </div>
-                  <div class="movie-card-length">
-                    <h5>Duración</h5>
-                    ${movie.length} min
-                  </div>
-                  <div class="movie-card-genres">
-                    <h5>Género</h5>
-                    ${genres}
-                  </div>
+                <section class="movie-card-details" data-movie-id="${movie.id}">
+                  <section class="movie-card-details-header">
+                    <div class="movie-card-year">
+                      <h5>Fecha</h5>
+                      ${movie.year}
+                    </div>
+                    <div class="movie-card-length">
+                      <h5>Duración</h5>
+                      ${movie.length} min
+                    </div>
+                    <div class="movie-card-genres">
+                      <h5>Género</h5>
+                      ${genres}
+                    </div>
+                  </section>
+                  <section class="movie-card-details-content">
+                    <h3>${movie.title}</h3>
+                    <h4>Director</h4>
+                    <h4>${movie.director}</h4>
+                  </section>
                 </section>
-                <section class="movie-card-details-content">
-                  <h3>${movie.title}</h3>
-                  <h4>Director</h4>
-                  <h4>${movie.director}</h4>
-                </section>
-              </section>
-            </section>`;
+              </section>`;
     };
     // console.log(moviesData);
     let movieCardContainerHTML = `<section class="movie-card-container">`;
@@ -599,40 +599,111 @@ if (document.title == "Movies: Crear Película") {
   });
 }
 
-// FORMULARIO EDITAR PELICULA
+async function handleMovieForm(formateMovieId, movieId) {
+  try {
+    await dataEditForm(formateMovieId);
+  } catch (error) {
+    console.error(error.message);
+  }
+
+  if (document.title == "Movies: Editar Película") {
+    const editMovieForm = document.getElementById("edit_movie_form");
+
+    editMovieForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+
+      const editedMovieData = {
+        title: formData.get("title"),
+        director: formData.get("director"),
+        year: formData.get("year"),
+        length: formData.get("length"),
+        image: formData.get("image"),
+        genres: formData.get("genres"),
+        actors: formData.get("actors"),
+        trailer: formData.get("trailer"),
+        overview: formData.get("overview"),
+      };
+
+      try {
+        const response = await fetch(
+          `https://movie-app-fullstack.onrender.com/api/editMovie/api/movies/details/${movieId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(editedMovieData),
+          }
+        );
+
+        const responseData = await response.json();
+        console.log(responseData);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+  }
+}
+
+async function dataEditForm(movieId) {
+  try {
+    const response = await fetch(
+      `https://movie-app-fullstack.onrender.com/api/movies/details/${movieId}`
+    );
+    const movieData = await response.json();
+
+    if (movieData && movieData.title) {
+      document.querySelector('#EDIT_form input[name="title"]').value =
+        movieData.title;
+      document.querySelector('#EDIT_form input[name="director"]').value =
+        movieData.director;
+      document.querySelector('#EDIT_form input[name="year"]').value =
+        movieData.year;
+      document.querySelector('#EDIT_form input[name="length"]').value =
+        movieData.length;
+      document.querySelector('#EDIT_form input[name="image"]').value =
+        movieData.image;
+      document.querySelector('#EDIT_form input[name="genres"]').value =
+        movieData.genres;
+      document.querySelector('#EDIT_form input[name="actors"]').value =
+        movieData.actors;
+      document.querySelector('#EDIT_form input[name="trailer"]').value =
+        movieData.trailer;
+      document.querySelector('#EDIT_form textarea[name="overview"]').value =
+        movieData.overview;
+
+      handleMovieForm();
+    } else {
+      console.error("Error");
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 if (document.title == "Movies: Editar Película") {
-  const editMovieForm = document.getElementById("edit_movie_form");
+  const movieId = window.location.href.split("/").pop();
 
-  editMovieForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
+  dataEditForm(movieId);
+}
 
-    const formData = new FormData(this);
-
-    const editedMovieData = {
-      title: formData.get("title"),
-      director: formData.get("director"),
-      year: formData.get("year"),
-      length: formData.get("length"),
-      image: formData.get("image"),
-      genres: formData.get("genres"),
-      actors: formData.get("actors"),
-      trailer: formData.get("trailer"),
-      overview: formData.get("overview"),
-    };
+// FUNCIONALIDAD BORRAR PELÍCULA
+document.addEventListener("click", async function (event) {
+  if (event.target.classList.contains("delete")) {
+    const movieId = event.target.getAttribute("data-movie-id");
     try {
       const response = await fetch(
-        "https://movie-app-fullstack.onrender.com/api/editMovie/:id",
+        `https://movie-app-fullstack.onrender.com/api/deleteMovie/${movieId}`,
         {
-          method: "PUT",
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            "x-auth-token": "yourAuthTokenHere",
           },
-          body: JSON.stringify(editedMovieData),
         }
       );
-
-      const responseData = await response.json();
-      console.log(responseData);
+      response.json();
     } catch (error) {
       console.error(error.message);
     }
