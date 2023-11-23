@@ -5,21 +5,24 @@ const jwt = require("jsonwebtoken");
 const passport = require("./config/passport-config");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const helmet = require('helmet');
+const helmet = require("helmet");
 require("./auth.js");
 const port = 3000;
 require("./config/mongo_atlas.js"); // Conexión a BBDD MongoDB
+
+//documentación
+require("swagger-jsdoc"), require("swagger-ui-express");
 
 const morgan = require("./middlewares/morgan");
 const secret = process.env.secret;
 app.set("trust proxy", 1);
 
-
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('public', { index: false, redirect: false }))
+app.use(express.static("public", { index: false, redirect: false }));
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
+app.use(
+  session({
     secret: secret,
     resave: false,
     saveUninitialized: true,
@@ -35,18 +38,16 @@ app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-      "img-src": ["'self'", "https: data:"]
-    }
+      "img-src": ["'self'", "https: data:"],
+    },
   })
-)
-
+);
 
 // Logger
 app.use(morgan(":method :host :status :url :response-time ms :body"));
 
 const viewsRoutes = require("./routes/views.routes");
 const apiRoutes = require("./routes/api.routes");
-
 
 //Configuracion de Pug
 app.set("view engine", "pug");
