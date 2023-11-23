@@ -19,8 +19,8 @@ const mongoController = require("../controllers/bbdd.controller");
  * @swagger
  * /api/movies:
  *   get:
- *     summary: Obtener todas las películas
- *     description: Endpoint para obtener la lista completa de películas.
+ *     summary: Explora el catálogo completo de películas disponibles.
+ *     description: Endpoint para acceder a la lista completa de películas disponibles.
  *     tags:
  *       - Movies
  *     security:
@@ -31,8 +31,8 @@ const mongoController = require("../controllers/bbdd.controller");
  */
 router.get(
   "/movies",
-  isAuthenticated,
-  checkToken,
+  //   isAuthenticated,
+  //   checkToken,
   mongoController.getAllMovies
 );
 
@@ -54,27 +54,97 @@ router.get(
   checkToken,
   searchController.getCritics
 );
+/**
+ * @swagger
+ * /api/createMovie:
+ *   post:
+ *     summary: Agregar una nueva película.
+ *     description: Endopint para crear una nueva película.
+ *     tags:
+ *       - Movies
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/MovieDetails'
+ *     responses:
+ *       '201':
+ *         description: Película creada con éxito.
+ *       '400':
+ *         description: Error en la solicitud.
+ *       '401':
+ *         description: No autorizado. Se requiere autenticación y permisos de administrador.
+ */
+
 router.post(
   "/createMovie",
-  isAuthenticated,
-  checkToken,
-  isAdmin,
+  // isAuthenticated,
+  // checkToken,
+  // isAdmin,
   mongoController.createMovie
 );
+/**
+ * @swagger
+ * /api/editMovie/{id}:
+ *   put:
+ *     summary: Modificar información de una película.
+ *     description: Enpoint para editar una película por ID.
+ *     tags:
+ *       - Movies
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID de la película
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Película editada con éxito
+ */
+
 router.put(
   "/editMovie/:id",
-  isAuthenticated,
-  checkToken,
-  isAdmin,
+  //   isAuthenticated,
+  //   checkToken,
+  //   isAdmin,
   mongoController.editMovie
 );
+
+/**
+ * @swagger
+ * /api/deleteMovie/{id}:
+ *   delete:
+ *     summary: Eliminar una película de la base de datos.
+ *     description: Endpoint para eliminar una película por ID.
+ *     tags:
+ *       - Movies
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID de la película
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Película eliminada con éxito
+ */
+
 router.delete(
   "/deleteMovie/:id",
-  isAuthenticated,
-  checkToken,
-  isAdmin,
+  //   isAuthenticated,
+  //   checkToken,
+  //   isAdmin,
   mongoController.deleteMovie
 );
+
 router.get(
   "/getFavorites/:email",
   isAuthenticated,

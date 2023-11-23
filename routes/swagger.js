@@ -8,6 +8,41 @@ const options = {
       title: "API MOVIES",
       version: "1.0.0",
     },
+    components: {
+      schemas: {
+        MovieDetails: {
+          type: "object",
+          properties: {
+            title: { type: "string" },
+            director: { type: "string" },
+            year: { type: "integer" },
+            length: { type: "string" },
+            image: { type: "string" },
+            genres: {
+              type: "array",
+              items: { type: "string" },
+            },
+            actors: {
+              type: "array",
+              items: { type: "string" },
+            },
+            trailer: { type: "string" },
+            overview: { type: "string" },
+          },
+          required: [
+            "title",
+            "director",
+            "year",
+            "length",
+            "image",
+            "genres",
+            "actors",
+            "trailer",
+            "overview",
+          ],
+        },
+      },
+    },
   },
   apis: ["./routes/api.routes.js"],
 };
