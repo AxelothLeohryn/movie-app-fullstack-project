@@ -235,6 +235,7 @@ function KeepFavoriteButton() {
           id: movieId,
         }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
       });
+
     });
   });
 }
