@@ -25,7 +25,7 @@ const signupFunction = async (req, res) => {
                 },
                 body: JSON.stringify(datos) 
             };
-            let response = await fetch("https://movie-app-fullstack.onrender.com/api/login", opciones).then(res => res.json());
+            let response = await fetch("/api/login", opciones).then(res => res.json());
             res.status(200).json(response);
         }
     }

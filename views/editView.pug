@@ -41,7 +41,7 @@ html
               span#sidenav-footer-logout Cerrar sesion
     main
       h1#edith1 Editar Película
-      form#EDIT_form(action="/editMovie/:id" method="PUT")
+      form#EDIT_form
         label(for='title') Título:
         input(type='text', name='title', required)
         label(for='director') Director:
@@ -62,4 +62,4 @@ html
         textarea.overview(name='overview', required)
         button(type='submit' class="blueButton") Editar Película
     footer
-    script(src="./script.js")
+    script(src="../script.js")

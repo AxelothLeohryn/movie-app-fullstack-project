@@ -58,13 +58,11 @@ if (document.title == "Inicio") {
           },
           body: JSON.stringify(datos),
         };
-        let emailAvailable = await fetch(
-          "https://movie-app-fullstack.onrender.com/api/signup",
-          opciones
-        ).then((response) => response.json());
+        let emailAvailable = await fetch("/api/signup", opciones).then(
+          (response) => response.json()
+        );
         if (emailAvailable == "success") {
-          window.location.href =
-            "https://movie-app-fullstack.onrender.com/dashboard";
+          window.location.href = "/dashboard";
         } else if (emailAvailable == false) {
           Swal.fire({
             icon: "error",
@@ -109,13 +107,11 @@ if (document.title == "Inicio") {
           },
           body: JSON.stringify(datos),
         };
-        let emailSigned = await fetch(
-          "https://movie-app-fullstack.onrender.com/api/login",
-          opciones
-        ).then((response) => response.json());
+        let emailSigned = await fetch("/api/login", opciones).then((response) =>
+          response.json()
+        );
         if (emailSigned == "success") {
-          window.location.href =
-            "https://movie-app-fullstack.onrender.com/dashboard";
+          window.location.href = "/dashboard";
         } else if (emailSigned == false) {
           Swal.fire({
             icon: "error",
@@ -132,8 +128,7 @@ if (document.title == "Inicio") {
   let google = document.querySelectorAll(".google");
   google.forEach((element) => {
     element.addEventListener("click", async function () {
-      window.location.href =
-        "https://movie-app-fullstack.onrender.com/api/auth/google";
+      window.location.href = "/api/auth/google";
     });
   });
 }
@@ -173,7 +168,7 @@ if (document.title == "recoverPassword") {
         body: JSON.stringify(datos),
       };
       let passwordChanged = await fetch(
-        `https://movie-app-fullstack.onrender.com/api/resetpassword/${token}`,
+        `/api/resetpassword/${token}`,
         opciones
       ).then((response) => response.json());
       if (passwordChanged == "success") {
@@ -184,7 +179,7 @@ if (document.title == "recoverPassword") {
           showCancelButton: false,
           confirmButtonText: "Volver a iniciar sesión",
         }).then((result) => {
-          window.location.href = "https://movie-app-fullstack.onrender.com/";
+          window.location.href = "/";
         });
       } else if (passwordChanged == false) {
         Swal.fire({
@@ -209,7 +204,7 @@ if (document.title == "tokenExpirado") {
     showCancelButton: false,
     confirmButtonText: "Volver a iniciar sesión",
   }).then((result) => {
-    window.location.href = "https://movie-app-fullstack.onrender.com/";
+    window.location.href = "/";
   });
 }
 if (document.title == "inicioExito") {
@@ -220,7 +215,7 @@ if (document.title == "inicioExito") {
     showCancelButton: false,
     confirmButtonText: "Entrar",
   }).then((result) => {
-    window.location.href = "https://movie-app-fullstack.onrender.com/dashboard";
+    window.location.href = "/dashboard";
   });
 }
 
@@ -231,18 +226,15 @@ function KeepFavoriteButton() {
     heartButton.addEventListener("click", async function (event) {
       event.preventDefault();
       const movieId = event.target.getAttribute("heart-id");
-      await fetch(
-        "http://https://movie-app-fullstack.onrender.com/api/favorites",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: movieId,
-          }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
-        }
-      );
+      await fetch("/favorites", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: movieId,
+        }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
+      });
     });
   });
 }
@@ -252,15 +244,12 @@ function unKeepFavoriteButton() {
     heartButton.addEventListener("click", async function (event) {
       event.preventDefault();
       const movieId = event.target.getAttribute("heart-id");
-      let response = await fetch(
-        `http://https://movie-app-fullstack.onrender.com/api/deleteFavorite/${movieId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => res.json());
+      let response = await fetch(`/api/deleteFavorite/${movieId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
       if (response == "Success") {
         Swal.fire({
           icon: "success",
@@ -329,7 +318,7 @@ function editButtonMovie() {
       console.log("Me has clickeado!", event.target);
       const movieId = event.target.getAttribute("data-movie-id");
       console.log(movieId);
-      window.location.href = `https://movie-app-fullstack.onrender.com/editMovie/${movieId}`;
+      window.location.href = `/editMovie/${movieId}`;
     });
   });
 }
@@ -399,7 +388,7 @@ function listenForClicks(section) {
       if (movieId) {
         // Redirect a la vista detalles de la película clickeada
         console.log("La id de la película clickeada es: " + movieId);
-        window.location.href = `https://movie-app-fullstack.onrender.com/search/${movieId}`;
+        window.location.href = `/search/${movieId}`;
       }
     }
   });
@@ -436,21 +425,16 @@ if (
     .getElementById("sidenav-footer-logout")
     .addEventListener("click", (event) => {
       event.preventDefault();
-      window.location.href =
-        "https://movie-app-fullstack.onrender.com/api/logout";
+      window.location.href = "/api/logout";
     });
 }
 //Sección de búsqueda-----------------------------------------------------------------------------------
 
 async function searchFilms(title) {
-  return await fetch(
-    `https://movie-app-fullstack.onrender.com/api/movies/${title}`
-  ).then((res) => res.json());
+  return await fetch(`/api/movies/${title}`).then((res) => res.json());
 }
 async function searchFilmDetails(id) {
-  return await fetch(
-    `https://movie-app-fullstack.onrender.com/api/movies/details/${id}`
-  ).then((res) => res.json());
+  return await fetch(`/api/movies/details/${id}`).then((res) => res.json());
 }
 
 //Event listener of search button: GET (/api/movies/title), then print cards
@@ -518,9 +502,9 @@ async function displayMovieDetails(id, section) {
   </section>
 </section>`;
   console.log("I'm displaying details");
-  let critics = await fetch(
-    `https://movie-app-fullstack.onrender.com/api/movies/details/${movieDetails.title}`
-  ).then((res) => res.json());
+  let critics = await fetch(`/api/movies/details/${movieDetails.title}`).then(
+    (res) => res.json()
+  );
   let criticsContainer = document.getElementById("criticsContainer");
   if (critics == false) {
     criticsContainer.innerHTML = `<p>No hay criticas para esta pelicula</p>`;
@@ -546,9 +530,7 @@ if (document.title === "Detalles de la película") {
 
 //*---------Sección de formularios create/edit movies------------*//
 async function getLocalMovies() {
-  return await fetch(
-    "https://movie-app-fullstack.onrender.com/api/movies"
-  ).then((res) => res.json());
+  return await fetch("/api/movies").then((res) => res.json());
 }
 if (document.title == "Movies: Admin") {
   async function printLocalMovies() {
@@ -575,22 +557,20 @@ if (document.title == "Movies: Crear Película") {
       year: formData.get("year"),
       length: formData.get("length"),
       image: formData.get("image"),
-      genres: formData.get("genres"),
-      actors: formData.get("actors"),
+      genres: [formData.get("genres")],
+      actors: [formData.get("actors")],
       trailer: formData.get("trailer"),
       overview: formData.get("overview"),
     };
+    console.log("Este es el objeto que se envia por fetch: " + movieData);
     try {
-      const response = await fetch(
-        "/api/createMovie",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(movieData),
-        }
-      );
+      const response = await fetch("/api/createMovie", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(movieData),
+      });
       const responseData = await response.json();
       console.log(responseData);
     } catch (error) {
@@ -599,58 +579,46 @@ if (document.title == "Movies: Crear Película") {
   });
 }
 
-async function handleMovieForm(formateMovieId, movieId) {
-  try {
-    await dataEditForm(formateMovieId);
-  } catch (error) {
-    console.error(error.message);
-  }
+async function handleMovieForm(movieId) {
+  const editMovieForm = document.getElementById("EDIT_form");
 
-  if (document.title == "Movies: Editar Película") {
-    const editMovieForm = document.getElementById("edit_movie_form");
+  editMovieForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
 
-    editMovieForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
-      const formData = new FormData(this);
+    const editedMovieData = {
+      title: formData.get("title"),
+      director: formData.get("director"),
+      year: formData.get("year"),
+      length: formData.get("length"),
+      image: formData.get("image"),
+      genres: formData.get("genres"),
+      actors: formData.get("actors"),
+      trailer: formData.get("trailer"),
+      overview: formData.get("overview"),
+    };
 
-      const editedMovieData = {
-        title: formData.get("title"),
-        director: formData.get("director"),
-        year: formData.get("year"),
-        length: formData.get("length"),
-        image: formData.get("image"),
-        genres: formData.get("genres"),
-        actors: formData.get("actors"),
-        trailer: formData.get("trailer"),
-        overview: formData.get("overview"),
-      };
+    try {
+      const response = await fetch(`/api/editMovie/${movieId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedMovieData),
+      });
 
-      try {
-        const response = await fetch(
-          `https://movie-app-fullstack.onrender.com/api/editMovie/api/movies/details/${movieId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(editedMovieData),
-          }
-        );
-
-        const responseData = await response.json();
-        console.log(responseData);
-      } catch (error) {
-        console.error(error.message);
-      }
-    });
-  }
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
 }
 
 async function dataEditForm(movieId) {
+  console.log("Esta es la id de la pelicula a editar: " + movieId);
   try {
-    const response = await fetch(
-      `https://movie-app-fullstack.onrender.com/api/movies/details/${movieId}`
-    );
+    const response = await fetch(`/api/movies/details/${movieId}`);
     const movieData = await response.json();
 
     if (movieData && movieData.title) {
@@ -673,7 +641,7 @@ async function dataEditForm(movieId) {
       document.querySelector('#EDIT_form textarea[name="overview"]').value =
         movieData.overview;
 
-      handleMovieForm();
+      handleMovieForm(movieId);
     } else {
       console.error("Error");
     }
@@ -682,8 +650,14 @@ async function dataEditForm(movieId) {
   }
 }
 
-if (document.title == "Movies: Editar Película") {
-  const movieId = window.location.href.split("/").pop();
+if (document.title === "Movies: Editar Película") {
+  function getMovieId() {
+    return window.location.href.split("/").pop();
+  }
+  movieId = getMovieId();
+  console.log({
+    id: getMovieId(),
+  });
 
   dataEditForm(movieId);
 }
@@ -693,16 +667,13 @@ document.addEventListener("click", async function (event) {
   if (event.target.classList.contains("delete")) {
     const movieId = event.target.getAttribute("data-movie-id");
     try {
-      const response = await fetch(
-        `https://movie-app-fullstack.onrender.com/api/deleteMovie/${movieId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "x-auth-token": "yourAuthTokenHere",
-          },
-        }
-      );
+      const response = await fetch(`/api/deleteMovie/${movieId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": "yourAuthTokenHere",
+        },
+      });
       response.json();
     } catch (error) {
       console.error(error.message);
@@ -714,7 +685,7 @@ document.addEventListener("click", async function (event) {
 //   let registeredemail = document.getElementById("registereduser");
 //   // console.log(registeredemail.innerHTML);
 //   let favorites = await fetch(
-//     `http://https://movie-app-fullstack.onrender.com/api/getFavorites/${registeredemail}`
+//     `/api/getFavorites/${registeredemail}`
 //   ).then((res) => res.json());
 //   console.log(favorites);
 // }
