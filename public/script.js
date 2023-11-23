@@ -260,7 +260,7 @@ function unKeepFavoriteButton() {
             "Content-Type": "application/json",
           },
         }
-      ).then(res => res.json());
+      ).then((res) => res.json());
       if (response == "Success") {
         Swal.fire({
           icon: "success",
@@ -707,25 +707,25 @@ document.addEventListener("click", async function (event) {
     } catch (error) {
       console.error(error.message);
     }
-  });
-
-  // async function getFavoriteMovies() {
-  //   let registeredemail = document.getElementById("registereduser");
-  //   // console.log(registeredemail.innerHTML);
-  //   let favorites = await fetch(
-  //     `http://https://movie-app-fullstack.onrender.com/api/getFavorites/${registeredemail}`
-  //   ).then((res) => res.json());
-  //   console.log(favorites);
-  // }
-
-  // async function printFavoriteMovies() {
-  //   const favoriteMovies = await getFavoriteMovies();
-  //   printMovieCardsUser(favoriteMovies, "favorites");
-  // }
-  // let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
-  if (document.title == "Mis películas") {
-    // primero cogemos los favoritos, luego los pintamos con las tarjetas
-    printFavoriteMovies();
-    unKeepFavoriteButton();
   }
+});
+
+// async function getFavoriteMovies() {
+//   let registeredemail = document.getElementById("registereduser");
+//   // console.log(registeredemail.innerHTML);
+//   let favorites = await fetch(
+//     `http://https://movie-app-fullstack.onrender.com/api/getFavorites/${registeredemail}`
+//   ).then((res) => res.json());
+//   console.log(favorites);
+// }
+
+// async function printFavoriteMovies() {
+//   const favoriteMovies = await getFavoriteMovies();
+//   printMovieCardsUser(favoriteMovies, "favorites");
+// }
+// let id_movie= favorites.movie_id //esto hace que se guarde en la variable el id de la peli
+if (document.title == "Mis películas") {
+  // primero cogemos los favoritos, luego los pintamos con las tarjetas
+  printFavoriteMovies();
+  unKeepFavoriteButton();
 }
