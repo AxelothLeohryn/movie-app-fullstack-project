@@ -24,11 +24,13 @@ const getRatings = async (title) => {
         await page.keyboard.press('Enter');
         await page.waitForNavigation();
 
-
-        await page.waitForSelector('#title-result > div > div:nth-child(2) > div.fa-shadow-nb.item-search > div > div.mc-poster > a');
-        const firstResultSelector = await page.$('#title-result > div > div:nth-child(2) > div.fa-shadow-nb.item-search > div > div.mc-poster > a');
-        await firstResultSelector.click();
-        await page.waitForNavigation();
+        const currentUrl = page.url();
+        if (!currentUrl.startsWith('https://www.filmaffinity.com/es/film')) {
+            await page.waitForSelector('#title-result > div > div:nth-child(2) > div.fa-shadow-nb.item-search > div > div.mc-poster > a');
+            const firstResultSelector = await page.$('#title-result > div > div:nth-child(2) > div.fa-shadow-nb.item-search > div > div.mc-poster > a');
+            await firstResultSelector.click();
+            await page.waitForNavigation();
+        }
 
         let criticasResultado = [];
         const criticas = [2, 3]; 
@@ -51,7 +53,6 @@ const getRatings = async (title) => {
         return {message: err};
     } 
 }
-
 
 const puppeteerCritics = {
     getRatings
