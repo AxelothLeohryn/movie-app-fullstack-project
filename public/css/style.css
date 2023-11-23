@@ -594,6 +594,12 @@ span:hover {
     height: 50px;
 }
 
+.NoResult {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
+
 
 @media screen and (min-width: 400px) and (max-width: 600px) {
     html {

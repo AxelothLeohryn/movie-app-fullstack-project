@@ -288,7 +288,7 @@ function printMovieCardsUser(moviesData, section) {
   resultsSection.innerHTML = "";
   let cardNumber = 0;
   if (moviesData.length == 0) {
-    resultsSection.innerHTML = "No se han encontrado películas.";
+    resultsSection.innerHTML = `<p class="NoResult"> No se han encontrado películas</p>`;
   } else {
     async function getFavourites() {
       objectFavoritos = {}
@@ -859,10 +859,12 @@ async function printFavoriteMovies() {
   for (const favoriteId of favoritesIds) {
     const favoriteData = await fetch(`/api/movies/details/${favoriteId.movie_id}`).then(res => res.json());
     console.log("Favorite Data: ", favoriteData);
+    favoriteData.id = favoriteId.movie_id;
     favoritesData.push(favoriteData);
   }
   // console.log("Favorites Data: ", favoritesData);
   printMovieCardsUser(favoritesData, "favorites");
+  listenForClicks("favorites")
 }
 if (document.title == "Mis películas") {
   // primero cogemos los favoritos, luego los pintamos con las tarjetas
