@@ -7,8 +7,10 @@ const getFavoritesByEmail = async (email) => {
     let client, result;
     try {
         client = await pool.connect(); // cuand haya alguien conectado, es decir, registrado
+        console.log("conectando a sql favoritos");
         const data = await client.query(queries.getAllFavoritesByEmail, [email]) // nos dará todas las pelis que haya guardado ese email
         result = data.rows;
+        console.log("Resultado de favoritos sql: " + result);
         return result
     } catch (err) {
         console.log(err);
