@@ -589,6 +589,9 @@ span:hover {
     color: white;
     text-align: center;
 }
+.overview {
+    height: 50px;
+}
 
 
 @media screen and (min-width: 400px) and (max-width: 600px) {
