@@ -164,6 +164,8 @@ router.delete(
   favoritesController.deleteFavorite
 );
 
+
+
 //Rutas sin protección
 router.post("/signup", signupController.signupFunction);
 router.get("/auth/google", GoogleController.profileFunction);

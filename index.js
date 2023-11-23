@@ -5,7 +5,9 @@ const jwt = require("jsonwebtoken");
 const passport = require("./config/passport-config");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const helmet = require("helmet");
+const helmet = require('helmet');
+const path = require('path'); 
+
 require("./auth.js");
 const port = 3000;
 require("./config/mongo_atlas.js"); // Conexión a BBDD MongoDB
@@ -34,6 +36,7 @@ const morgan = require("./middlewares/morgan");
 const secret = process.env.secret;
 app.set("trust proxy", 1);
 
+app.use('/api-jsdoc', express.static(path.join(__dirname, '/jsondocs')));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public", { index: false, redirect: false }));
@@ -56,6 +59,8 @@ app.use(
     useDefaults: true,
     directives: {
       "img-src": ["'self'", "https: data:"],
+      "script-src": ["'self'", "https://cdn.jsdelivr.net"],
+      "frame-src": ["'self'", "https://www.youtube.com"]
     },
   })
 );

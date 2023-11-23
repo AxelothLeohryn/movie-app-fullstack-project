@@ -1,5 +1,6 @@
 const Movie = require("../models/movies");
 const movieModel = require("../models/search.model");
+const favouritesModel = require("../models/favorites.model");
 require("../config/mongo_atlas.js");
 
 const getAllMovies = async (req, res) => {
@@ -12,12 +13,15 @@ const getAllMovies = async (req, res) => {
 };
 
 const createMovie = async (req, res) => {
+  console.log(req.body);
+  const newMovie = new Movie(req.body);
+  console.log("Objeto pelicula: " + newMovie);
   try {
-    const newMovie = new Movie(req.body);
     const savedMovie = await newMovie.save();
+    console.log(savedMovie);
     res.json(savedMovie);
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json(error);
   }
 };
 
@@ -51,7 +55,13 @@ const deleteMovie = async (req, res) => {
 
 const getFavorites = async (req, res) => {
   try {
-    res.json({ favorites: [] });
+    let email = req.user.email;
+    let response = await favouritesModel.getFavoritesByEmail(email);
+    if (response == "error") {
+      res.status(400).json("error")
+    } else {
+      res.status(200).json(response);
+    }
   } catch (error) {
     res.status(500).json(error.message);
   }

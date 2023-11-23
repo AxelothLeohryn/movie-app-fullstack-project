@@ -1,13 +1,16 @@
 doctype html
 html
   head
+    meta(http-equiv="Content-Security-Policy", content="script-src 'self' https://cdn.jsdelivr.net;")
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title Movies: Crear Película
     link(rel="stylesheet", href="./css/style.css")
     link(rel="shortcut icon", href="./css/favicon.png", type="image/x-icon")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css", integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==", crossorigin="anonymous", referrerpolicy="no-referrer")
-
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin)
+    link(href='https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap', rel='stylesheet')
   body
     header 
       //---------Navbars----------------------------------------
@@ -40,10 +43,10 @@ html
               //-     li.sidenav-main-link Mi perfil
               //-     li.sidenav-main-link Ajustes
           section#sidenav-footer
-              span#sidenav-footer-logout Cerrar sesion
+              span#sidenav-footer-logout Cerrar sesión
     main
       h1#createh1 Crear Película
-      form#movie_form(action="/createMovie" method="POST")
+      form#movie_form
         label(for='title') Título:
         input(type='text', name='title', required)
         label(for='director') Director:
@@ -61,7 +64,8 @@ html
         label(for='trailer') URL del tráiler:
         input(type='text', name='trailer',value="https://www.youtube.com/embed/", required)
         label(for='overview') Resumen:
-        textarea(name='overview', required)
-        button(type='submit' class="blueButton") Crear Película
+        textarea.overview(name='overview', required)
+        button(type='submit' class="blueButton submitbutton") Crear Película
     footer
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
     script(src="./script.js")

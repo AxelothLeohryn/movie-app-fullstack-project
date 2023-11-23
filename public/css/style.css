@@ -1,6 +1,14 @@
+:root {
+    --black: #353535;
+    --green: #3c6e71;
+    --white: #FFFFFF;
+    --grey: #D9D9D9;
+    --blue: #284B63;
+}
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 html {
@@ -8,32 +16,35 @@ html {
 }
 
 body {
-    background: linear-gradient(to bottom, rgb(35, 33, 33), rgb(100, 94, 94));
+    background: linear-gradient(to bottom, #041e30, #7d9697);
     background-size: cover;
     background-attachment: fixed;
 }
 
 #container {
     position: absolute;
+    backdrop-filter: brightness(0.5);
+    /* background-color: black; */
+    padding: 40px;
+    border-radius: 10px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40vw;
+    width: 60vw;
     min-width: 200px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .Title {
+    font-weight: 700;
     font-size: 3rem;
-    color: darkblue;
+    color: var(--grey);
     text-align: center;
+    text-wrap: nowrap;
     margin: 30px;
-    text-shadow:
-        2px 2px 1px darkturquoise,
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white;
     display: inline-block;
 }
 
@@ -43,9 +54,9 @@ body {
     font-size: 1.5rem;
     color: white;
     text-shadow: 2px 2px 1px black;
-    background-color: crimson;
+    background-color: var(--green);
     border-radius: 20px;
-    box-shadow: -5px -5px 5px black;
+    /* box-shadow: -5px -5px 5px black; */
     padding: 10px;
     width: 100%;
 }
@@ -55,12 +66,11 @@ body {
     margin: 20px;
     font-size: 1rem;
     color: white;
-    text-shadow: 2px 2px 1px black;
-    background-color: crimson;
+    background-color: var(--blue);
     border-radius: 10px;
-    box-shadow: -5px -5px 5px black;
     padding: 10px;
-    width: 100px;
+    min-width: 120px;
+    max-width: 200px;
     position: absolute;
     top: 5px;
     right: 5px;
@@ -77,9 +87,16 @@ body {
 .formContainer {
     display: flex;
     flex-direction: column;
-    background-color: rgba(0, 139, 139, 0.742);
-    padding: 10px;
+    backdrop-filter: brightness(0.5);
+    padding: 40px;
+    width: 60vw;
     border-radius: 20px;
+    margin: auto;
+}
+.formContainer label {
+    color: white;
+    margin-top: 20px;
+    padding-bottom: 5px;
 }
 
 .formContainer form,
@@ -103,38 +120,41 @@ body {
     padding: 10px;
     border-radius: 20px;
 }
+#recuperar {
+    color: rgb(228, 228, 228);
+    margin-top: 10px;
+    font-size: smaller;
+}
 
 .google {
-    width: 80vw;
+    width: 80%;
     max-width: 500px;
     margin: auto;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .blueButton {
     cursor: pointer;
     margin: 20px auto;
     font-size: 1.5rem;
-    color: black;
-    text-shadow: 2px 2px 1px white;
-    background-color: rgb(0, 166, 222);
-    border-radius: 20px;
-    box-shadow: -5px -5px 5px black;
-    padding: 5px;
+    color: white;
+    background-color: var(--green);
+    padding: 12px;
+    border-radius: 10px;
     width: fit-content;
 }
 
 .redButton {
     cursor: pointer;
     margin: 20px auto;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: black;
-    text-shadow: 2px 2px 1px white;
-    background-color: crimson;
+    background-color: var(--green);
     border-radius: 20px;
-    box-shadow: -5px -5px 5px black;
     padding: 5px;
     width: fit-content;
+   
 }
 
 #recuperar {
@@ -162,6 +182,13 @@ body {
     width: 80vw;
 }
 
+#logo {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 30vw;
+    margin: auto;
+}
 
 /* Top Navbar------------------------------------------------------- */
 header {
@@ -177,14 +204,15 @@ header a {
 }
 
 #topnav {
+    z-index: 2;
     width: 100vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    color:white;
     height: 56px;
-    background-color: #3b6eb1;
+    background-color: rgb(22, 22, 22);
 }
 
 .topnav-section {
@@ -210,7 +238,8 @@ header a {
 
 /* Side Navbar------------------------------------------------------- */
 #sidenav {
-    background-color: #6695d3;
+    background-color: var(--blue);
+    z-index: 2;
     height: 100%;
     position: fixed;
     z-index: 100;
@@ -223,6 +252,7 @@ header a {
     align-items: end;
     /* width por defecto, cerrado */
     width: 0px;
+    color: white;
 }
 
 #sidenav-header {
@@ -299,6 +329,7 @@ span:hover {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    width: min-content;
 }
 
 .movie-card {
@@ -339,27 +370,26 @@ span:hover {
 }
 
 .keep {
-    z-index: 1000;
+    z-index: 1;
     position: absolute;
-    top: 20px;
-    right: 50px;
+    top: 40px;
+    right: 20px;
+    display: none;
 }
-.unkeep {
-    z-index: 1000;
-    position: absolute;
-    top: 20px;
-    right: 10px;
+
+.movie-details {
+    position: relative;
 }
 
 .edit {
     position: absolute;
-    top: 20px;
+    top: 40px;
     right: 80px;
 }
 
 .delete {
     position: absolute;
-    top: 20px;
+    top: 40px;
     right: 20px;
 }
 
@@ -403,6 +433,8 @@ span:hover {
     text-align: start;
 }
 
+
+
 .movie-card-length {
     text-align: center;
     margin: 0px 10px;
@@ -417,7 +449,9 @@ span:hover {
 }
 
 .movie-card img {
-    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    height: 100%;
 
 }
 
@@ -428,14 +462,41 @@ span:hover {
     margin: 2px;
     margin-top: 8px;
 }
+.cardbutton {
+    padding: 15px;
+    background-color: var(--grey);
+    border-radius: 10px;
+  
+}
 
 /*Search Section -----------------------------------------------------*/
+#searchh1 {
+    max-width: 70%;
+    margin: auto;
+}
 #search-form {
-    width: 100%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+#search-bar {
+    min-width: 30%;
+    max-width: 50%;
+    background-color:var(--white);
+    
+}
+#search-button {
+    cursor: pointer;
+    margin: 20px;
+    font-size: 1.5rem;
+    color: white;
+    background-color: var(--green);
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 120px;
+    max-width: 200px;
 }
 
 #search-results {
@@ -470,6 +531,7 @@ span:hover {
 .movie-image img {
     width: 100%;
     border-radius: 5px;
+    padding-bottom: 13px;
 }
 
 .movie-info {
@@ -484,6 +546,7 @@ span:hover {
 .movie-year {
     color: #666;
 }
+
 
 .movie-length,
 .movie-genres,
@@ -535,8 +598,8 @@ span:hover {
 }
 
 #search-bar {
-    width: 200px;
-    transform: scale(2);
+    width: 80vw;
+    height: 5vh;
     margin: 30px auto;
 }
 
@@ -544,6 +607,18 @@ span:hover {
     margin-top: 5%;
     color: white;
     text-align: center;
+}
+#create_movie_section {
+    width: 100%;
+    padding: 0px;
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#create_movie_button {
+    margin: auto;
 }
 .userFavourites {
     margin-top: 20px;
@@ -570,6 +645,7 @@ span:hover {
     color: white;
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 #edith1 {
     margin-top: 5%;
@@ -581,14 +657,48 @@ span:hover {
     color: white;
     display: flex;
     flex-direction: column;
+    gap: 7px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 #pelish1 {
     margin-top: 5%;
     color: white;
     text-align: center;
 }
+.overview {
+    height: 50px;
+}
+
+input, textarea {
+    background-color: #041e30;
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    height: 35px;
+    padding-left: 10px;  
+}
+
+textarea {
+    padding-top: 10px;
+
+}
+
+.NoResult {
+    margin-top: 5%;
+    color: white;
+    text-align: center;
+}
 
 
+label { 
+    margin-top:9px;
+}
+
+
+.submitbutton {
+    font-size:medium;
+}
 @media screen and (min-width: 400px) and (max-width: 600px) {
     html {
         font-size: 18px;

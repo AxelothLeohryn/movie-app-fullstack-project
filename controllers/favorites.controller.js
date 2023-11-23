@@ -3,15 +3,7 @@ const queriesFunctions = require('../models/favorites.model');  //como se intera
 
 // cuando tengamos todas las favs
 
-//cuando estemos en/getfarites se ejecuta esto y pinta tarjetas
-const getFavorites = async (req, res) => {
-    let favorites;
-    let userEmail = req.params;
-    console.log(userEmail);
-        favorites = await queriesFunctions.getFavoritesByEmail(userEmail)//segun el email que se haya registrado
-   
-    res.status(200).json(favorites)
-}
+//cuando estemos en/getfarites se ejecuta esto y pinta tarjeta
 
 const createFavorite = async (req, res) => {
     const id = req.body.id;
@@ -21,13 +13,19 @@ const createFavorite = async (req, res) => {
         movie_id: id
     }
     const response = await queriesFunctions.createFavorite(newFav);
-        res.status(201).json({msg:'guardado en favoritos'})
-    };
+    console.log(response);
+    if (response === "Success!") {
+        res.status(200).json("Success!")
+    } else {
+        res.status(400).json("Error")
+    }  
+};
 
     const deleteFavorite = async (req, res) => {
         const id = req.params.id;
         const email = req.user.email;
         const response = await queriesFunctions.deleteById(id, email);
+        console.log(response);
         if (response === "Success!") {
             res.status(200).json("Success!")
         } else {
@@ -36,7 +34,6 @@ const createFavorite = async (req, res) => {
         };
 
 module.exports = {  
-    getFavorites,
     createFavorite,
     deleteFavorite
 }
