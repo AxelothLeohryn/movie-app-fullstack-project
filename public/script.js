@@ -225,51 +225,67 @@ if (document.title == "inicioExito") {
 }
 
 /* --------------------------------PRINT MOVIES FUNCTION -------------------------*/
+let objectFavoritos = {};
 function KeepFavoriteButton() {
   const heartButtons = document.querySelectorAll(".keep");
   heartButtons.forEach((heartButton) => {
     heartButton.addEventListener("click", async function (event) {
       event.preventDefault();
-      const movieId = event.target.getAttribute("heart-id");
-      await fetch(
-        "http:///api/favorites",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: movieId,
-          }), //enviamos el email del user y la id cogida al hacer click // no se puede coger con req. porque es de back
+      let cadena = event.target.getAttribute("id");
+      let movieId = cadena.slice(6);
+      if (objectFavoritos.hasOwnProperty(`${movieId}`) && objectFavoritos[`${movieId}`] == false) {
+        let response = await fetch("/api/favorites", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: movieId,
+            }),
+        }).then(res => res.json());
+        if (response == "Success!") {
+          Swal.fire({
+            icon: "success",
+            text: "Se ha añadido la película a favoritos",
+          });
+          objectFavoritos[`${movieId}`] = true;
+          heartButton.classList.remove("fa-heart-circle-plus");
+          heartButton.classList.add("fa-heart-circle-minus");
+        } else {
+          Swal.fire({
+            icon: "error",
+            text: "No se ha podido añadir la película a favoritos",
+          });
         }
-      );
+      } else {
+        let response = await fetch(
+          `/api/deleteFavorites/${movieId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        ).then(res => res.json());
+        if (response == "Success!") {
+          Swal.fire({
+            icon: "success",
+            text: "Se ha eliminado la película de favoritos",
+          });
+          objectFavoritos[`${movieId}`] = false;
+          heartButton.classList.remove("fa-heart-circle-minus");
+          heartButton.classList.add("fa-heart-circle-plus");
+        } else {
+          Swal.fire({
+            icon: "error",
+            text: "No se ha podido eliminar la película de favoritos",
+          });
+        }
+      } 
     });
   });
 }
-function unKeepFavoriteButton() {
-  const heartButtons = document.querySelectorAll(".unkeep");
-  heartButtons.forEach((heartButton) => {
-    heartButton.addEventListener("click", async function (event) {
-      event.preventDefault();
-      const movieId = event.target.getAttribute("heart-id");
-      let response = await fetch(
-        `http:///api/deleteFavorite/${movieId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => res.json());
-      if (response == "Success") {
-        Swal.fire({
-          icon: "success",
-          text: "Se ha eliminado la película de favoritos",
-        });
-      }
-    });
-  });
-}
+
 function printMovieCardsUser(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
   const resultsSection = document.getElementById(`${section}`);
@@ -278,47 +294,71 @@ function printMovieCardsUser(moviesData, section) {
   if (moviesData.length == 0) {
     resultsSection.innerHTML = "No se han encontrado películas con ese nombre.";
   } else {
-    const movieCard = (movie) => {
-      //Store all found genres in a string
-      let genres = movie.genres.map((genre) => genre).join(", ");
-      //-----------------HTML structure of each movie card------------------------------
-      return `<section class="movie-card" data-movie-id="${movie.id}">
-                <section class="movie-card-image">
-                  <img src="${movie.image}" alt="Poster Image">
-                    <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>
-                    <i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>
+    async function getFavourites() {
+      objectFavoritos = {}
+      let favoritos = await fetch("/api/getFavorites").then(res => res.json());
+      console.log(favoritos);
+      for (let i = 0; i < moviesData.length; i++) {
+        let encontrado = false;
+        for (let j = 0; j < favoritos.length; j++) {
+          if (moviesData[i].id == favoritos[j].movie_id) {
+            encontrado = true;
+            break;
+          }
+        }
+        objectFavoritos[`${moviesData[i].id}`] = encontrado;
+      }
+      console.log(objectFavoritos);
+      const movieCard = (movie) => {
+        //Store all found genres in a string
+        let heart;
+        if (objectFavoritos[`${movie.id}`] == true) {
+          heart = `<i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-minus fa-2xl" style="color: #fc2222;"></i>`;
+        } else {
+          heart = `<i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl" style="color: #fc2222;"></i>`
+        }
+        let genres = movie.genres.map((genre) => genre).join(", ");
+        //-----------------HTML structure of each movie card------------------------------
+        //
+        return `<section class="movie-card" data-movie-id="${movie.id}">
+                  <section class="movie-card-image">
+                    <img src="${movie.image}" alt="Poster Image">
+                      ${heart}
+                  </section>
+                  <section class="movie-card-details" data-movie-id="${movie.id}">
+                                  <section class=" movie-card-details-header">
+                    <div class="movie-card-year">
+                      <h5>Fecha</h5>
+                      ${movie.year}
+                    </div>
+                    <div class="movie-card-length">
+                      <h5>Duración</h5>
+                      ${movie.length} min
+                    </div>
+                    <div class="movie-card-genres">
+                      <h5>Género</h5>
+                      ${genres}
+                    </div>
+                  </section>
+                  <section class="movie-card-details-content">
+                    <h3>${movie.title}</h3>
+                    <h4>Director</h4>
+                    <h4>${movie.director}</h4>
+                  </section>
                 </section>
-                <section class="movie-card-details" data-movie-id="${movie.id}">
-                                <section class=" movie-card-details-header">
-                  <div class="movie-card-year">
-                    <h5>Fecha</h5>
-                    ${movie.year}
-                  </div>
-                  <div class="movie-card-length">
-                    <h5>Duración</h5>
-                    ${movie.length} min
-                  </div>
-                  <div class="movie-card-genres">
-                    <h5>Género</h5>
-                    ${genres}
-                  </div>
-                </section>
-                <section class="movie-card-details-content">
-                  <h3>${movie.title}</h3>
-                  <h4>Director</h4>
-                  <h4>${movie.director}</h4>
-                </section>
-              </section>
-    </section>`;
-    };
-    // console.log(moviesData);
-    let movieCardContainerHTML = `<section class="movie-card-container">`;
-    moviesData.forEach((movie) => {
-      movieCardContainerHTML += movieCard(movie);
-    });
-    movieCardContainerHTML += `</section>`;
-    resultsSection.innerHTML = "";
-    resultsSection.innerHTML += movieCardContainerHTML;
+      </section>`;
+      };
+      // console.log(moviesData);
+      let movieCardContainerHTML = `<section class="movie-card-container">`;
+      moviesData.forEach(movie => {
+        movieCardContainerHTML += movieCard(movie);
+      });
+      movieCardContainerHTML += `</section>`;
+      resultsSection.innerHTML = "";
+      resultsSection.innerHTML += movieCardContainerHTML;
+      KeepFavoriteButton();
+    }
+    getFavourites();
   }
 }
 function editButtonMovie() {
@@ -464,10 +504,7 @@ if (document.title == "Búsqueda") {
     const query = document.getElementById("search-bar").value;
     //Fetch from our API to search for the film/s.
     const results = await searchFilms(query);
-    console.log(results);
     printMovieCardsUser(results, "search-results"); //Imprimir tarjetas
-    KeepFavoriteButton();
-    unKeepFavoriteButton();
     listenForClicks("search-results");
   });
 }
@@ -714,7 +751,7 @@ document.addEventListener("click", async function (event) {
 //   let registeredemail = document.getElementById("registereduser");
 //   // console.log(registeredemail.innerHTML);
 //   let favorites = await fetch(
-//     `http:///api/getFavorites/${registeredemail}`
+//     `/api/getFavorites/${registeredemail}`
 //   ).then((res) => res.json());
 //   console.log(favorites);
 // }
@@ -727,5 +764,4 @@ document.addEventListener("click", async function (event) {
 if (document.title == "Mis películas") {
   // primero cogemos los favoritos, luego los pintamos con las tarjetas
   printFavoriteMovies();
-  unKeepFavoriteButton();
 }
