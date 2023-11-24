@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 const getRatings = async (title) => {
-    const browser = await puppeteer.launch({headless: "new"});
+    const browser = await puppeteer.launch({headless: "true"});
     try {
         const page = await browser.newPage();
         await page.goto('https://www.filmaffinity.com/es/main.html', {
