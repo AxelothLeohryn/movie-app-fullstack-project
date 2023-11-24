@@ -227,7 +227,7 @@ function KeepFavoriteButton() {
       event.preventDefault();
       let cadena = event.target.getAttribute("id");
       let movieId = cadena.slice(6);
-      console.log(objectFavoritos);
+      //console.log(objectFavoritos);
       if (objectFavoritos[`${movieId}`] == false) {
         let response = await fetch("/api/favorites", {
             method: "POST",
@@ -282,7 +282,7 @@ function KeepFavoriteButton() {
 }
 function printMovieCardsUser(moviesData, section) {
   // A esta función hay que pasarle el array de objetos de películas, y el id de la sección (ej: "search-results") donde quieres que se pinten las tarjetas
-  console.log("moviesData received: " + moviesData);
+  //console.log("moviesData received: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   let cardNumber = 0;
@@ -292,7 +292,7 @@ function printMovieCardsUser(moviesData, section) {
     async function getFavourites() {
       objectFavoritos = {}
       let favoritos = await fetch("/api/getFavorites").then(res => res.json());
-      console.log(favoritos);
+      ////console.log(favoritos);
       for (let i = 0; i < moviesData.length; i++) {
         let encontrado = false;
         for (let j = 0; j < favoritos.length; j++) {
@@ -303,16 +303,21 @@ function printMovieCardsUser(moviesData, section) {
         }
         objectFavoritos[`${moviesData[i].id}`] = encontrado;
       }
-      console.log(objectFavoritos);
+      
      const movieCard = (movie) => {
+      let heart;
+      if (objectFavoritos[`${movie.id}`] == true) {
+        heart = `<i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-minus fa-2xl cardbutton" style="color: #fc2222;"></i>`;
+      } else {
+        heart = `<i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl cardbutton" style="color: #fc2222;"></i>`
+      }
       //Store all found genres in a string
       let genres = movie.genres.map((genre) => genre).join(", ");
       //-----------------HTML structure of each movie card------------------------------
       return `<section class="movie-card" data-movie-id="${movie.id}">
                 <section class="movie-card-image">
                   <img src="${movie.image}" alt="Poster Image">
-                    <i id="heart-${movie.id}" class="keep fa-solid fa-heart-circle-plus fa-2xl cardbutton" style="color: #fc2222;"></i>
-                    <i id="unheart-${movie.id}" class="unkeep fa-solid fa-heart-circle-minus fa-2xl cardbutton" style="color: #fc2222;"></i>
+                    ${heart}
                 </section>
                 <section class="movie-card-details" data-movie-id="${movie.id}">
                                 <section class=" movie-card-details-header">
@@ -336,7 +341,7 @@ function printMovieCardsUser(moviesData, section) {
                  </section>
       </section>`;
       };
-      // console.log(moviesData);
+      // //console.log(moviesData);
       let movieCardContainerHTML = `<section class="movie-card-container">`;
       moviesData.forEach(movie => {
         movieCardContainerHTML += movieCard(movie);
@@ -354,9 +359,9 @@ function editButtonMovie() {
   editButtons.forEach((editButton) => {
     editButton.addEventListener("click", function (event) {
       event.preventDefault();
-      console.log("Me has clickeado!", event.target);
+      //console.log("Me has clickeado!", event.target);
       const movieId = event.target.getAttribute("data-movie-id");
-      console.log(movieId);
+      //console.log(movieId);
       window.location.href = `/editMovie/${movieId}`;
     });
   });
@@ -371,7 +376,7 @@ function editButtonMovie() {
 */
 
 function printMovieCardsAdmin(moviesData, section) {
-  console.log("Movie data to print: " + moviesData);
+  //console.log("Movie data to print: " + moviesData);
   const resultsSection = document.getElementById(`${section}`);
   resultsSection.innerHTML = "";
   if (moviesData.length == 0) {
@@ -413,7 +418,7 @@ function printMovieCardsAdmin(moviesData, section) {
                 </section>
               </section>`;
     };
-    // console.log(moviesData);
+    // //console.log(moviesData);
     let movieCardContainerHTML = `<section class="movie-card-container">`;
     moviesData.forEach((movie) => {
       movieCardContainerHTML += movieCard(movie);
@@ -435,13 +440,13 @@ function printMovieCardsAdmin(moviesData, section) {
 function listenForClicks(section) {
   document.getElementById(section).addEventListener("click", async (event) => {
     event.preventDefault();
-    // console.log("He clickeado!");
+    // //console.log("He clickeado!");
     const movieCard = event.target.closest(".movie-card-details");
     if (movieCard) {
       const movieId = movieCard.getAttribute("data-movie-id");
       if (movieId) {
         // Redirect a la vista detalles de la película clickeada
-        console.log("La id de la película clickeada es: " + movieId);
+        //console.log("La id de la película clickeada es: " + movieId);
         window.location.href = `/search/${movieId}`;
       }
     }
@@ -535,7 +540,7 @@ async function displayMovieDetails(id, section) {
   const movieDetails = await searchFilmDetails(id);
   objectFavoritos = {}
   let favoritos = await fetch("/api/getFavorites").then(res => res.json());
-  console.log(favoritos);
+  //console.log(favoritos);
   let encontrado = false;
   for (let j = 0; j < favoritos.length; j++) {
     if (id == favoritos[j].movie_id) {
@@ -592,7 +597,7 @@ async function displayMovieDetails(id, section) {
       <section id="criticsContainer"></section>
   </section>
 </section>`;
-  console.log("I'm displaying details");
+  //console.log("I'm displaying details");
   KeepFavoriteButton()
   let critics = await fetch(`/api/movies/detail/${movieDetails.title}`).then(
     (res) => res.json()
@@ -617,7 +622,7 @@ async function displayMovieDetails(id, section) {
 
 if (document.title === "Detalles de la película") {
   const movieId = window.location.pathname.split("/").pop();
-  console.log(movieId);
+  //console.log(movieId);
   displayMovieDetails(movieId, "details-section");
 }
 
@@ -634,7 +639,7 @@ async function getLocalMovies() {
 if (document.title == "Movies: Admin") {
   async function printLocalMovies() {
     let localMovies = await getLocalMovies();
-    console.log(localMovies);
+    //console.log(localMovies);
     printMovieCardsAdmin(localMovies, "admincards");
     listenForClicks("admincards");
     editButtonMovie();
@@ -653,7 +658,7 @@ async function createMovie(movieData) {
       body: JSON.stringify(movieData),
     });
     const responseData = await response.json();
-    console.log(responseData);
+    //console.log(responseData);
   } catch (error) {
     console.error(error.message);
   }
@@ -676,7 +681,7 @@ if (document.title == "Movies: Crear Película") {
       trailer: formData.get("trailer"),
       overview: formData.get("overview"),
     };
-    console.log("Este es el objeto que se envia por fetch: " + movieData);
+    //console.log("Este es el objeto que se envia por fetch: " + movieData);
     Swal.fire({
       title: "¿Quieres crear esta película?",
       showDenyButton: true,
@@ -705,7 +710,7 @@ async function editMovie(editedMovieData, movieId) {
     });
 
     const responseData = await response.json();
-    console.log(responseData);
+    //console.log(responseData);
   } catch (error) {
     console.error(error.message);
   }
@@ -748,7 +753,7 @@ async function handleMovieForm(movieId) {
 }
 
 async function dataEditForm(movieId) {
-  console.log("Esta es la id de la pelicula a editar: " + movieId);
+  //console.log("Esta es la id de la pelicula a editar: " + movieId);
   try {
     const response = await fetch(`/api/movies/details/${movieId}`);
     const movieData = await response.json();
@@ -787,7 +792,7 @@ if (document.title === "Movies: Editar Película") {
     return window.location.href.split("/").pop();
   }
   movieId = getMovieId();
-  console.log({
+  //console.log({
     id: getMovieId(),
   });
 
@@ -833,15 +838,15 @@ document.addEventListener("click", async function (event) {
 // Sección favoritos ---------------------------------------------------------------------------------
 async function printFavoriteMovies() {
   const favoritesIds = await fetch("/api/getFavorites").then(res => res.json());
-  // console.log("Favorite movies ids: ", favoritesIds);
+  // //console.log("Favorite movies ids: ", favoritesIds);
   let favoritesData = [];
   for (const favoriteId of favoritesIds) {
     const favoriteData = await fetch(`/api/movies/details/${favoriteId.movie_id}`).then(res => res.json());
-    console.log("Favorite Data: ", favoriteData);
+    //console.log("Favorite Data: ", favoriteData);
     favoriteData.id = favoriteId.movie_id;
     favoritesData.push(favoriteData);
   }
-  // console.log("Favorites Data: ", favoritesData);
+  // //console.log("Favorites Data: ", favoritesData);
   printMovieCardsUser(favoritesData, "favorites");
   listenForClicks("favorites")
 }
