@@ -75,6 +75,11 @@ De igual manera podrás acceder a esas dos secciones pulsando en los botones que
 El proyecto funciona con dos bases de datos: SQl y Mongo. En SQL, desplegada en Render, se guardan las películas favoritas de cada usuario que luego pintamos en las diferentes tarjetas. En administrador, trabaja con la base de datos no relacional Mongo y crea, edita y borra películas que se guardan allí. 
 Las películas se pintan a través de llamadas fetch a una APi externa combinada con una llamada a nuestra APi de películas originales. La llamada da como resultado un array de objetos de películas.
 
+
+![Sin título-2023-11-23-1505 (1)](https://github.com/AxelothLeohryn/movie-app-fullstack-project/assets/145337549/75a8279b-21fc-4a1e-ad57-27dfe20fb25b)
+
+
+
 ¿Quieres probarlo? Pues clica en el enlace y disfruta!! 
 
 https://movie-app-fullstack.onrender.com/
