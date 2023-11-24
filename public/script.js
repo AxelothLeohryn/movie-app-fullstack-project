@@ -792,10 +792,6 @@ if (document.title === "Movies: Editar Película") {
     return window.location.href.split("/").pop();
   }
   movieId = getMovieId();
-  //console.log({
-    id: getMovieId(),
-  });
-
   dataEditForm(movieId);
 }
 
