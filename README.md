@@ -1,11 +1,11 @@
-# Backend proyect :computer: 	:warning: # 
+# Backend Project :computer: :warning:
 ---
 
 ## Herramientas ##
 - Node js
 - Express
 - BBDD SQL
-- BBDD Mongo Atlas
+- BBDD MongoDB Atlas
 - Render
 - Web Scraping (puppeteer)
 - Pug
@@ -30,7 +30,7 @@ En este repositorio encontrarás un proyecto de backend en que se han combinado 
 
       
 
-Con esos podrás crear, editar y borrar películas originales, creadas por tí y que aparecerán en el buscador para un futuro usuario.
+Con estos podrás crear, editar y borrar películas originales, creadas por tí y que aparecerán en el buscador para un futuro usuario.
 Si clicas en crear película se abrirá un formulario como el de editar pero con los campos vacíos, dale rienda suelta a tu imaginación. 
 
   <img width="206" alt="Captura de pantalla 2023-11-23 204914" src="https://github.com/AxelothLeohryn/movie-app-fullstack-project/assets/145337549/c604e2a4-4392-4db5-b951-17563bb0742c">
@@ -57,8 +57,8 @@ Este es un ejemplo de una película original, si quisieras editarla le das a la 
 
    
   #### Navegador ####
-  1. si clicas en la lupa podrás volver al buscador.
-  2. si clicas en el corazón podrás acceder al apartado de tus películas guardadas en favoritos.
+1. Si haces clic en la lupa, podrás volver al buscador.
+2. Si haces clic en el corazón, podrás acceder al apartado de tus películas guardadas en favoritos.
 
 De igual manera podrás acceder a esas dos secciones pulsando en los botones que salen en la pantalla
 
